@@ -1,0 +1,58 @@
+body {
+  margin: 0;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+}
+.grid-container {
+  height: 100vh;
+  width: 100vw;
+  display: grid;
+  grid-template-columns: repeat(13, 1fr);
+  grid-template-rows: repeat(11, 1fr);
+  grid-template-areas:
+    "logo logo logo logo barR barR barR barR barR rest rest rest rest"
+    "side1 side1 side1 main main main main main main main side2 side2 side2"
+    "side1 side1 side1 main main main main main main main side2 side2 side2"
+    "side1 side1 side1 main main main main main main main side2 side2 side2"
+    "side1 side1 side1 main main main main main main main side2 side2 side2"
+    "side1 side1 side1 main main main main main main main side2 side2 side2"
+    "side1 side1 side1 main main main main main main main side2 side2 side2"
+    "side1 side1 side1 main main main main main main main side2 side2 side2"
+    "side1 side1 side1 main main main main main main main side2 side2 side2"
+    "side1 side1 side1 main main main main main main main side2 side2 side2"
+    "side1 side1 side1 main main main main main main main side2 side2 side2"
+   
+    ;
+}
+
+.platformName {
+  grid-area: logo;
+  background-color: aqua;
+}
+
+.barreDeRecherch {
+  grid-area: barR;
+  background-color: aquamarine;
+}
+
+.otherButton {
+  grid-area: rest;
+  background-color: antiquewhite;
+}
+
+.aside1 {
+  grid-area: side1;
+  background-color: yellowgreen;
+}
+
+.aside2 {
+  grid-area: side2;
+  background-color: bisque;
+}
+
+main {
+  grid-area: main;
+  background-color: black;
+  color: white;
+}

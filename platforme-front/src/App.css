@@ -24,6 +24,9 @@ body {
     "side1 side1 side1 main main main main main main main side2 side2 side2";
 }
 
+/* 9esemT page dyali l des zones */
+/* *************************************************************************************************** */
+
 .platformName {
   grid-area: logo;
   background-color: rgb(3, 25, 81);
@@ -39,15 +42,7 @@ body {
   background-color: rgb(3, 25, 81);
 }
 
-.aside1 {
-  padding-top: 20px;
-  grid-area: side1;
-  background-color: rgb(255, 255, 255);
-  display: flex;
-  flex-direction: row;
-  align-items: start;
-  justify-content: center;
-}
+
 
 .aside2 {
   grid-area: side2;
@@ -68,12 +63,24 @@ main {
   -o-border-radius: 5px;
 }
 
+/* hada kamel mna w ahbet kamel side barre a gauche */
+/* ******************************************************** */
+.aside1 {
+  padding-top: 20px;
+  grid-area: side1;
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: row;
+  align-items: start;
+  justify-content: center;
+}
+
 .menue {
   display: flex;
   flex-direction: column;
   /*height: 75%;
   */
-  width: 75%;
+  width: 90%;
   border: 1px solid black;
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -92,6 +99,7 @@ main {
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
+  
 }
 
 .false:hover {
@@ -113,3 +121,41 @@ main {
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
 }
+
+/* hada kamel mna w etla3 kamel side barre a gauche */
+/* ******************************************************** */
+
+
+/* barre de recherch principale */
+.search{
+
+}
+
+#barreDeRecherchePrincipale{
+  color: black;
+  width: 350px;
+  padding: 5px;
+  font-size: auto;
+  border: 2px solid #080347;
+  border-radius: 5px;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
+.barreDeRecherch {
+  grid-area: barR;
+  background-color: rgb(3, 25, 81);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+}
+
+
+
+/* ************************************************************************ */

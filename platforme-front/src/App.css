@@ -37,12 +37,6 @@ body {
   background-color: rgb(3, 25, 81);
 }
 
-.otherButton {
-  grid-area: rest;
-  background-color: rgb(3, 25, 81);
-}
-
-
 
 .aside2 {
   grid-area: side2;
@@ -61,6 +55,8 @@ main {
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
+  overflow: scroll;
+  scrollbar-width: none; 
 }
 
 /* hada kamel mna w ahbet kamel side barre a gauche */
@@ -99,7 +95,6 @@ main {
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
-  
 }
 
 .false:hover {
@@ -125,26 +120,7 @@ main {
 /* hada kamel mna w etla3 kamel side barre a gauche */
 /* ******************************************************** */
 
-
 /* barre de recherch principale */
-.search{
-
-}
-
-#barreDeRecherchePrincipale{
-  color: black;
-  width: 350px;
-  padding: 5px;
-  font-size: auto;
-  border: 2px solid #080347;
-  border-radius: 5px;
-  outline: none;
-  transition: all 0.3s ease-in-out;
-  -webkit-border-radius: 5px;
-  -moz-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -o-border-radius: 5px;
-}
 
 .barreDeRecherch {
   grid-area: barR;
@@ -153,9 +129,141 @@ main {
   flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+.search-box {
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+#barreDeRecherchePrincipale {
+  color: black;
+  width: 350px;
+  padding: 5px;
+  font-size: auto;
+  border: none;
+}
+
+#barreDeRecherchePrincipale:focus {
+  outline: none;
+  border: none;
+}
+
+/* ************************************************************************ */
+/* styling ta3 2 button signin w signup */
+/* ************************************************************************ */
+
+
+.otherButton {
+  grid-area: rest;
+  background-color: rgb(3, 25, 81);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.ButtonSignInUp{
+  margin-right: 15px;
+  color: white;
+  background-color:rgb(3, 25, 81) ;
+  border: none;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
+.ButtonSignInUp:hover{
+  color: rgb(3, 25, 81);
+  background-color:rgb(255, 255, 255) ;
+
 
 }
 
-
-
 /* ************************************************************************ */
+/* ************************************************************************ */
+/* ************************************************************************ */
+/* 
+page de signup */
+
+
+
+.SignUpPage{
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 450px;
+  height: 500px;
+  border: 1px black solid;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+
+.formSignUpPage{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+
+}
+.input{
+  width: 400px;
+  height: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: white;
+  border: 1px black solid;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+.input:focus{
+  outline: none;
+  border: 2px black solid;
+}
+
+.ButtonCreateAccount{
+  width: 350px;
+  height: 30px;
+  background-color:rgb(3, 25, 81) ;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+
+.ButtonCreateAccount:hover{
+  background-color:rgb(20, 50, 124);
+}
+
+.social-icons{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: space-around;
+}
+
+.social{
+  color: black;
+  padding: 5px;
+}

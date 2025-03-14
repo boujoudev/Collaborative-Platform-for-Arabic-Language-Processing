@@ -1,4 +1,5 @@
 import "./App.css";
+import SIdeBarre1 from "./component/SIdeBarre1";
 
 function App() {
   return (
@@ -6,7 +7,9 @@ function App() {
       <div className="platformName">LOGO</div>
       <div className="barreDeRecherch">Search Bar</div>
       <div className="otherButton">Other Buttons</div>
-      <aside className="aside1">Sidebar 1</aside>
+      <aside className="aside1">
+        <SIdeBarre1/>
+      </aside>
       <main>Main Content</main>
       <aside className="aside2">Sidebar 2</aside>
     </div>

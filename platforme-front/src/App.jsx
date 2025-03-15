@@ -4,6 +4,7 @@ import BarreDERecherche from "./component/BarreDERecherche";
 import SignInSignUp from "./component/SignInSignUp";
 import SignUpPage from "./component/SignUpPage";
 import SignInPage from "./component/SignInPage";
+import HomeFirstElement from "./component/Home/HomeFirstElement";
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
         <SIdeBarre1 />
       </aside>
       <main>
-        
+        <HomeFirstElement/>
+
       </main>
       <aside className="aside2">Sidebar 2</aside>
     </div>

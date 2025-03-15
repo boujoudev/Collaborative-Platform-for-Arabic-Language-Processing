@@ -37,7 +37,6 @@ body {
   background-color: rgb(3, 25, 81);
 }
 
-
 .aside2 {
   grid-area: side2;
   background-color: rgb(254, 254, 254);
@@ -49,14 +48,14 @@ main {
   color: rgb(4, 7, 85);
   margin: 10px;
   padding: 10px;
-  border: 1px black solid;
+  border: 0px black solid;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
   overflow: scroll;
-  scrollbar-width: none; 
+  scrollbar-width: none;
 }
 
 /* hada kamel mna w ahbet kamel side barre a gauche */
@@ -77,12 +76,13 @@ main {
   /*height: 75%;
   */
   width: 90%;
-  border: 1px solid black;
+  border:0px solid black;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
+  box-shadow: 1px 1px 2px 2px rgb(164, 164, 200);
 }
 
 .false {
@@ -90,12 +90,13 @@ main {
   height: 30px;
   background-color: white;
   color: black;
-  border: 1px black solid;
+  border: none;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
+  text-align: left;
 }
 
 .false:hover {
@@ -117,6 +118,7 @@ main {
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
+  text-align: left;
 }
 
 /* hada kamel mna w etla3 kamel side barre a gauche */
@@ -149,6 +151,7 @@ main {
 #barreDeRecherchePrincipale {
   color: black;
   width: 350px;
+  height: 30px;
   padding: 5px;
   font-size: auto;
   border: none;
@@ -163,7 +166,6 @@ main {
 /* styling ta3 2 button signin w signup */
 /* ************************************************************************ */
 
-
 .otherButton {
   grid-area: rest;
   background-color: rgb(3, 25, 81);
@@ -173,10 +175,10 @@ main {
   justify-content: flex-end;
 }
 
-.ButtonSignInUp{
+.ButtonSignInUp {
   margin-right: 15px;
   color: white;
-  background-color:rgb(3, 25, 81) ;
+  background-color: rgb(3, 25, 81);
   border: none;
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -185,11 +187,9 @@ main {
   -o-border-radius: 5px;
 }
 
-.ButtonSignInUp:hover{
+.ButtonSignInUp:hover {
   color: rgb(3, 25, 81);
-  background-color:rgb(255, 255, 255) ;
-
-
+  background-color: rgb(255, 255, 255);
 }
 
 /* ************************************************************************ */
@@ -198,9 +198,7 @@ main {
 /* 
 page de signup */
 
-
-
-.SignUpPage{
+.SignUpPage {
   background-color: rgb(255, 255, 255);
   display: flex;
   flex-direction: column;
@@ -216,14 +214,13 @@ page de signup */
   -o-border-radius: 15px;
 }
 
-.formSignUpPage{
+.formSignUpPage {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-
 }
-.input{
+.input {
   width: 400px;
   height: 30px;
   margin-top: 10px;
@@ -236,15 +233,15 @@ page de signup */
   -ms-border-radius: 10px;
   -o-border-radius: 10px;
 }
-.input:focus{
+.input:focus {
   outline: none;
   border: 2px black solid;
 }
 
-.ButtonCreateAccount{
+.ButtonCreateAccount {
   width: 350px;
   height: 30px;
-  background-color:rgb(3, 25, 81) ;
+  background-color: rgb(3, 25, 81);
   color: white;
   border: none;
   border-radius: 20px;
@@ -254,18 +251,18 @@ page de signup */
   -o-border-radius: 20px;
 }
 
-.ButtonCreateAccount:hover{
-  background-color:rgb(20, 50, 124);
+.ButtonCreateAccount:hover {
+  background-color: rgb(20, 50, 124);
 }
 
-.social-icons{
+.social-icons {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   align-items: space-around;
 }
 
-.social{
+.social {
   color: black;
   padding: 5px;
 }
@@ -275,7 +272,7 @@ page de signup */
 /* ************************************************************************ */
 /* 
 page de signIn */
-.SignInPage{
+.SignInPage {
   background-color: rgb(255, 255, 255);
   display: flex;
   flex-direction: column;
@@ -291,10 +288,10 @@ page de signIn */
   -o-border-radius: 15px;
 }
 
-.ButtonSignIn{
+.ButtonSignIn {
   width: 350px;
   height: 30px;
-  background-color:rgb(3, 25, 81) ;
+  background-color: rgb(3, 25, 81);
   color: white;
   border: none;
   border-radius: 20px;
@@ -304,21 +301,58 @@ page de signIn */
   -o-border-radius: 20px;
 }
 
-.ButtonSignIn:hover{
-  background-color:rgb(20, 50, 124);
+.ButtonSignIn:hover {
+  background-color: rgb(20, 50, 124);
 }
 
-.formSignInPage{
+.formSignInPage {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-
 }
 
+/* ************************************************************************ */
+/* ************************************************************************ */
+/* ************************************************************************ */
 
+/* accueil styling */
+
+.AccueilInput {
+  background-color: lightgray;
+  color: gray;
+  width: 550px;
+  height: 30px;
+  border: 1px solid black;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+
+.AccueilInput:focus {
+  outline: none;
+  border: 2px black solid;
+}
+
+.AccueilEnTete {
+  box-shadow: 1px 1px 2px 2px rgb(164, 164, 200);
+  padding: 10px;
+  border: 1px solid black;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+.accueilButton{
+  background-color:transparent;
+  border: none;
+  cursor: pointer;
+}
 
 /* ************************************************************************ */
 /* ************************************************************************ */
 /* ************************************************************************ */
-/* 

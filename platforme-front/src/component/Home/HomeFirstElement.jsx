@@ -3,18 +3,19 @@ import React from "react";
 const HomeFirstElement = () => {
     return (
         <div className="AccueilEnTete">
-        <h2 style={{ "font-family": "Arial , sans-serif" }}>Home</h2>
+        <h2 style={{ "font-family": "Arial , sans-serif" , "marginBottom":"5px"}}>Home</h2>
         <div
             style={{
+            margin:"0px",
             backgroundColor: "rgb(20, 50, 124)",
             color: "white",
-            padding: "10px",
-            borderRadius: "30px",
+            padding: "5px",
+            borderRadius: "20px",
             }}
         >
-            <h3 style={{ "font-family": "Arial , sans-serif" }}>Platform Name</h3>
-            <p style={{ "font-family": "Arial , sans-serif" }}>
-            Share your discoveries and follow the latest advances in Arabic NLP.
+            <h3 style={{ "font-family": "Arial , sans-serif" ,"margin":"5px" }}>Platform Name</h3>
+            <p style={{ "font-family": "Arial" , "padding":"0px" ,"marginTop":"0px" , "marginBottom":"5px","marginLeft":"5px"}}>
+                Share your discoveries and follow the latest advances in Arabic NLP.
             </p>
         </div>
         <div

@@ -3,6 +3,7 @@ import SIdeBarre1 from "./component/SIdeBarre1";
 import BarreDERecherche from "./component/BarreDERecherche";
 import SignInSignUp from "./component/SignInSignUp";
 import SignUpPage from "./component/SignUpPage";
+import SignInPage from "./component/SignInPage";
 
 function App() {
   return (
@@ -18,7 +19,6 @@ function App() {
         <SIdeBarre1 />
       </aside>
       <main>
-        <SignUpPage/>
         
       </main>
       <aside className="aside2">Sidebar 2</aside>

@@ -76,13 +76,13 @@ main {
   /*height: 75%;
   */
   width: 90%;
-  border:0px solid black;
+  border: 0px solid black;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
-  box-shadow: 1px 1px 2px 2px rgb(164, 164, 200);
+  box-shadow: 1px 1px 2px 2px rgb(181, 181, 190);
 }
 
 .false {
@@ -319,11 +319,11 @@ page de signIn */
 /* accueil styling */
 
 .AccueilInput {
-  background-color: lightgray;
+  background-color: rgb(230, 230, 230);
   color: gray;
   width: 550px;
   height: 30px;
-  border: 1px solid black;
+  border: 0px solid black;
   border-radius: 20px;
   -webkit-border-radius: 20px;
   -moz-border-radius: 20px;
@@ -333,13 +333,13 @@ page de signIn */
 
 .AccueilInput:focus {
   outline: none;
-  border: 2px black solid;
+  border: 0px solid black;
 }
 
 .AccueilEnTete {
-  box-shadow: 1px 1px 2px 2px rgb(164, 164, 200);
+  box-shadow: 1px 1px 2px 2px rgb(181, 181, 190);
   padding: 5px;
-  border: 1px solid black;
+  border: 0px solid black;
   border-radius: 10px;
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
@@ -347,8 +347,12 @@ page de signIn */
   -o-border-radius: 10px;
 }
 
-.accueilButton{
-  background-color:transparent;
+.divAccueil {
+  background: linear-gradient(to right, #6382fa, rgb(20, 50, 124));
+}
+
+.accueilButton {
+  background-color: transparent;
   border: none;
   cursor: pointer;
 }
@@ -356,3 +360,30 @@ page de signIn */
 /* ************************************************************************ */
 /* ************************************************************************ */
 /* ************************************************************************ */
+/* 
+Forum 
+Entet dyalha */
+
+.AddForum {
+  background-color: black;
+  color: white;
+  font-size: 11px;
+  border-radius: 5px;
+  margin: 5px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: 0.3s; /* Animation fluide */
+}
+
+.AddForum:hover {
+  background-color: rgb(154, 154, 154); /* Change la couleur au hover */
+}
+
+.ForumEntet {
+  box-shadow: 1px 1px 2px 2px rgb(181, 181, 190);
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}

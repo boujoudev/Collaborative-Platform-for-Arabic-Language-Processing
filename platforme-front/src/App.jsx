@@ -5,6 +5,7 @@ import SignInSignUp from "./component/SignInSignUp";
 import SignUpPage from "./component/SignUpPage";
 import SignInPage from "./component/SignInPage";
 import HomeFirstElement from "./component/Home/HomeFirstElement";
+import ForumEntet from "./component/forum/ForumEntet";
 
 function App() {
   return (
@@ -20,7 +21,7 @@ function App() {
         <SIdeBarre1 />
       </aside>
       <main>
-        <HomeFirstElement/>
+        <ForumEntet/>
 
       </main>
       <aside className="aside2">Sidebar 2</aside>

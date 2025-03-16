@@ -3,14 +3,13 @@ import React from "react";
 const HomeFirstElement = () => {
     return (
         <div className="AccueilEnTete">
-        <h2 style={{ "font-family": "Arial , sans-serif" , "marginBottom":"5px"}}>Home</h2>
-        <div
+        <h2 style={{ "font-family": "Arial , sans-serif","color":"black" , "marginBottom":"5px"}}>Home</h2>
+        <div className="divAccueil"
             style={{
             margin:"0px",
-            backgroundColor: "rgb(20, 50, 124)",
             color: "white",
             padding: "5px",
-            borderRadius: "20px",
+            borderRadius: "10px",
             }}
         >
             <h3 style={{ "font-family": "Arial , sans-serif" ,"margin":"5px" }}>Platform Name</h3>
@@ -48,7 +47,7 @@ const HomeFirstElement = () => {
             }}>
             <button className="accueilButton"><i class="fa-solid fa-comments"></i> Forum</button>
             <button className="accueilButton"><i class="fa-solid fa-calendar-days"></i> Event</button>
-            <button className="accueilButton">Resources</button>
+            <button className="accueilButton"><i class="fa-solid fa-file"></i> Resources</button>
         </div>
         </div>
     );

@@ -8,7 +8,6 @@ import HomeFirstElement from "./component/Home/HomeFirstElement";
 import ForumEntet from "./component/forum/ForumEntet";
 import Forum from "./component/forum/Forum";
 
-
 function App() {
   return (
     <div className="grid-container">
@@ -23,8 +22,7 @@ function App() {
         <SIdeBarre1 />
       </aside>
       <main>
-
-
+        
       </main>
       <aside className="aside2">Sidebar 2</aside>
     </div>

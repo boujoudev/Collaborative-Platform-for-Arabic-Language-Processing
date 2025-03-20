@@ -1,15 +1,17 @@
 const express = require('express')
+const Forum = require("../models/forumModels"); 
 
-const router = express.Router()
-const pool = require('../configs/db')
+const router = express.Router();
+
 
 router.get('/', (req, res) => {
-    pool.query('SELECT * FROM forum', (error, results) => {
-        if (error) {
-            throw error
-        }
-        res.status(200).json(results.rows)
-    })
+    try {
+        const forums = Forum.getAllPosts();
+        res.status(200).json(forums);
+    }
+    catch (error) {
+        res.status(400).send(error.message);
+    }
 }
 )   
 

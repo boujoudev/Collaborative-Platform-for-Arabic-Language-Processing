@@ -7,6 +7,10 @@ import SignInPage from "./component/SignInPage";
 import HomeFirstElement from "./component/Home/HomeFirstElement";
 import ForumEntet from "./component/forum/ForumEntet";
 import Forum from "./component/forum/Forum";
+import ToolEntet from "./component/tool/ToolEntet";
+import Tool from "./component/tool/Tool";
+import ProjectEntet from "./component/Project/ProjectEntet";
+import Project from "./component/Project/Project";
 
 function App() {
   return (
@@ -22,7 +26,20 @@ function App() {
         <SIdeBarre1 />
       </aside>
       <main>
-        
+        {/* <SignUpPage/> */}
+        <HomeFirstElement/>
+        <ForumEntet/>
+        <Forum/>
+        <Forum/>
+        <Forum/>
+        <Forum/>
+        <ToolEntet/>
+        <Tool/>
+        <Forum/>
+        <ProjectEntet/>
+        <Project/>
+
+
       </main>
       <aside className="aside2">Sidebar 2</aside>
     </div>

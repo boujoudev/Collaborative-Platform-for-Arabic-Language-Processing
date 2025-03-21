@@ -11,6 +11,8 @@ import ToolEntet from "./component/tool/ToolEntet";
 import Tool from "./component/tool/Tool";
 import ProjectEntet from "./component/Project/ProjectEntet";
 import Project from "./component/Project/Project";
+import EventEntet from "./component/Event/EventEntet";
+import Event from "./component/Event/Event";
 
 function App() {
   return (
@@ -27,7 +29,7 @@ function App() {
       </aside>
       <main>
         {/* <SignUpPage/> */}
-        <HomeFirstElement/>
+        {/* <HomeFirstElement/>
         <ForumEntet/>
         <Forum/>
         <Forum/>
@@ -37,7 +39,9 @@ function App() {
         <Tool/>
         <Forum/>
         <ProjectEntet/>
-        <Project/>
+        <Project/> */}
+        <EventEntet/>
+        <Event/>
 
 
       </main>

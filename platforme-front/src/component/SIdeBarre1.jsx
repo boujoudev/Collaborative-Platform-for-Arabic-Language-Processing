@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const SIdeBarre1 = () => {
+  const GoTo = useNavigate();
   const [Home, setHome] = useState("true");
   const [Disc, setDisc] = useState("false");
   const [Event, setEvent] = useState("false");
@@ -11,11 +13,11 @@ const SIdeBarre1 = () => {
   const [Course, setCourse] = useState("false");
 
   return (
-    <div className="menue">
+    <nav className="menue">
       <button
         className={Home}
         id="1Ops"
-        onClick={() => {
+        onClick={() => { GoTo("/");
           setHome("true");
           setDisc("false");
           setEvent("false");
@@ -30,8 +32,8 @@ const SIdeBarre1 = () => {
       </button>
       <button
         className={Disc}
-        id="2Ops"
-        onClick={() => {
+        id="1Ops"
+        onClick={() => {GoTo("/Forum");
           setHome("false");
           setDisc("true");
           setEvent("false");
@@ -47,7 +49,7 @@ const SIdeBarre1 = () => {
       <button
         className={Event}
         id="3Ops"
-        onClick={() => {
+        onClick={() => {GoTo("/Event");
           setHome("false");
           setDisc("false");
           setEvent("true");
@@ -63,7 +65,7 @@ const SIdeBarre1 = () => {
       <button
         className={Tool}
         id="4Ops"
-        onClick={() => {
+        onClick={() => {GoTo("/Tool");
           setHome("false");
           setDisc("false");
           setEvent("false");
@@ -79,7 +81,7 @@ const SIdeBarre1 = () => {
       <button
         className={Project}
         id="5Ops"
-        onClick={() => {
+        onClick={() => {GoTo("/Project");
           setHome("false");
           setDisc("false");
           setEvent("false");
@@ -95,7 +97,7 @@ const SIdeBarre1 = () => {
       <button
         className={Bib}
         id="6Ops"
-        onClick={() => {
+        onClick={() => {GoTo("/BiBlio");
           setHome("false");
           setDisc("false");
           setEvent("false");
@@ -111,7 +113,7 @@ const SIdeBarre1 = () => {
       <button
         className={Corpus}
         id="7Ops"
-        onClick={() => {
+        onClick={() => {GoTo("/Corpus");
           setHome("false");
           setDisc("false");
           setEvent("false");
@@ -127,7 +129,7 @@ const SIdeBarre1 = () => {
       <button
         className={Course}
         id="8Ops"
-        onClick={() => {
+        onClick={() => {GoTo("/Course");
           setHome("false");
           setDisc("false");
           setEvent("false");
@@ -140,7 +142,7 @@ const SIdeBarre1 = () => {
       >
         <i class="fa-solid fa-graduation-cap"></i> Courses
       </button>
-    </div>
+    </nav>
   );
 };
 

@@ -110,7 +110,11 @@ const Event = () => {
           <i class="fa-solid fa-ellipsis"></i>
         </button>
       </div>
-      <div className="EventContent">
+      <div className="EventContent" style={{
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          whiteSpace: "nowrap",
+        }}>
         <h5
           className="EventTitre"
           style={{
@@ -167,7 +171,7 @@ const Event = () => {
       <hr
         style={{
           marginTop: "0px",
-          width: "500px",
+          width: "80%",
           height: "1px",
           backgroundColor: "black",
           border: "none",

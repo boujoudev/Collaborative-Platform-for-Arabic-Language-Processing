@@ -79,7 +79,8 @@ const Event = () => {
               paddingTop: "7px",
               paddingLeft: "3px",
               fontSize: "12px",
-              "font-family": "Arial , sans-serif",
+              fontFamily: "Arial , sans-serif",
+              fontWeight: "bold",
             }}
           >
             Name de chercheur

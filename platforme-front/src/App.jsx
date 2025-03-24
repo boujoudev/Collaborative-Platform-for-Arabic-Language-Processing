@@ -48,7 +48,7 @@ function App() {
         </Routes>
       </main>
       <aside className="aside2">
-        <ProfilASuivre/>
+        <ProfilASuivre />
         <Routes>
           <Route path="/" element={<></>} />
           <Route path="/HomeSideBarre2" element={<></>} />

@@ -4,6 +4,11 @@
     "express": "^4.21.2",
     "lodash": "^4.17.21",
     "morgan": "^1.10.0",
-    "pg": "^8.14.1"
+    "pg": "^8.14.1",
+    "pg-hstore": "^2.3.4",
+    "sequelize": "^6.37.6"
+  },
+  "devDependencies": {
+    "sequelize-cli": "^6.6.2"
   }
 }

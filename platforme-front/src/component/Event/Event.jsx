@@ -119,11 +119,13 @@ const Event = () => {
         <h5
           className="EventTitre"
           style={{
+            fontSize: "14px",
             fontFamily: "Arial , sans-serif",
             fontWeight: "bold",
             color: "black",
-            padding: "0px",
+            padding: "5px",
             paddingLeft: "15px",
+            paddingBottom:"5px",
             margin: "0px",
           }}
         >
@@ -174,7 +176,7 @@ const Event = () => {
           marginTop: "0px",
           width: "80%",
           height: "1px",
-          backgroundColor: "black",
+          backgroundColor: "gray",
           border: "none",
         }}
       />

@@ -110,10 +110,11 @@ const Project = () => {
             color: "black",
             padding: "0px",
             paddingLeft: "15px",
+            paddingBottom: "2px",
             margin: "0px",
           }}
         >
-          TAL
+          Traitement de language
         </h5>
         <h5
           className="ProjectTitre"
@@ -123,6 +124,7 @@ const Project = () => {
             color: "black",
             padding: "0px",
             paddingLeft: "15px",
+            paddingBottom: "2px",
             margin: "0px",
           }}
         >
@@ -171,7 +173,7 @@ const Project = () => {
         style={{
           width: "80%",
           height: "1px",
-          backgroundColor: "black",
+          backgroundColor: "gray",
           border: "none",
         }}
       />

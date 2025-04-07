@@ -111,10 +111,11 @@ const Forum = () => {
             color: "black",
             padding: "5px",
             paddingLeft: "15px",
+            paddingBottom:"0px",
             margin: "0px",
           }}
         >
-          tal
+          Traitement de language
         </div>
         <p className="ForumText">
           TextContehhhhhhhhhhhhhhhhhhhh hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
@@ -126,7 +127,7 @@ const Forum = () => {
         style={{
           width: "80%",
           height: "1px",
-          backgroundColor: "black",
+          backgroundColor: "gray",
           border: "none",
         }}
       />

@@ -6,6 +6,7 @@ CREATE TABLE users (
     role VARCHAR(50) CHECK (role IN ('admin', 'moderator', 'user')) DEFAULT 'user',
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+ALTER TABLE users ADD COLUMN username VARCHAR(255) UNIQUE NOT NULL;
 
 CREATE TABLE forums (
     id SERIAL PRIMARY KEY,
@@ -197,3 +198,61 @@ CREATE TABLE course_files (
     FOREIGN KEY (course_id) REFERENCES courses(id) ON DELETE CASCADE,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
+
+
+
+-- Index on users table for quick lookups
+CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_users_username ON users(username);
+
+-- Indexing for faster search in posts and forums
+CREATE INDEX idx_posts_forum_id ON posts(forum_id);
+CREATE INDEX idx_posts_user_id ON posts(user_id);
+CREATE INDEX idx_forums_name ON forums(name);
+
+-- Indexing for events (faster queries on time-based data)
+CREATE INDEX idx_events_start_time ON events(start_time);
+CREATE INDEX idx_events_deadline ON events(deadline);
+
+-- Index on projects for filtering based on status
+CREATE INDEX idx_projects_status ON projects(status);
+
+-- Index for project participants & requests
+CREATE INDEX idx_project_participants_project_id ON project_participants(project_id);
+CREATE INDEX idx_project_requests_project_id ON project_requests(project_id);
+
+-- Index for NLP tools (since it relies on external links)
+CREATE INDEX idx_nlp_tools_name ON nlp_tools(title);
+
+-- Index for corpus and publications (frequently searched by title)
+CREATE INDEX idx_corpus_title ON corpus(title);
+CREATE INDEX idx_publication_title ON publication(title);
+
+-- Index for course categories
+CREATE INDEX idx_course_categories_name ON course_categories(name);
+
+-- Indexing evaluations for faster calculations of upvotes/downvotes
+CREATE INDEX idx_evaluations_target ON evaluations(entity_id, entity_type);
+CREATE INDEX idx_evaluations_user ON evaluations(user_id);
+
+-- Trigger to prevent project owners from being participants in their own projects
+
+
+CREATE OR REPLACE FUNCTION prevent_owner_as_participant()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF EXISTS (
+        SELECT 1 FROM projects 
+        WHERE id = NEW.project_id AND owner_id = NEW.participant_id
+    ) THEN
+        RAISE EXCEPTION 'Project owner cannot be a participant in their own project';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_no_owner_as_participant
+BEFORE INSERT OR UPDATE ON project_participants
+FOR EACH ROW EXECUTE FUNCTION prevent_owner_as_participant();
+
+

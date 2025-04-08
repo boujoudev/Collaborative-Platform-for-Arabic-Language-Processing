@@ -1,21 +1,23 @@
-const express = require('express')
-const Forum = require("../models/forumModels"); 
-
+const express = require('express');
 const router = express.Router();
+const ForumController = require('../controllers/ForumController');
 
+// Get all posts
+router.get('/', ForumController.getAllPosts);
 
-router.get('/', (req, res) => {
-    try {
-        const forums = Forum.getAllPosts();
-        res.status(200).json(forums);
-    }
-    catch (error) {
-        res.status(400).send(error.message);
-    }
-}
-)   
+// Get a single post by ID
+router.get('/:id', ForumController.getPostById);
 
-module.exports = router
+// Create a new post
+router.post('/', ForumController.createPost);
+
+// Update a post
+router.put('/:id', ForumController.updatePost);
+
+// Delete a post
+router.delete('/:id', ForumController.deletePost);
+
+module.exports = router;
 
 
 

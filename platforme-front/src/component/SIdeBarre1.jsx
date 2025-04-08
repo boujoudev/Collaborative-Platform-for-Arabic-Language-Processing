@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 const SIdeBarre1 = () => {
   const GoTo = useNavigate();
+  const GoToSideBarre2 = useNavigate();
   const [Home, setHome] = useState("true");
   const [Disc, setDisc] = useState("false");
   const [Event, setEvent] = useState("false");
@@ -18,6 +19,7 @@ const SIdeBarre1 = () => {
         className={Home}
         id="1Ops"
         onClick={() => { GoTo("/");
+          
           setHome("true");
           setDisc("false");
           setEvent("false");
@@ -34,6 +36,7 @@ const SIdeBarre1 = () => {
         className={Disc}
         id="1Ops"
         onClick={() => {GoTo("/Forum");
+         
           setHome("false");
           setDisc("true");
           setEvent("false");

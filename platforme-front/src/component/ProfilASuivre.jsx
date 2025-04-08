@@ -32,9 +32,15 @@ const ProfilASuivre = () => {
 
 const styles = {
   Container: {
+    display: "flex",
+    flexDirection:"row",
+    justifyContent:"flex-start",
+    width :"240px",
+    height :"67px",
     backgroundColor: "white",
-    padding: "5px",
+    padding: "0px",
     marginTop: "5px",
+    
   },
   card: {
     display: "flex",

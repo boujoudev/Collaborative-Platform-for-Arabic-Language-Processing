@@ -20,34 +20,34 @@ const SideBarre2Text = () => {
 
 const styles = {
   footer: {
-    fontSize: "10px",
+    fontSize: "8px",
     textAlign: "center",
     fontFamily: "Arial, sans-serif",
     color: "#333",
     padding: "20px",
   },
   title: {
-    fontSize: "10px",
+    fontSize: "8px",
     fontWeight: "bold",
     marginBottom: "10px",
   },
   description: {
-    fontSize: "10px",
+    fontSize: "8px",
     maxWidth: "600px",
     margin: "0 auto 15px",
     lineHeight: "1.5",
   },
   links: {
-    fontSize: "10px",
+    fontSize: "8px",
     marginBottom: "10px",
   },
   more: {
-    fontSize: "10px",
+    fontSize: "8px",
     fontWeight: "bold",
     marginBottom: "10px",
   },
   copyright: {
-    fontSize: "10px",
+    fontSize: "8px",
     color: "#666",
   },
 };

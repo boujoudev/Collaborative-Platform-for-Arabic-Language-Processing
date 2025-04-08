@@ -21,6 +21,11 @@ import EventPage from "./component/Event/EventPage";
 import ProjectPage from "./component/Project/ProjectPage";
 import SideBarre2Text from "./component/SideBarre2Text";
 import ProfilASuivre from "./component/ProfilASuivre";
+import ConfARejoindre from "./component/ConfARejoindre";
+import RecommondationProfilAsuivre from "./component/Recommandation/RecommondationProfilAsuivre.jsx";
+import RecomandationConfARejoindre from "./component/Recommandation/RecomandationConfARejoindre";
+import ToolAUtiliser from "./component/ToolAUtiliser.jsx";
+import RecomandationTools from "./component/Recommandation/RecomandationTools.jsx";
 
 function App() {
   return (
@@ -48,17 +53,11 @@ function App() {
         </Routes>
       </main>
       <aside className="aside2">
-        <ProfilASuivre />
         <Routes>
-          <Route path="/" element={<></>} />
-          <Route path="/HomeSideBarre2" element={<></>} />
-          <Route path="/ForumSideBarre2" element={<ForumPage />} />
-          <Route path="/EventSideBarre2" element={<EventPage />} />
-          <Route path="/ToolSideBarre2" element={<ToolPage />} />
-          {/* <Route path="/Project" element={<ProjectPage/>}/>
-            <Route path="/BiBlio" element={<h1>Event</h1>}/>
-            <Route path="/Corpus" element={<h1>Event</h1>}/>
-            <Route path="/Course" element={<h1>Event</h1>}/> */}
+          <Route path="/" element={<RecommondationProfilAsuivre />} />
+          <Route path="/Forum" element={<RecommondationProfilAsuivre />} />
+          <Route path="/Event" element={<RecomandationConfARejoindre />} />
+          <Route path="/Tool" element={<RecomandationTools/>} />
         </Routes>
         <SideBarre2Text />
       </aside>

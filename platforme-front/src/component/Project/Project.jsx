@@ -16,7 +16,7 @@ const Project = () => {
   };
   const handleDislike = () => {
     if (dislikedProject) {
-      setLikesProject(likesProject - 1);
+      setLikesProject(likesProject -1);
       setDisLikedProject(!dislikedProject);
     } else {
       setLikesProject(likesProject + 1);
@@ -29,7 +29,7 @@ const Project = () => {
       style={{
         marginBottom: "10px",
         borderRadius: "5px",
-        boxShadow: " 1px 1px 2px 2px rgb(181, 181, 190)",
+        boxShadow: " 1px 1px 2px 2px rgb(223, 223, 225)",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",

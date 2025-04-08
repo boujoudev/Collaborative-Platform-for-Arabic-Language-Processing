@@ -39,12 +39,12 @@ body {
 }
 
 .aside2 {
-  padding-top: 20px;
+  padding: 10px;
   grid-area: side2;
   background-color: rgb(254, 254, 254);
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: flex-start;
 }
 
@@ -88,7 +88,7 @@ main {
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
-  box-shadow: 1px 1px 2px 2px rgb(181, 181, 190);
+  box-shadow: 1px 1px 2px 2px rgb(223, 223, 225);
 }
 
 .false {
@@ -204,6 +204,10 @@ main {
 /* 
 page de signup */
 
+.labelText {
+  color: gray;
+}
+
 .SignUpPage {
   background-color: rgb(255, 255, 255);
   display: flex;
@@ -212,7 +216,7 @@ page de signup */
   justify-content: center;
   width: 450px;
   height: 500px;
-  border: 1px black solid;
+  border: 1px gray solid;
   border-radius: 15px;
   -webkit-border-radius: 15px;
   -moz-border-radius: 15px;
@@ -229,19 +233,61 @@ page de signup */
 .input {
   width: 400px;
   height: 30px;
+  padding-left: 5px;
   margin-top: 10px;
   margin-bottom: 10px;
   background-color: white;
-  border: 1px black solid;
-  border-radius: 10px;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -o-border-radius: 10px;
+  border: 1px gray solid;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
 }
 .input:focus {
   outline: none;
-  border: 2px black solid;
+}
+.Passworddd {
+  padding-left: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 400px;
+  height: 30px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: white;
+  border: 1px gray solid;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
+.inputPassword {
+  width: 345px;
+  height: 20px;
+  background-color: white;
+  border: none;
+}
+
+.inputPassword:focus {
+  outline: none;
+}
+
+.buttonShow {
+  width: 50px;
+  height: 20px;
+  background-color: white;
+  border: none;
+
+  color: rgb(3, 25, 81);
+}
+
+.buttonShow:hover {
+  color: rgb(20, 50, 124);
 }
 
 .ButtonCreateAccount {
@@ -287,11 +333,11 @@ page de signIn */
   width: 450px;
   height: 500px;
   border: 1px black solid;
-  border-radius: 15px;
-  -webkit-border-radius: 15px;
-  -moz-border-radius: 15px;
-  -ms-border-radius: 15px;
-  -o-border-radius: 15px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
 }
 
 .ButtonSignIn {
@@ -300,11 +346,11 @@ page de signIn */
   background-color: rgb(3, 25, 81);
   color: white;
   border: none;
-  border-radius: 20px;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  -ms-border-radius: 20px;
-  -o-border-radius: 20px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
 }
 
 .ButtonSignIn:hover {
@@ -330,11 +376,12 @@ page de signIn */
   width: 550px;
   height: 30px;
   border: 0px solid black;
-  border-radius: 20px;
-  -webkit-border-radius: 20px;
-  -moz-border-radius: 20px;
-  -ms-border-radius: 20px;
-  -o-border-radius: 20px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+  -webkit-border-radius: 10;
 }
 
 .AccueilInput:focus {
@@ -344,7 +391,7 @@ page de signIn */
 
 .AccueilEnTete {
   margin-bottom: 10px;
-  box-shadow: 1px 1px 2px 2px rgb(181, 181, 190);
+  box-shadow: 1px 1px 2px 2px rgb(223, 223, 225);
   padding: 5px;
   border: 0px solid black;
   border-radius: 10px;
@@ -390,7 +437,7 @@ Entet dyalha */
 .ForumEntet {
   background-color: white;
   margin-bottom: 10px;
-  box-shadow: 1px 1px 2px 2px rgb(181, 181, 190);
+  box-shadow: 1px 1px 2px 2px rgb(223, 223, 225);
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -408,7 +455,6 @@ Entet dyalha */
   height: auto;
   overflow: scroll;
   scrollbar-width: none;
-
 }
 
 /* ************************************************************************ */
@@ -420,7 +466,7 @@ Tools
 
 .ToolEntet {
   margin-bottom: 10px;
-  box-shadow: 1px 1px 2px 2px rgb(181, 181, 190);
+  box-shadow: 1px 1px 2px 2px rgb(223, 223, 225);
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -465,7 +511,7 @@ project
 
 .ProjectEntet {
   margin-bottom: 10px;
-  box-shadow: 1px 1px 2px 2px rgb(177, 177, 218);
+  box-shadow: 1px 1px 2px 2px rgb(223, 223, 225);
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -504,10 +550,9 @@ project
 event
  */
 
-
 .EventEntet {
   margin-bottom: 10px;
-  box-shadow: 1px 1px 2px 2px rgb(177, 177, 218);
+  box-shadow: 1px 1px 2px 2px rgb(223, 223, 225);
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -531,8 +576,7 @@ event
   background-color: rgb(154, 154, 154); /* Change la couleur au hover */
 }
 
-
-.No{
+.No {
   border: none;
   color: white;
   background-color: black;
@@ -550,7 +594,7 @@ event
   -o-border-radius: 5px;
 }
 
-.yes{
+.yes {
   border: none;
   color: white;
   background-color: rgb(28, 177, 14);
@@ -573,3 +617,43 @@ event
 /* 
 biblio
  */
+
+/* ************************************************************************ */
+/* ************************************************************************ */
+/* ************************************************************************ */
+/* 
+RecommondationProfilAsuivre  and RecomandationConfARejoindre and ToolAUtiliser
+ */
+
+.RecommondationProfilAsuivre {
+  box-shadow: 1px 1px 2px 2px rgb(223, 223, 225);
+  border-radius: 5px;
+  margin: 10px;
+  padding: 5px;
+}
+
+.RecomandationConfARejoindre {
+  box-shadow: 1px 1px 2px 2px rgb(223, 223, 225);
+  border-radius: 5px;
+  margin: 10px;
+  padding: 5px;
+}
+
+.ToolAUtiliser {
+  width: 230px;
+  height: 60px;
+  background: linear-gradient(to right, #3b82f6, #1e3a8a);
+  border-radius: 10px;
+  padding: 5px;
+  margin-top: 5px;
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  font-family: "Segoe UI", sans-serif;
+}
+
+.RecomandationTools {
+  box-shadow: 1px 1px 2px 2px rgb(223, 223, 225);
+  border-radius: 5px;
+  margin: 10px;
+  padding: 5px;
+}

@@ -1,64 +1,215 @@
-const Course = require('../models/courseModels.js');
+const { Course, User, CourseCategory, CourseFile } = require('../models');
 
-class CourseController {
-    // Get all courses
-    static async getAllCourses() {
-        try {
-            const courses = await Course.getAllCourses();
-            return courses;
-        } catch (error) {
-            throw new Error(`Error fetching courses: ${error.message}`);
-        }
+// Controller for handling course-related operations
+const courseController = {
+  // Get all courses
+  getAllCourses: async (req, res) => {
+    try {
+      const courses = await Course.findAll({
+        include: [
+          {
+            model: User,
+            as: 'creator',
+            attributes: ['id', 'username', 'full_name']
+          },
+          {
+            model: CourseCategory,
+            as: 'category'
+          }
+        ],
+        order: [['created_at', 'DESC']]
+      });
+
+      return res.status(200).json(courses);
+    } catch (error) {
+      console.error('Error fetching courses:', error);
+      return res.status(500).json({ message: 'Internal server error' });
     }
+  },
 
-    // Get course by ID
-    static async getCourseById(id) {
-        try {
-            const course = await Course.getCourseById(id);
-            if (!course) {
-                throw new Error('Course not found');
-            }
-            return course;
-        } catch (error) {
-            throw new Error(`Error fetching course: ${error.message}`);
-        }
+  // Get courses by category
+  getCoursesByCategory: async (req, res) => {
+    try {
+      const { categoryId } = req.params;
+      
+      const courses = await Course.findAll({
+        where: { category_id: categoryId },
+        include: [
+          {
+            model: User,
+            as: 'creator',
+            attributes: ['id', 'username', 'full_name']
+          },
+          {
+            model: CourseCategory,
+            as: 'category'
+          }
+        ],
+        order: [['created_at', 'DESC']]
+      });
+
+      return res.status(200).json(courses);
+    } catch (error) {
+      console.error('Error fetching courses by category:', error);
+      return res.status(500).json({ message: 'Internal server error' });
     }
+  },
 
-    // Create new course
-    static async createCourse(courseData) {
-        try {
-            const newCourse = await Course.createCourse(courseData);
-            return newCourse;
-        } catch (error) {
-            throw new Error(`Error creating course: ${error.message}`);
-        }
+  // Get a specific course by ID
+  getCourseById: async (req, res) => {
+    try {
+      const { id } = req.params;
+      
+      const course = await Course.findByPk(id, {
+        include: [
+          {
+            model: User,
+            as: 'creator',
+            attributes: ['id', 'username', 'full_name']
+          },
+          {
+            model: CourseCategory,
+            as: 'category'
+          },
+          {
+            model: CourseFile,
+            as: 'files'
+          }
+        ]
+      });
+
+      if (!course) {
+        return res.status(404).json({ message: 'Course not found' });
+      }
+
+      return res.status(200).json(course);
+    } catch (error) {
+      console.error('Error fetching course:', error);
+      return res.status(500).json({ message: 'Internal server error' });
     }
+  },
 
-    // Update course
-    static async updateCourse(id, courseData) {
-        try {
-            const updatedCourse = await Course.updateCourse(id, courseData);
-            if (!updatedCourse) {
-                throw new Error('Course not found');
-            }
-            return updatedCourse;
-        } catch (error) {
-            throw new Error(`Error updating course: ${error.message}`);
-        }
+  // Create a new course
+  createCourse: async (req, res) => {
+    try {
+      const { title, description, link, category_id } = req.body;
+      const user_id = req.user.id; // Assuming user is authenticated and available in req.user
+      
+      // Validate required fields
+      if (!title) {
+        return res.status(400).json({ message: 'Course title is required' });
+      }
+
+      if (!category_id) {
+        return res.status(400).json({ message: 'Course category is required' });
+      }
+
+      const newCourse = await Course.create({
+        title,
+        description,
+        link,
+        category_id,
+        user_id
+      });
+
+      // Fetch the created course with creator and category details
+      const course = await Course.findByPk(newCourse.id, {
+        include: [
+          {
+            model: User,
+            as: 'creator',
+            attributes: ['id', 'username', 'full_name']
+          },
+          {
+            model: CourseCategory,
+            as: 'category'
+          }
+        ]
+      });
+
+      return res.status(201).json(course);
+    } catch (error) {
+      console.error('Error creating course:', error);
+      return res.status(500).json({ message: 'Internal server error' });
     }
+  },
 
-    // Delete course
-    static async deleteCourse(id) {
-        try {
-            const result = await Course.deleteCourse(id);
-            if (!result) {
-                throw new Error('Course not found');
-            }
-            return result;
-        } catch (error) {
-            throw new Error(`Error deleting course: ${error.message}`);
-        }
+  // Update an existing course
+  updateCourse: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const { title, description, link, category_id } = req.body;
+      const user_id = req.user.id; // Assuming user is authenticated and available in req.user
+
+      // Find the course
+      const course = await Course.findByPk(id);
+
+      if (!course) {
+        return res.status(404).json({ message: 'Course not found' });
+      }
+
+      // Check if the user is the creator of the course
+      if (course.user_id !== user_id) {
+        return res.status(403).json({ message: 'Not authorized to update this course' });
+      }
+
+      // Update the course
+      await course.update({
+        title: title || course.title,
+        description: description !== undefined ? description : course.description,
+        link: link || course.link,
+        category_id: category_id || course.category_id
+      });
+
+      // Fetch the updated course with creator and category details
+      const updatedCourse = await Course.findByPk(id, {
+        include: [
+          {
+            model: User,
+            as: 'creator',
+            attributes: ['id', 'username', 'full_name']
+          },
+          {
+            model: CourseCategory,
+            as: 'category'
+          }
+        ]
+      });
+
+      return res.status(200).json(updatedCourse);
+    } catch (error) {
+      console.error('Error updating course:', error);
+      return res.status(500).json({ message: 'Internal server error' });
     }
-}
+  },
 
-module.exports = CourseController;
+  // Delete a course
+  deleteCourse: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const user_id = req.user.id; // Assuming user is authenticated and available in req.user
+
+      // Find the course
+      const course = await Course.findByPk(id);
+
+      if (!course) {
+        return res.status(404).json({ message: 'Course not found' });
+      }
+
+      // Check if the user is the creator of the course
+      if (course.user_id !== user_id) {
+        return res.status(403).json({ message: 'Not authorized to delete this course' });
+      }
+
+      // Delete the course
+      await course.destroy();
+
+      return res.status(200).json({ message: 'Course deleted successfully' });
+    } catch (error) {
+      console.error('Error deleting course:', error);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+  }
+};
+
+module.exports = courseController;

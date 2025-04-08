@@ -1,23 +1,49 @@
 const express = require('express');
 const router = express.Router();
-const UserController = require('../controllers/UserController');
+const userController = require('../controllers/userController');
+const { authenticate, isAdmin, isModeratorOrAdmin } = require('../middlewares/authMiddleware');
 
+// Public routes
+// Register a new user
+// POST /api/users/register
+router.post('/register', userController.register);
+
+// Login user
+// POST /api/users/login
+router.post('/login', userController.login);
+
+// Get user by ID (public profile)
+// GET /api/users/:id
+router.get('/:id', userController.getUserById);
+
+// Protected routes (require authentication)
+// Get current user profile
+// GET /api/users/profile
+router.get('/profile', authenticate, userController.getProfile);
+
+// Update user profile
+// PUT /api/users/profile
+router.put('/profile', authenticate, userController.updateProfile);
+
+// Change password
+// PUT /api/users/change-password
+router.put('/change-password', authenticate, userController.changePassword);
+
+// Delete own account
+// DELETE /api/users/:id
+router.delete('/:id', authenticate, userController.deleteUser);
+
+// Admin routes
 // Get all users
-router.get('/', UserController.getAllUsers);
+// GET /api/users
+router.get('/', authenticate, isAdmin, userController.getAllUsers);
 
-// Get a single user by ID
-router.get('/:id', UserController.getUserById);
+// Update user role
+// PUT /api/users/:id/role
+router.put('/:id/role', authenticate, isAdmin, userController.updateUserRole);
 
-// Create a new user
-router.post('/', UserController.createUser);
-
-// Update a user
-router.put('/:id', UserController.updateUser);
-
-// Delete a user
-router.delete('/:id', UserController.deleteUser);
-
-// User authentication
-router.post('/login', UserController.authenticateUser);
+// Toggle user certification
+// PUT /api/users/:id/certification
+router.put('/:id/certification', authenticate, isAdmin, userController.toggleCertification);
 
 module.exports = router;

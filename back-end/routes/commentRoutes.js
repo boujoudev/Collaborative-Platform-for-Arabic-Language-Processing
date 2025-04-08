@@ -1,20 +1,28 @@
 const express = require('express');
 const router = express.Router();
-const CommentController = require('../controllers/CommentController');
+const commentController = require('../controllers/commentController');
 
-// Get all comments
-router.get('/', CommentController.getAllComments);
+// Middleware for authentication (to be implemented)
+const { authenticate } = require('../middlewares/authMiddleware');
 
-// Get a single comment by ID
-router.get('/:id', CommentController.getCommentById);
+// Get all comments for a specific entity (post, project, event, etc.)
+// GET /api/comments/:entityType/:entityId
+router.get('/:entityType/:entityId', commentController.getCommentsByEntity);
 
-// Create a new comment
-router.post('/', CommentController.createComment);
+// Get a specific comment by ID
+// GET /api/comments/:id
+router.get('/:id', commentController.getCommentById);
 
-// Update a comment
-router.put('/:id', CommentController.updateComment);
+// Create a new comment (requires authentication)
+// POST /api/comments
+router.post('/', authenticate, commentController.createComment);
 
-// Delete a comment
-router.delete('/:id', CommentController.deleteComment);
+// Update an existing comment (requires authentication)
+// PUT /api/comments/:id
+router.put('/:id', authenticate, commentController.updateComment);
+
+// Delete a comment (requires authentication)
+// DELETE /api/comments/:id
+router.delete('/:id', authenticate, commentController.deleteComment);
 
 module.exports = router;

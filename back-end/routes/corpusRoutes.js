@@ -1,20 +1,28 @@
 const express = require('express');
 const router = express.Router();
-const CorpusController = require('../controllers/CorpusController');
+const corpusController = require('../controllers/corpusController');
 
-// Get all corpuses
-router.get('/', CorpusController.getAllCorpuses);
+// Middleware for authentication
+const { authenticate } = require('../middlewares/authMiddleware');
 
-// Get a single corpus by ID
-router.get('/:id', CorpusController.getCorpusById);
+// Get all corpora
+// GET /api/corpus
+router.get('/', corpusController.getAllCorpora);
 
-// Create a new corpus
-router.post('/', CorpusController.createCorpus);
+// Get a specific corpus by ID
+// GET /api/corpus/:id
+router.get('/:id', corpusController.getCorpusById);
 
-// Update a corpus
-router.put('/:id', CorpusController.updateCorpus);
+// Create a new corpus (requires authentication)
+// POST /api/corpus
+router.post('/', authenticate, corpusController.createCorpus);
 
-// Delete a corpus
-router.delete('/:id', CorpusController.deleteCorpus);
+// Update an existing corpus (requires authentication)
+// PUT /api/corpus/:id
+router.put('/:id', authenticate, corpusController.updateCorpus);
+
+// Delete a corpus (requires authentication)
+// DELETE /api/corpus/:id
+router.delete('/:id', authenticate, corpusController.deleteCorpus);
 
 module.exports = router;

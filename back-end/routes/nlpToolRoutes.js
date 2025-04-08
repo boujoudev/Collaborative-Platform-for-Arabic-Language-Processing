@@ -1,20 +1,28 @@
 const express = require('express');
 const router = express.Router();
-const NLPToolController = require('../controllers/NLPToolController');
+const nlpToolController = require('../controllers/nlpToolController');
+
+// Middleware for authentication
+const { authenticate } = require('../middlewares/authMiddleware');
 
 // Get all NLP tools
-router.get('/', NLPToolController.getAllNLPTools);
+// GET /api/nlp-tools
+router.get('/', nlpToolController.getAllTools);
 
-// Get a single NLP tool by ID
-router.get('/:id', NLPToolController.getNLPToolById);
+// Get a specific NLP tool by ID
+// GET /api/nlp-tools/:id
+router.get('/:id', nlpToolController.getToolById);
 
-// Create a new NLP tool
-router.post('/', NLPToolController.createNLPTool);
+// Create a new NLP tool (requires authentication)
+// POST /api/nlp-tools
+router.post('/', authenticate, nlpToolController.createTool);
 
-// Update an NLP tool
-router.put('/:id', NLPToolController.updateNLPTool);
+// Update an existing NLP tool (requires authentication)
+// PUT /api/nlp-tools/:id
+router.put('/:id', authenticate, nlpToolController.updateTool);
 
-// Delete an NLP tool
-router.delete('/:id', NLPToolController.deleteNLPTool);
+// Delete an NLP tool (requires authentication)
+// DELETE /api/nlp-tools/:id
+router.delete('/:id', authenticate, nlpToolController.deleteTool);
 
 module.exports = router;

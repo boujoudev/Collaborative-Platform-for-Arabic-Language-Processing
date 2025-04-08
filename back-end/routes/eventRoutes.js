@@ -1,20 +1,40 @@
 const express = require('express');
 const router = express.Router();
-const EventController = require('../controllers/EventController.js');
+const eventController = require('../controllers/eventController');
+
+// Middleware for authentication
+const { authenticate } = require('../middlewares/authMiddleware');
 
 // Get all events
-router.get('/', EventController.getAllEvents);
+// GET /api/events
+router.get('/', eventController.getAllEvents);
 
-// Get event by ID
-router.get('/:id', EventController.getEventById);
+// Get upcoming events
+// GET /api/events/upcoming
+router.get('/upcoming', eventController.getUpcomingEvents);
 
-// Create new event
-router.post('/', EventController.createEvent);
+// Get a specific event by ID
+// GET /api/events/:id
+router.get('/:id', eventController.getEventById);
 
-// Update event
-router.put('/:id', EventController.updateEvent);
+// Create a new event (requires authentication)
+// POST /api/events
+router.post('/', authenticate, eventController.createEvent);
 
-// Delete event
-router.delete('/:id', EventController.deleteEvent);
+// Update an existing event (requires authentication)
+// PUT /api/events/:id
+router.put('/:id', authenticate, eventController.updateEvent);
+
+// Delete an event (requires authentication)
+// DELETE /api/events/:id
+router.delete('/:id', authenticate, eventController.deleteEvent);
+
+// Express interest in an event (requires authentication)
+// POST /api/events/:id/interest
+router.post('/:id/interest', authenticate, eventController.expressInterest);
+
+// Withdraw interest from an event (requires authentication)
+// DELETE /api/events/:id/interest
+router.delete('/:id/interest', authenticate, eventController.withdrawInterest);
 
 module.exports = router;

@@ -4,6 +4,7 @@ body {
   width: 100vw;
   display: flex;
   font-family: Arial, sans-serif;
+  background-color: white;
 }
 .grid-container {
   height: 100vh;

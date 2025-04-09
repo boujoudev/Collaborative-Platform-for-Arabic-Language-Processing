@@ -41,6 +41,7 @@ function App() {
         <SIdeBarre1 />
       </aside>
       <main>
+        
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/Forum" element={<ForumPage />} />

@@ -26,6 +26,7 @@ import RecommondationProfilAsuivre from "./component/Recommandation/Recommondati
 import RecomandationConfARejoindre from "./component/Recommandation/RecomandationConfARejoindre";
 import ToolAUtiliser from "./component/ToolAUtiliser.jsx";
 import RecomandationTools from "./component/Recommandation/RecomandationTools.jsx";
+import ProfilSideBarre from "./component/Profil/ProfilSideBarre.jsx";
 
 function App() {
   return (
@@ -41,7 +42,6 @@ function App() {
         <SIdeBarre1 />
       </aside>
       <main>
-        
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/Forum" element={<ForumPage />} />
@@ -59,6 +59,7 @@ function App() {
           <Route path="/Forum" element={<RecommondationProfilAsuivre />} />
           <Route path="/Event" element={<RecomandationConfARejoindre />} />
           <Route path="/Tool" element={<RecomandationTools/>} />
+          <Route path="/Profil" element={<ProfilSideBarre/>} />
         </Routes>
         <SideBarre2Text />
       </aside>

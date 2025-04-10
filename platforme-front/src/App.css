@@ -456,6 +456,10 @@ Entet dyalha */
   height: auto;
   overflow: scroll;
   scrollbar-width: none;
+  word-wrap: break-word;     /* Permet de couper les mots trop longs */
+  white-space: normal;       /* Autorise le retour à la ligne */
+  font-family: Arial, sans-serif;
+  margin-top: 0;
 }
 
 /* ************************************************************************ */
@@ -657,4 +661,25 @@ RecommondationProfilAsuivre  and RecomandationConfARejoindre and ToolAUtiliser
   border-radius: 5px;
   margin: 10px;
   padding: 5px;
+}
+
+/* ************************************************************************ */
+/* ************************************************************************ */
+/* ************************************************************************ */
+/* 
+Profil
+ */
+.ProfilSideBarre {
+  display: flex;
+  margin: 10px;
+  flex-direction: column;
+  margin-left: 0px;
+  width: 100%;
+  border: 0px solid black;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  box-shadow: 1px 1px 2px 2px rgb(223, 223, 225);
 }

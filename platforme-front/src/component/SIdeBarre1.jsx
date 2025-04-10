@@ -3,7 +3,6 @@ import { NavLink, useNavigate } from "react-router-dom";
 
 const SIdeBarre1 = () => {
   const GoTo = useNavigate();
-  const GoToSideBarre2 = useNavigate();
   const [Home, setHome] = useState("true");
   const [Disc, setDisc] = useState("false");
   const [Event, setEvent] = useState("false");

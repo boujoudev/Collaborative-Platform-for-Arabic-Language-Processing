@@ -118,11 +118,11 @@ const Forum = () => {
           Traitement de language
         </div>
         <p className="ForumText">
-          TextContehhhhhhhhhhhhhhhhhhhh hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
-          hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh hhhhhhhhhhhhhhhhhhhhhhhhhhhh
-          hhhhhhhhhhhnt
-          jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
-          jjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+          TextConteh hhhhhhhhhhh hhhhhhhh hhhhh hhhhhhhhh hhhhhhhhh hhhhhhhh
+          hhhhhhhh hhhhhhh hhhhhhhhhh hhhhhhhh hhhhhhh hhhhhhhhhhh hhhhhhhhhh
+          hhhhhhhhhh hnt hhh dqsd a zdazd a d zedaz azd azd az dazd azda e fz d az a d a zd azfazdazd
+          jjjjjjj jjjjjj jjjjjjjjjjjjjjjjjjjjjjjjjjjjj
+          jjjjjjjjjjj jjjjjj jjjjjjjj jjjjjjjjjjj
         </p>
       </div>
       <hr

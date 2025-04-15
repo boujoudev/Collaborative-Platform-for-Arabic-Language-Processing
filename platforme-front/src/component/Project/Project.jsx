@@ -16,7 +16,7 @@ const Project = () => {
   };
   const handleDislike = () => {
     if (dislikedProject) {
-      setLikesProject(likesProject -1);
+      setLikesProject(likesProject - 1);
       setDisLikedProject(!dislikedProject);
     } else {
       setLikesProject(likesProject + 1);
@@ -29,7 +29,7 @@ const Project = () => {
       style={{
         marginBottom: "10px",
         borderRadius: "5px",
-        boxShadow: " 1px 1px 2px 2px rgb(223, 223, 225)",
+        boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -139,6 +139,7 @@ const Project = () => {
               padding: "0px",
               paddingLeft: "15px",
               margin: "0px",
+              fontSize: "12px",
             }}
           >
             Status : <span className={x}>{x}</span>
@@ -151,6 +152,7 @@ const Project = () => {
               padding: "0px",
               paddingLeft: "15px",
               margin: "0px",
+              fontSize: "12px",
             }}
           >
             Responsible : <span>{}</span>
@@ -163,9 +165,20 @@ const Project = () => {
               padding: "0px",
               paddingLeft: "15px",
               margin: "0px",
+              fontSize: "12px",
             }}
           >
-            Project description : <span>{}</span>
+            Project description :{" "}
+            <span
+              style={{
+                wordWrap: "break-word",
+                whiteSpace: "normal",
+              }}
+            >
+              ddddddddddddddddddddd dddd dddd d dddd d dd ddddd d ddddd d d d d
+              d fffffffffffff ffffffffffffff ffffffffffffff f f ffffffffffffff f
+              fffffffff
+            </span>
           </h6>
         </div>
       </div>

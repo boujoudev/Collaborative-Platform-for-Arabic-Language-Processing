@@ -27,6 +27,8 @@ import RecomandationConfARejoindre from "./component/Recommandation/Recomandatio
 import ToolAUtiliser from "./component/ToolAUtiliser.jsx";
 import RecomandationTools from "./component/Recommandation/RecomandationTools.jsx";
 import ProfilSideBarre from "./component/Profil/ProfilSideBarre.jsx";
+import ProfilEntet from "./component/Profil/ProfilEntet.jsx";
+import ButtonForConnectUser from "./component/ButtonForConnectUser.jsx";
 
 function App() {
   return (
@@ -36,7 +38,7 @@ function App() {
         <BarreDERecherche />
       </div>
       <div className="otherButton">
-        <SignInSignUp />
+        <ButtonForConnectUser/>
       </div>
       <aside className="aside1">
         <SIdeBarre1 />
@@ -51,6 +53,7 @@ function App() {
           <Route path="/BiBlio" element={<h1>Event</h1>} />
           <Route path="/Corpus" element={<h1>Event</h1>} />
           <Route path="/Course" element={<h1>Event</h1>} />
+          <Route path="/Profil" element={<ProfilEntet />} />
         </Routes>
       </main>
       <aside className="aside2">
@@ -58,8 +61,8 @@ function App() {
           <Route path="/" element={<RecommondationProfilAsuivre />} />
           <Route path="/Forum" element={<RecommondationProfilAsuivre />} />
           <Route path="/Event" element={<RecomandationConfARejoindre />} />
-          <Route path="/Tool" element={<RecomandationTools/>} />
-          <Route path="/Profil" element={<ProfilSideBarre/>} />
+          <Route path="/Tool" element={<RecomandationTools />} />
+          <Route path="/Profil" element={<ProfilSideBarre />} />
         </Routes>
         <SideBarre2Text />
       </aside>

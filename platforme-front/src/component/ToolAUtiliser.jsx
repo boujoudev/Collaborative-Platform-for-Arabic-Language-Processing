@@ -9,12 +9,22 @@ const ToolAUtiliser = () => {
           fontSize: "12px",
           padding: "0px",
           margin: "0px",
+          wordWrap: "break-word",
+          whiteSpace: "normal",
         }}
       >
         Analyse Morphologique et Syntaxique
       </h5>
-      <p style={{ fontSize: "10px", padding: "0px", margin: "0px" }}>
-        HMM (Hidden Markov Model)
+      <p
+        style={{
+          fontSize: "10px",
+          padding: "0px",
+          margin: "0px",
+          wordWrap: "break-word",
+          whiteSpace: "normal",
+        }}
+      >
+        HMM ( Hidden Markov Model ) fffffffffffffffffff fff ffffffff fff ffffff 
       </p>
       <a
         style={{

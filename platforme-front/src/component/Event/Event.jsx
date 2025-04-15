@@ -13,12 +13,9 @@ const Event = () => {
     if (clickInterested) {
       setinterested("yes");
       setinterestedButton("interested");
-    }else{
-        
+    } else {
       setinterested("No");
       setinterestedButton("to interest");
-     
-
     }
   };
 
@@ -46,7 +43,7 @@ const Event = () => {
       style={{
         marginBottom: "10px",
         borderRadius: "5px",
-        boxShadow:" 1px 1px 2px 2px rgb(223, 223, 225)",
+        boxShadow: " 0 2px 5px rgba(0, 0, 0, 0.1)",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -111,11 +108,14 @@ const Event = () => {
           <i class="fa-solid fa-ellipsis"></i>
         </button>
       </div>
-      <div className="EventContent" style={{
+      <div
+        className="EventContent"
+        style={{
           overflow: "hidden",
           textOverflow: "ellipsis",
           whiteSpace: "nowrap",
-        }}>
+        }}
+      >
         <h5
           className="EventTitre"
           style={{
@@ -125,7 +125,7 @@ const Event = () => {
             color: "black",
             padding: "5px",
             paddingLeft: "15px",
-            paddingBottom:"5px",
+            paddingBottom: "5px",
             margin: "0px",
           }}
         >
@@ -140,6 +140,7 @@ const Event = () => {
               padding: "0px",
               paddingLeft: "15px",
               margin: "0px",
+              fontSize: "12px",
             }}
           >
             Deadline : <span>{}</span>
@@ -152,6 +153,7 @@ const Event = () => {
               padding: "0px",
               paddingLeft: "15px",
               margin: "0px",
+              fontSize: "12px",
             }}
           >
             Location : <span>{}</span>
@@ -164,11 +166,16 @@ const Event = () => {
               padding: "0px",
               paddingLeft: "15px",
               margin: "0px",
+              wordWrap: "break-word",
+              whiteSpace: "normal",
+              fontSize: "12px",
             }}
           >
             Description : <span>{}</span>
           </h6>
-          <button className={interested} onClick={changeButtonValue}><i class="fa-solid fa-bell"></i> {interestedButton}</button>
+          <button className={interested} onClick={changeButtonValue}>
+            <i class="fa-solid fa-bell"></i> {interestedButton}
+          </button>
         </div>
       </div>
       <hr

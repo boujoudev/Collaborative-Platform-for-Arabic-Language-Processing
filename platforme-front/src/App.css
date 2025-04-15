@@ -40,18 +40,18 @@ body {
 }
 
 .aside2 {
-  padding: 10px;
+  padding-top: 20px;
   grid-area: side2;
   background-color: rgb(254, 254, 254);
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: flex-start;
 }
 
 main {
   grid-area: main;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(254, 254, 254);
   color: rgb(4, 7, 85);
   margin: 10px;
   padding: 10px;
@@ -70,7 +70,7 @@ main {
 .aside1 {
   padding-top: 20px;
   grid-area: side1;
-  background-color: rgb(255, 255, 255);
+  background-color: rgb(254, 254, 254);
   display: flex;
   flex-direction: row;
   align-items: start;
@@ -89,7 +89,7 @@ main {
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
-  box-shadow: 1px 1px 2px 2px rgb(223, 223, 225);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .false {
@@ -392,7 +392,7 @@ page de signIn */
 
 .AccueilEnTete {
   margin-bottom: 10px;
-  box-shadow: 1px 1px 2px 2px rgb(223, 223, 225);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   padding: 5px;
   border: 0px solid black;
   border-radius: 10px;
@@ -438,7 +438,7 @@ Entet dyalha */
 .ForumEntet {
   background-color: white;
   margin-bottom: 10px;
-  box-shadow: 1px 1px 2px 2px rgb(223, 223, 225);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -456,8 +456,8 @@ Entet dyalha */
   height: auto;
   overflow: scroll;
   scrollbar-width: none;
-  word-wrap: break-word;     /* Permet de couper les mots trop longs */
-  white-space: normal;       /* Autorise le retour à la ligne */
+  word-wrap: break-word; /* Permet de couper les mots trop longs */
+  white-space: normal; /* Autorise le retour à la ligne */
   font-family: Arial, sans-serif;
   margin-top: 0;
 }
@@ -471,7 +471,7 @@ Tools
 
 .ToolEntet {
   margin-bottom: 10px;
-  box-shadow: 1px 1px 2px 2px rgb(223, 223, 225);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -505,6 +505,9 @@ Tools
   height: auto;
   overflow: scroll;
   scrollbar-width: none;
+  word-wrap: break-word; /* Permet de couper les mots trop longs */
+  white-space: normal; /* Autorise le retour à la ligne */
+  font-family: Arial, sans-serif;
 }
 
 /* ************************************************************************ */
@@ -516,7 +519,7 @@ project
 
 .ProjectEntet {
   margin-bottom: 10px;
-  box-shadow: 1px 1px 2px 2px rgb(223, 223, 225);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -557,7 +560,7 @@ event
 
 .EventEntet {
   margin-bottom: 10px;
-  box-shadow: 1px 1px 2px 2px rgb(223, 223, 225);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
@@ -631,17 +634,19 @@ RecommondationProfilAsuivre  and RecomandationConfARejoindre and ToolAUtiliser
  */
 
 .RecommondationProfilAsuivre {
-  box-shadow: 1px 1px 2px 2px rgb(223, 223, 225);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-  margin: 10px;
   padding: 5px;
 }
 
 .RecomandationConfARejoindre {
-  box-shadow: 1px 1px 2px 2px rgb(223, 223, 225);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-  margin: 10px;
   padding: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
 }
 
 .ToolAUtiliser {
@@ -657,9 +662,9 @@ RecommondationProfilAsuivre  and RecomandationConfARejoindre and ToolAUtiliser
 }
 
 .RecomandationTools {
-  box-shadow: 1px 1px 2px 2px rgb(223, 223, 225);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
-  margin: 10px;
+
   padding: 5px;
 }
 
@@ -671,15 +676,121 @@ Profil
  */
 .ProfilSideBarre {
   display: flex;
-  margin: 10px;
   flex-direction: column;
-  margin-left: 0px;
-  width: 100%;
+
+  width: 90%;
   border: 0px solid black;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   -ms-border-radius: 5px;
   -o-border-radius: 5px;
-  box-shadow: 1px 1px 2px 2px rgb(223, 223, 225);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+/* ************************************************************************ */
+/* ************************************************************************ */
+/* ************************************************************************ */
+/* 
+Profil Entet
+ */
+/* Conteneur principal */
+.profil-container {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+/* Bannière */
+.banniere {
+  height: 70px;
+  background: linear-gradient(to right, #2980b9, #1e3c72);
+  position: relative;
+}
+
+/* Bouton modifier */
+.btn-modifier {
+  position: absolute;
+  font-size: 10px;
+  top: 15px;
+  right: 15px;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 8px 12px;
+  cursor: pointer;
+  width: 100px;
+}
+
+/* Contenu */
+.contenu {
+  background-color: white;
+  padding: 20px;
+  padding-top: 30px;
+  position: relative;
+}
+
+/* Photo de profil */
+.photo-container {
+  position: absolute;
+  top: -50px;
+  left: 20px;
+  border: 4px solid white;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  background-color: #111;
+}
+
+.photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background-color: #111;
+}
+
+/* Informations */
+.info {
+  margin-top: 5px;
+}
+
+.info h1 {
+  font-size: 14px;
+  margin-top: 5px;
+  padding: 0px;
+  word-wrap: break-word; /* Permet de couper les mots trop longs */
+  white-space: normal;
+}
+
+.info p {
+  color: #555;
+  margin-top: 5px;
+  font-size: 12px;
+  padding: 0px;
+  word-wrap: break-word; /* Permet de couper les mots trop longs */
+  white-space: normal;
+}
+
+/* Lien coordonnées */
+.coordonnees {
+  display: block;
+  color: #2980b9;
+  margin-top: 5px;
+  text-decoration: none;
+  font-size: 12px;
+}
+
+/* Statistiques */
+.stats {
+  margin-top: 15px;
+  color: #555;
+  font-size: 10px;
+}
+
+.separateur {
+  margin: 0 10px;
 }

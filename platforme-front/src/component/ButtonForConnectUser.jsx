@@ -1,11 +1,29 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 const ButtonForConnectUser = () => {
   const GoTo = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef(null);
+
+  // Gérer le clic à l'extérieur
+  useEffect(() => {
+    function handleClickOutside(event) {
+           // vérifie si le clic est à l’intérieur du menu.
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    }
+    // écoute tous les clics sur la page.
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // permet de nettoyer l'écouteur quand le composant est démonté (bon pour les performances).
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
   return (
     <div
+      ref={menuRef}
       style={{
         padding: "10px",
         display: "flex",

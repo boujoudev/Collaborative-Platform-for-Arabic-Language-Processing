@@ -171,7 +171,7 @@ const Event = () => {
               fontSize: "12px",
             }}
           >
-            Description : <span>{}</span>
+            Description : <span>{""}</span>
           </h6>
           <button className={interested} onClick={changeButtonValue}>
             <i class="fa-solid fa-bell"></i> {interestedButton}

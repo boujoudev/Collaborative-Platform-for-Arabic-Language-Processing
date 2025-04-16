@@ -180,6 +180,9 @@ const Project = () => {
               fffffffff
             </span>
           </h6>
+          <button className="projetDetail">
+            <i class="fa-solid fa-link"></i> Project details
+          </button>
         </div>
       </div>
       <hr

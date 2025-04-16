@@ -29,6 +29,8 @@ import RecomandationTools from "./component/Recommandation/RecomandationTools.js
 import ProfilSideBarre from "./component/Profil/ProfilSideBarre.jsx";
 import ProfilEntet from "./component/Profil/ProfilEntet.jsx";
 import ButtonForConnectUser from "./component/ButtonForConnectUser.jsx";
+import ProfilInformation from "./component/Profil/ProfilInformation.jsx";
+import InformationPage from "./component/Profil/InformationPage.jsx";
 
 function App() {
   return (
@@ -38,7 +40,7 @@ function App() {
         <BarreDERecherche />
       </div>
       <div className="otherButton">
-        <ButtonForConnectUser/>
+        <ButtonForConnectUser />
       </div>
       <aside className="aside1">
         <SIdeBarre1 />
@@ -53,7 +55,7 @@ function App() {
           <Route path="/BiBlio" element={<h1>Event</h1>} />
           <Route path="/Corpus" element={<h1>Event</h1>} />
           <Route path="/Course" element={<h1>Event</h1>} />
-          <Route path="/Profil" element={<ProfilEntet />} />
+          <Route path="/Profil" element={<InformationPage />} />
         </Routes>
       </main>
       <aside className="aside2">

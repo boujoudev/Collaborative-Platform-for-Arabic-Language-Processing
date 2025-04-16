@@ -1,8 +1,9 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-
+import { useState } from "react";
 const ButtonForConnectUser = () => {
   const GoTo = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <div
       style={{
@@ -50,11 +51,11 @@ const ButtonForConnectUser = () => {
           border: "none",
           cursor: "pointer",
         }}
-        onClick={() => {
-          GoTo("/Profil");
-        }}
       >
         <img
+          onClick={() => {
+            GoTo("/Profil");
+          }}
           style={{
             width: "20px",
             height: "20px",
@@ -65,6 +66,9 @@ const ButtonForConnectUser = () => {
           className="photo"
         />
         <p
+          onClick={() => {
+            GoTo("/Profil");
+          }}
           style={{
             margin: "5px",
             fontSize: "12px",
@@ -74,7 +78,42 @@ const ButtonForConnectUser = () => {
         >
           Aymene Meghni
         </p>
-        <i class="fa-solid fa-chevron-down"></i>
+        {isOpen ? (
+          <i
+            class="fa-solid fa-chevron-up"
+            onClick={() => {
+              setIsOpen(!isOpen);
+            }}
+          ></i>
+        ) : (
+          <i
+            class="fa-solid fa-chevron-down"
+            onClick={() => {
+              setIsOpen(!isOpen);
+            }}
+          ></i>
+        )}
+
+        {isOpen && (
+          <div className="profile-menu">
+            <span
+              style={{ color: " rgb(3, 25, 81)", marginBottom: "5px" }}
+              onClick={() => {
+                GoTo("/Profil");
+              }}
+            >
+              <i class="fa-solid fa-user"></i> Mon profile
+            </span>
+
+            <span style={{ color: " rgb(3, 25, 81)", marginBottom: "5px" }}>
+              <i class="fa-solid fa-gear"></i> Paramètres
+            </span>
+
+            <span style={{ color: " rgb(220, 15, 15)", marginBottom: "5px" }}>
+              <i class="fa-solid fa-right-from-bracket"></i> Déconnexion
+            </span>
+          </div>
+        )}
       </button>
     </div>
   );

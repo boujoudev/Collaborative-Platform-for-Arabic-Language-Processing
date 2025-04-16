@@ -1,16 +1,19 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const ProfilSideBarre = () => {
   const [Info, setInfo] = useState("true");
   const [Post, setPost] = useState("false");
   const [Project, setProject] = useState("false");
   const [Activities, setActivities] = useState("false");
+  const GoTo = useNavigate();
   return (
     <div className="ProfilSideBarre">
       <button
         className={Info}
         id="1Ops"
         onClick={() => {
+          GoTo("/Profil");
           setInfo("true");
           setPost("false");
           setProject("false");

@@ -7,13 +7,14 @@ const ProfilSideBarre = () => {
   const [Project, setProject] = useState("false");
   const [Activities, setActivities] = useState("false");
   const GoTo = useNavigate();
+
   return (
     <div className="ProfilSideBarre">
       <button
         className={Info}
         id="1Ops"
         onClick={() => {
-          GoTo("/Profil");
+          GoTo("/Profil/Information");
           setInfo("true");
           setPost("false");
           setProject("false");
@@ -38,6 +39,7 @@ const ProfilSideBarre = () => {
         className={Project}
         id="1Ops"
         onClick={() => {
+          GoTo("/Profil/Project");
           setInfo("false");
           setPost("false");
           setProject("true");
@@ -50,6 +52,7 @@ const ProfilSideBarre = () => {
         className={Activities}
         id="1Ops"
         onClick={() => {
+          GoTo("/Profil/Activities");
           setInfo("false");
           setPost("false");
           setProject("false");

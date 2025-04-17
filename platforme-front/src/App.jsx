@@ -31,6 +31,8 @@ import ProfilEntet from "./component/Profil/ProfilEntet.jsx";
 import ButtonForConnectUser from "./component/ButtonForConnectUser.jsx";
 import ProfilInformation from "./component/Profil/ProfilInformation.jsx";
 import InformationPage from "./component/Profil/InformationPage.jsx";
+import ProfilProject from "./component/Profil/ProfilProject.jsx";
+import ProfilActivité from "./component/Profil/ProfilActivité.jsx";
 
 function App() {
   return (
@@ -56,6 +58,9 @@ function App() {
           <Route path="/Corpus" element={<h1>Event</h1>} />
           <Route path="/Course" element={<h1>Event</h1>} />
           <Route path="/Profil" element={<InformationPage />} />
+          <Route path="/Profil/Information" element={<InformationPage />} />
+          <Route path="/Profil/Project" element={<ProfilProject />} />
+          <Route path="/Profil/Activities" element={<ProfilActivité />} />
         </Routes>
       </main>
       <aside className="aside2">
@@ -65,6 +70,9 @@ function App() {
           <Route path="/Event" element={<RecomandationConfARejoindre />} />
           <Route path="/Tool" element={<RecomandationTools />} />
           <Route path="/Profil" element={<ProfilSideBarre />} />
+          <Route path="/Profil/Information" element={<ProfilSideBarre />} />
+          <Route path="/Profil/Project" element={<ProfilSideBarre />} />
+          <Route path="/Profil/Activities" element={<ProfilSideBarre />} />
         </Routes>
         <SideBarre2Text />
       </aside>

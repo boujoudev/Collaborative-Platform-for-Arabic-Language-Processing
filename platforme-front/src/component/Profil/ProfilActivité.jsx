@@ -6,13 +6,13 @@ const ProfilActivité = () => {
   return (
     <div>
       <ProfilEntet />
-      <div className="container">
-        <h2 className="title">Activité récente</h2>
-        <p className="subtitle">
+      <div className="containerAct">
+        <h2 className="titleAct">Activité récente</h2>
+        <p className="subtitleAct">
           Vos contributions et interactions sur la plateforme
         </p>
 
-        <div className="activityList">
+        <div className="activityListAct">
           <Activité
             Title={"Vous avez publié un nouveau sujet dans le forum"}
             Title1={"Avancées en traitement des dialectes maghrébins"}

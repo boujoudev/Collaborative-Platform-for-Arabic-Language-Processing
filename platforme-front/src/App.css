@@ -936,7 +936,7 @@ Profil Entet Info user
 /* 
 Profil  user activité
  */
-.container {
+.containerAct {
   border-radius: 0.5rem;
   border-width: 1px;
   background-color: white;
@@ -944,7 +944,7 @@ Profil  user activité
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-.title {
+.titleAct {
   margin-bottom: 5px;
   padding: 0px;
   font-size: 1.25rem;
@@ -952,20 +952,20 @@ Profil  user activité
   font-weight: bold;
 }
 
-.subtitle {
+.subtitleAct {
   margin-bottom: 1.5rem;
   margin-top: 0px;
   font-size: 14px;
   color: #6b7280;
 }
 
-.activityList {
+.activityListAct {
   display: flex;
   flex-direction: column;
   gap: 10px;
 }
 
-.activityItem {
+.activityItemAct {
   border-bottom: 1px solid #111;
 
   display: flex;
@@ -973,7 +973,7 @@ Profil  user activité
   padding: 5px;
 }
 
-.avatar {
+.avatarAct {
   height: 35px;
   width: 35px;
   flex-shrink: 0;
@@ -981,13 +981,13 @@ Profil  user activité
   background-color: #f3f4f6;
 }
 
-.content {
+.contentAct {
   display: flex;
   flex-direction: column;
   gap: 0px;
 }
 
-.actionText {
+.actionTextAct {
   margin: 0px;
   margin-top: 5px;
   margin-bottom: 5px;
@@ -997,7 +997,7 @@ Profil  user activité
   font-weight: 500;
 }
 
-.linkTitle {
+.linkTitleAct {
   padding-top: 0px;
   margin-top: 0px;
   margin-bottom: 5px;
@@ -1007,11 +1007,11 @@ Profil  user activité
   background-color: #ffffff;
 }
 
-.linkTitle:hover {
+.linkTitleAct:hover {
   text-decoration: underline;
 }
 
-.description {
+.descriptionAct {
   font-size: 12px;
   color: #6b7280;
   margin: 0px;
@@ -1019,7 +1019,7 @@ Profil  user activité
   background-color: #ffffff;
 }
 
-.timestamp {
+.timestampAct {
   display: flex;
   align-items: center;
   gap: 5px;

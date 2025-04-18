@@ -7,6 +7,7 @@ const Event = () => {
   const [clickInterested, setclickInterested] = useState(false);
   const [interested, setinterested] = useState("No");
   const [interestedButton, setinterestedButton] = useState("to interest");
+  const [three, setthree] = useState(false);
 
   const changeButtonValue = () => {
     setclickInterested(!clickInterested);
@@ -95,10 +96,15 @@ const Event = () => {
           </p>
         </div>
         <button
+          onClick={() => {
+            setthree(!three);
+          }}
           style={{
+            width: "5px",
+            height: "5px",
             border: "none",
             backgroundColor: "white",
-            marginLeft: "auto",
+            marginLeft: "72%",
             marginTop: "0px",
             paddingTop: "0px",
             paddingBottom: "0px",
@@ -106,8 +112,33 @@ const Event = () => {
           }}
         >
           <i class="fa-solid fa-ellipsis"></i>
+          {three && (
+            <div className="THreepoint">
+              <button
+                style={{
+                  cursor: "pointer",
+                  border: "none",
+                  backgroundColor: "white",
+                  color: "red",
+                }}
+              >
+                signaler
+              </button>
+              <button
+                style={{
+                  cursor: "pointer",
+                  border: "none",
+                  backgroundColor: "white",
+                  color: "black",
+                }}
+              >
+                blocker
+              </button>
+            </div>
+          )}
         </button>
       </div>
+
       <div
         className="EventContent"
         style={{

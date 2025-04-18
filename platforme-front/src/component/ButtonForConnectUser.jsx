@@ -9,7 +9,7 @@ const ButtonForConnectUser = () => {
   // Gérer le clic à l'extérieur
   useEffect(() => {
     function handleClickOutside(event) {
-           // vérifie si le clic est à l’intérieur du menu.
+      // vérifie si le clic est à l’intérieur du menu.
       if (menuRef.current && !menuRef.current.contains(event.target)) {
         setIsOpen(false);
       }
@@ -79,7 +79,7 @@ const ButtonForConnectUser = () => {
             height: "20px",
             borderRadius: "50%",
           }}
-          src="/placeholder.svg?height=100&width=100"
+          src="image.jpg"
           alt="Photo de profil"
           className="photo"
         />
@@ -114,22 +114,47 @@ const ButtonForConnectUser = () => {
 
         {isOpen && (
           <div className="profile-menu">
-            <span
-              style={{ color: " rgb(3, 25, 81)", marginBottom: "5px" }}
+            <button
+              style={{
+                color: " rgb(3, 25, 81)",
+                marginBottom: "5px",
+                padding: "0px",
+                border: "none",
+                backgroundColor: "white",
+                cursor: "pointer",
+              }}
               onClick={() => {
                 GoTo("/Profil");
               }}
             >
               <i class="fa-solid fa-user"></i> Mon profile
-            </span>
+            </button>
 
-            <span style={{ color: " rgb(3, 25, 81)", marginBottom: "5px" }}>
+            <button
+              style={{
+                color: " rgb(3, 25, 81)",
+                marginBottom: "5px",
+                padding: "0px",
+                border: "none",
+                backgroundColor: "white",
+                cursor: "pointer",
+              }}
+            >
               <i class="fa-solid fa-gear"></i> Paramètres
-            </span>
+            </button>
 
-            <span style={{ color: " rgb(220, 15, 15)", marginBottom: "5px" }}>
+            <button
+              style={{
+                color: " rgb(220, 15, 15)",
+                marginBottom: "5px",
+                padding: "0px",
+                border: "none",
+                backgroundColor: "white",
+                cursor: "pointer",
+              }}
+            >
               <i class="fa-solid fa-right-from-bracket"></i> Déconnexion
-            </span>
+            </button>
           </div>
         )}
       </button>

@@ -12,11 +12,7 @@ function ProfilEntet() {
       <div className="contenu">
         {/* Photo de profil */}
         <div className="photo-container">
-          <img
-            src="/placeholder.svg?height=100&width=100"
-            alt="Photo de profil"
-            className="photo"
-          />
+          <img src="image.jpg" className="photo" />
         </div>
 
         {/* Informations */}

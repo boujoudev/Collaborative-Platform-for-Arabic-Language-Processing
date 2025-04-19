@@ -31,7 +31,7 @@ body {
 
 .platformName {
   grid-area: logo;
-  background-color: rgb(3, 25, 81);
+  background-color: #1a237a;
   color: white;
   display: flex;
   align-items: center;
@@ -40,13 +40,13 @@ body {
 
 .barreDeRecherch {
   grid-area: barR;
-  background-color: rgb(3, 25, 81);
+  background-color: #1a237a;
 }
 
 .aside2 {
   padding-top: 20px;
   grid-area: side2;
-  background-color: rgb(254, 254, 254);
+  background-color: white;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -56,7 +56,7 @@ body {
 main {
   grid-area: main;
   background-color: rgb(254, 254, 254);
-  color: rgb(4, 7, 85);
+  color: #1a237a;
   margin: 10px;
   padding: 10px;
   border: 0px black solid;
@@ -100,7 +100,7 @@ main {
   margin: 5px;
   height: 30px;
   background-color: white;
-  color: black;
+  color: #1a237a;
   border: none;
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -112,7 +112,7 @@ main {
 
 .false:hover {
   margin: 5px;
-  background-color: rgb(3, 25, 81);
+  background-color: #1a237a;
   color: rgb(255, 255, 255);
   transform: scale(0.95);
   border-radius: 5px;
@@ -121,7 +121,7 @@ main {
 .true {
   margin: 5px;
   height: 30px;
-  background-color: rgb(3, 25, 81);
+  background-color: #1a237a;
   color: rgb(255, 255, 255);
   transform: scale(0.95);
   border-radius: 5px;
@@ -139,7 +139,7 @@ main {
 
 .barreDeRecherch {
   grid-area: barR;
-  background-color: rgb(3, 25, 81);
+  background-color: #1a237a;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -160,7 +160,7 @@ main {
 }
 
 #barreDeRecherchePrincipale {
-  color: black;
+  color: #1a237a;
   width: 350px;
   height: 30px;
   padding: 5px;
@@ -179,7 +179,7 @@ main {
 
 .otherButton {
   grid-area: rest;
-  background-color: rgb(3, 25, 81);
+  background-color: #1a237a;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -192,7 +192,7 @@ main {
 .ButtonSignInUp {
   margin-right: 15px;
   color: white;
-  background-color: rgb(3, 25, 81);
+  background-color: #1a237a;
   border: none;
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -202,7 +202,7 @@ main {
 }
 
 .ButtonSignInUp:hover {
-  color: rgb(3, 25, 81);
+  color: #1a237a;
   background-color: rgb(255, 255, 255);
 }
 
@@ -291,17 +291,17 @@ page de signup */
   background-color: white;
   border: none;
 
-  color: rgb(3, 25, 81);
+  color: #1a237a;
 }
 
 .buttonShow:hover {
-  color: rgb(20, 50, 124);
+  color: #1a237a;
 }
 
 .ButtonCreateAccount {
   width: 350px;
   height: 30px;
-  background-color: rgb(3, 25, 81);
+  background-color: #1a237a;
   color: white;
   border: none;
   border-radius: 20px;
@@ -312,7 +312,7 @@ page de signup */
 }
 
 .ButtonCreateAccount:hover {
-  background-color: rgb(20, 50, 124);
+  background-color: #1a237a;
 }
 
 .social-icons {
@@ -351,7 +351,7 @@ page de signIn */
 .ButtonSignIn {
   width: 350px;
   height: 30px;
-  background-color: rgb(3, 25, 81);
+  background-color: #1a237a;
   color: white;
   border: none;
   border-radius: 10px;
@@ -362,7 +362,7 @@ page de signIn */
 }
 
 .ButtonSignIn:hover {
-  background-color: rgb(20, 50, 124);
+  background-color: #1a237a;
 }
 
 .formSignInPage {
@@ -410,7 +410,7 @@ page de signIn */
 }
 
 .divAccueil {
-  background: linear-gradient(to right, #6382fa, rgb(20, 50, 124));
+  background: linear-gradient(to right, #007bd9, #1a237a);
 }
 
 .accueilButton {
@@ -439,7 +439,7 @@ Entet dyalha */
 }
 
 .AddForum:hover {
-  background-color: rgb(154, 154, 154); /* Change la couleur au hover */
+  background-color: #1a237a; /* Change la couleur au hover */
 }
 
 .ForumEntet {
@@ -547,7 +547,7 @@ project
 }
 
 .AddProject:hover {
-  background-color: rgb(154, 154, 154); /* Change la couleur au hover */
+  background-color: #1a237a; /* Change la couleur au hover */
 }
 
 .finish {
@@ -704,7 +704,7 @@ RecommondationProfilAsuivre  and RecomandationConfARejoindre and ToolAUtiliser
 .ToolAUtiliser {
   width: 230px;
   height: 60px;
-  background: linear-gradient(to right, #3b82f6, #1e3a8a);
+  background: linear-gradient(to right, #007bd9, #1a237a);
   border-radius: 10px;
   padding: 5px;
   margin-top: 5px;
@@ -778,7 +778,7 @@ Profil Entet
 /* Bannière */
 .banniere {
   height: 70px;
-  background: linear-gradient(to right, #2980b9, #1e3c72);
+  background: linear-gradient(to right, #007bd9, #1a237a);
   position: relative;
 }
 

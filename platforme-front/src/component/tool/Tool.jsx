@@ -2,6 +2,8 @@ import React, { useState } from "react";
 
 function Tool() {
   const [likesTool, setLikesTool] = useState(100);
+  const [three, setthree] = useState(false);
+
   const [likedTool, setLikedTool] = useState(false);
   const [dislikedTool, setDisLikedTool] = useState(true);
 
@@ -81,10 +83,13 @@ function Tool() {
           </p>
         </div>
         <button
+        onClick={()=>{setthree(!three)}}
           style={{
+            width: "5px",
+            height: "5px",
             border: "none",
             backgroundColor: "white",
-            marginLeft: "auto",
+            marginLeft: "72%",
             marginTop: "0px",
             paddingTop: "0px",
             paddingBottom: "0px",
@@ -92,6 +97,30 @@ function Tool() {
           }}
         >
           <i class="fa-solid fa-ellipsis"></i>
+          {three && (
+            <div className="THreepoint">
+              <button
+                style={{
+                  cursor: "pointer",
+                  border: "none",
+                  backgroundColor: "white",
+                  color: "red",
+                }}
+              >
+                Report
+              </button>
+              <button
+                style={{
+                  cursor: "pointer",
+                  border: "none",
+                  backgroundColor: "white",
+                  color: "black",
+                }}
+              >
+                Block
+              </button>
+            </div>
+          )}
         </button>
       </div>
       <div
@@ -111,7 +140,7 @@ function Tool() {
             color: "black",
             padding: "5px",
             paddingLeft: "15px",
-            paddingBottom:"0px",
+            paddingBottom: "0px",
             margin: "0px",
           }}
         >

@@ -1,12 +1,26 @@
-import React from 'react'
+import { Weight } from "lucide-react";
+import SignUpPage from "./SignUpPage";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 const SignInSignUp = () => {
   return (
-    <div className='SignInSignUp'>
-        <button className='ButtonSignInUp'>Sign In</button>
-        <button className='ButtonSignInUp'>Sign Up</button>
-    </div>
-  )
-}
+    <Dialog>
+      <DialogTrigger asChild>
+        <button className="ButtonSignInUp">Sign Up</button>
+      </DialogTrigger>
 
-export default SignInSignUp
+      <DialogContent className="sm:max-w-[425px]">
+        <SignUpPage />
+      </DialogContent>
+    </Dialog>
+  );
+};
+
+export default SignInSignUp;

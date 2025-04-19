@@ -3,6 +3,7 @@ const Project = () => {
   const [likesProject, setLikesProject] = useState(100);
   const [likedProject, setLikedProject] = useState(false);
   const [dislikedProject, setDisLikedProject] = useState(true);
+  const [three, setthree] = useState(false);
   const x = "notFinish";
 
   const handleLike = () => {
@@ -81,10 +82,15 @@ const Project = () => {
           </p>
         </div>
         <button
+          onClick={() => {
+            setthree(!three);
+          }}
           style={{
+            width: "5px",
+            height: "5px",
             border: "none",
             backgroundColor: "white",
-            marginLeft: "auto",
+            marginLeft: "72%",
             marginTop: "0px",
             paddingTop: "0px",
             paddingBottom: "0px",
@@ -92,6 +98,30 @@ const Project = () => {
           }}
         >
           <i class="fa-solid fa-ellipsis"></i>
+          {three && (
+            <div className="THreepoint">
+              <button
+                style={{
+                  cursor: "pointer",
+                  border: "none",
+                  backgroundColor: "white",
+                  color: "red",
+                }}
+              >
+                Report
+              </button>
+              <button
+                style={{
+                  cursor: "pointer",
+                  border: "none",
+                  backgroundColor: "white",
+                  color: "black",
+                }}
+              >
+                Block
+              </button>
+            </div>
+          )}
         </button>
       </div>
       <div

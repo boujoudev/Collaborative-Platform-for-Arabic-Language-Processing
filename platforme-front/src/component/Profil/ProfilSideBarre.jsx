@@ -8,7 +8,9 @@ const ProfilSideBarre = () => {
     return savedInfo ? JSON.parse(savedInfo) : "true";
   });
   const [Post, setPost] = useState(() => {
+
     // Lire la valeur du localStorage au premier rendu
+    
     const savedPost = localStorage.getItem("myPost");
     return savedPost ? JSON.parse(savedPost) : "false";
   });

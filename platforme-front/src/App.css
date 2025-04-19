@@ -32,6 +32,10 @@ body {
 .platformName {
   grid-area: logo;
   background-color: rgb(3, 25, 81);
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 5px;
 }
 
 .barreDeRecherch {

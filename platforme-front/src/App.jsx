@@ -35,14 +35,15 @@ import ProfilProject from "./component/Profil/ProfilProject.jsx";
 import ProfilActivité from "./component/Profil/ProfilActivité.jsx";
 
 function App() {
+  const connect = false;
   return (
     <div className="grid-container">
-      <div className="platformName">LOGO</div>
+      <div className="platformName">TAL-Arabic Platforme</div>
       <div className="barreDeRecherch">
         <BarreDERecherche />
       </div>
       <div className="otherButton">
-        <ButtonForConnectUser />
+        {connect ? <ButtonForConnectUser /> : <SignInSignUp />}
       </div>
       <aside className="aside1">
         <SIdeBarre1 />

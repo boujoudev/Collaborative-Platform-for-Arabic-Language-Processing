@@ -122,7 +122,7 @@ const Event = () => {
                   color: "red",
                 }}
               >
-                signaler
+                Report
               </button>
               <button
                 style={{
@@ -132,7 +132,7 @@ const Event = () => {
                   color: "black",
                 }}
               >
-                blocker
+                Block
               </button>
             </div>
           )}

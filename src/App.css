@@ -1,0 +1,100 @@
+
+/* Layout principal */
+.grid-container {
+  display: grid;
+  height: 100vh;
+  width: 100vw;
+  grid-template-columns: repeat(13, 1fr);
+  grid-template-rows: repeat(11, 1fr);
+  grid-template-areas:
+    "logo logo logo logo barR barR barR barR barR rest rest rest rest"
+    "side1 side1 side1 main main main main main main main side2 side2 side2"
+    /* Répéter pour les autres lignes */;
+  background: var(--background);
+  color: var(--foreground);
+}
+
+.platformName {
+  grid-area: logo;
+  background: var(--sidebar);
+  color: var(--sidebar-foreground);
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+
+.barreDeRecherch {
+  grid-area: barR;
+  background: var(--sidebar);
+  display: flex;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.aside1 {
+  grid-area: side1;
+  background: var(--sidebar);
+  padding: 1rem;
+}
+
+.main {
+  grid-area: main;
+  background: var(--card);
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+/* Composants */
+.component-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  background: var(--background);
+  border-radius: var(--radius);
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Overrides Tailwind si nécessaire */
+.menue {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.menue .false {
+  padding: 0.75rem;
+  border-radius: calc(var(--radius) - 2px);
+  transition: all 0.3s ease;
+}
+
+.menue .false:hover {
+  background: var(--sidebar-accent);
+  color: var(--sidebar-accent-foreground);
+}
+
+/* Suppression des styles par défaut */
+#root {
+  all: unset;
+}
+
+.logo {
+  display: none;
+}
+
+.read-the-docs {
+  display: none;
+}

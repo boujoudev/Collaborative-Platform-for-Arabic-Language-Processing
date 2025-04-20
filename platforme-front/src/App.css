@@ -216,7 +216,7 @@ page de signup */
   color: gray;
 }
 
-.SignUpPage {
+ .SignUpPage {
   background-color: rgb(255, 255, 255);
   display: flex;
   flex-direction: column;
@@ -230,7 +230,7 @@ page de signup */
   -moz-border-radius: 15px;
   -ms-border-radius: 15px;
   -o-border-radius: 15px;
-}
+} 
 
 .formSignUpPage {
   display: flex;

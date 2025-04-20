@@ -16,7 +16,7 @@ const SignInSignUp = () => {
         <button className="ButtonSignInUp">Sign Up</button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent>
         <SignUpPage />
       </DialogContent>
     </Dialog>

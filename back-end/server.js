@@ -3,6 +3,9 @@ const morgan = require('morgan');
 const cors = require('cors');
 const db = require('./config/db');
 const { sequelize } = require('./models');
+const dotenv = require('dotenv');
+dotenv.config({path: './back-end/.env'});
+console.log(process.env.GOOGLE_API_KEY)
 
 const port = 3000;
 

@@ -1,8 +1,9 @@
-require('dotenv').config({ path: '../config/.env' });// services/chatbotService.js
+const dotnenv = require('dotenv')// services/chatbotService.js
 const axios = require('axios');
+dotnenv.config()
+console.log(process.env.GOOGLE_API_KEY)
 
-
-const GOOGLE_API_KEY = 'AIzaSyCsyuRg9iRvMnE2Mvr4gFsjW54GS0-FPrQ'
+const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 if (!GOOGLE_API_KEY) {
   throw new Error("Google API key is not set in the environment variables.");
 }

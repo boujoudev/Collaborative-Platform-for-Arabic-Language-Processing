@@ -1,40 +1,71 @@
-const express = require('express')
-const morgan = require('morgan')
-const {Client}=require('pg');
+const express = require('express');
+const morgan = require('morgan');
+const cors = require('cors');
+const db = require('./config/db');
+const { sequelize } = require('./models');
 
-
-const port = 3000
+const port = 3000;
 
 // Create the Express app
-const app = express()
+const app = express();
 
-// Connect to the database
+// Middleware
+app.use(cors()); // Enable CORS for all routes
+app.use(express.json()); // Parse JSON request bodies
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded request bodies
+app.use(morgan('dev')); // HTTP request logger
+app.use(express.static('public')); // Serve static files
 
+// Register view engine
+app.set('view engine', 'ejs');
 
+// API Routes
+// User routes
+const userRoutes = require('./routes/userRoutes');
+app.use('/api/users', userRoutes);
 
+// Comment routes
+const commentRoutes = require('./routes/commentRoutes');
+app.use('/api/comments', commentRoutes);
 
-// register view engine
-app.set('view engine','ejs');
-
-// listen for requests
-app.listen(port, () => {    
-    console.log(`Server is running on port ${port}`);
-}
-);
-
-// middleware & static files
-app.use(express.static('public'));
-app.use(morgan('dev'));
-
-// routes
-
-//forum route
+// Forum routes
 const forumRoutes = require('./routes/forumRoutes');
-app.use('/api/forum', forumRoutes);
+app.use('/api/forums', forumRoutes);
 
-//courses route
-const coursesRoutes = require('./routes/coursesRoutes');
-app.use('/api/courses', coursesRoutes);
+// Post routes
+const postRoutes = require('./routes/postRoutes');
+app.use('/api/posts', postRoutes);
+
+// Project routes
+const projectRoutes = require('./routes/projectRoutes');
+app.use('/api/projects', projectRoutes);
+
+// Corpus routes
+const corpusRoutes = require('./routes/corpusRoutes');
+app.use('/api/corpus', corpusRoutes);
+
+// Course routes
+const courseRoutes = require('./routes/courseRoutes');
+app.use('/api/courses', courseRoutes);
+
+// NLP Tool routes
+const nlpToolRoutes = require('./routes/nlpToolRoutes');
+app.use('/api/nlp-tools', nlpToolRoutes);
+
+// Event routes
+const eventRoutes = require('./routes/eventRoutes');
+app.use('/api/events', eventRoutes);
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ message: 'Something went wrong!' });
+});
+
+// Start the server
+app.listen(port, () => {    
+  console.log(`Server is running on port ${port}`);
+});
 
 
 

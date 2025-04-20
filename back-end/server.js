@@ -21,6 +21,7 @@ app.set('view engine', 'ejs');
 
 // API Routes
 // User routes
+
 const userRoutes = require('./routes/userRoutes');
 app.use('/api/users', userRoutes);
 
@@ -55,6 +56,10 @@ app.use('/api/nlp-tools', nlpToolRoutes);
 // Event routes
 const eventRoutes = require('./routes/eventRoutes');
 app.use('/api/events', eventRoutes);
+
+// Chatbot routes
+const chatbotRoutes = require('./routes/chatbotRoutes');
+app.use('/api/chatbot', chatbotRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

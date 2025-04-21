@@ -334,6 +334,20 @@
   }
   ```
 
+### Messagerie Firebase 
+   - Envoyer un message :
+   POST /api/messages
+   {
+       "receiver_id": "1",
+       "content": "Test message"
+   }
+
+   - Recevoir un message :
+      GET /api/messages/Id du messager 
+      
+
+
+
 ### Obtenir l'Historique des Messages
 - **Méthode** : GET
 - **URL** : `http://localhost:3000/api/chatbot/history`

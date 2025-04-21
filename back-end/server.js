@@ -72,6 +72,10 @@ app.use('/api/files', fileRoutes);
 const searchRoutes = require('./routes/searchRoutes');
 app.use('/api/search', searchRoutes);
 
+// Message routes
+const messageRoutes = require('./routes/messageRoutes');
+app.use('/api/messages', messageRoutes);
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);

@@ -1,5 +1,6 @@
 import { Weight } from "lucide-react";
 import SignUpPage from "./SignUpPage";
+import SignInPage from "./SignInPage";
 import {
   Dialog,
   DialogContent,
@@ -8,16 +9,35 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useState } from "react";
 
 const SignInSignUp = () => {
+  const [select, setselect] = useState("");
   return (
-    <Dialog>
+    <Dialog  >
       <DialogTrigger asChild>
-        <button className="ButtonSignInUp">Sign Up</button>
+        <button
+          className="ButtonSignInUp"
+          onClick={() => {
+            setselect("SignUp");
+          }}
+        >
+          Sign Up
+        </button>
+      </DialogTrigger>
+      <DialogTrigger asChild>
+        <button
+          className="ButtonSignInUp"
+          onClick={() => {
+            setselect("SignIn");
+          }}
+        >
+          Sign In
+        </button>
       </DialogTrigger>
 
       <DialogContent>
-        <SignUpPage />
+        {select === "SignIn" ? <SignInPage /> : <SignUpPage />}
       </DialogContent>
     </Dialog>
   );

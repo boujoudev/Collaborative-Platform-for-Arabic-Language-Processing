@@ -8,9 +8,8 @@ const ProfilSideBarre = () => {
     return savedInfo ? JSON.parse(savedInfo) : "true";
   });
   const [Post, setPost] = useState(() => {
-
     // Lire la valeur du localStorage au premier rendu
-    
+
     const savedPost = localStorage.getItem("myPost");
     return savedPost ? JSON.parse(savedPost) : "false";
   });
@@ -31,7 +30,7 @@ const ProfilSideBarre = () => {
     localStorage.setItem("myPost", JSON.stringify(Post));
     localStorage.setItem("myProject", JSON.stringify(Project));
     localStorage.setItem("myActivities", JSON.stringify(Activities));
-  }, [Info , Post , Project , Activities]);
+  }, [Info, Post, Project, Activities]);
 
   // useEffect(() => {
   //   // Sauvegarder la valeur dans le localStorage à chaque changement

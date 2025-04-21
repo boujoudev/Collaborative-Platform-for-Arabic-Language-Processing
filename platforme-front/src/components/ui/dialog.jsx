@@ -25,10 +25,7 @@ function DialogOverlay({ className, ...props }) {
   return (
     <DialogPrimitive.Overlay
       data-slot="dialog-overlay"
-      className={cn(
-        "data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-black/50",
-        className
-      )}
+      className={cn("dialog-overlay", className)}
       {...props}
     />
   );
@@ -37,27 +34,25 @@ function DialogOverlay({ className, ...props }) {
 function DialogContent({ className, children, ...props }) {
   return (
     <DialogPortal data-slot="dialog-portal">
-      <DialogOverlay className="fixed inset-0 z-40 bg-black/50" />
+      <DialogOverlay />
       <DialogPrimitive.Content
         data-slot="dialog-content"
         className={cn(
-          "bg-white fixed top-1/2 left-1/2 z-50 transform -translate-x-1/2 -translate-y-1/2 rounded-lg border shadow-lg",
+          "bg-white fixed top-1/2 left-1/2 z-50 transform -translate-x-1/2 -translate-y-1/2 rounded-lg shadow-lg",
           className
         )}
         style={{
-          width: "auto", // Permet au contenu de définir la largeur
-          height: "auto", // Permet au contenu de définir la hauteur
-          maxWidth: "90%", // Limite la largeur à 90% de l'écran
-          maxHeight: "90%", // Limite la hauteur à 90% de l'écran
-          padding: "1.5rem", // Ajoute un espacement interne
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "1rem",
+          width: "fit-content",
+          height: "fit-content",
         }}
         {...props}
       >
         {children}
-        <DialogPrimitive.Close className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-gray-200 opacity-70 transition-opacity hover:opacity-100 focus:ring-2 focus:ring-offset-2">
-          <XIcon className="w-4 h-4" />
-          <span className="sr-only">Close</span>
-        </DialogPrimitive.Close>
       </DialogPrimitive.Content>
     </DialogPortal>
   );

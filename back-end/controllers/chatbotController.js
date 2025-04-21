@@ -1,12 +1,17 @@
 // controllers/chatbot.js
 const chatbotService = require('../services/chatbotService');
 
+
+
 async function handleChat(req, res) {
-  const { message } = req.body;
+  const { message, userId } = req.body; // Ensure userId is passed in the request body
+
+  if (!userId) {
+    return res.status(400).json({ response: "User ID is required." });
+  }
 
   try {
-    
-    const response = await chatbotService.processChat(message);
+    const response = await chatbotService.processChat(message, userId);
     return res.json({ response });
   } catch (error) {
     console.error("Error processing chat request:", error);
@@ -15,3 +20,4 @@ async function handleChat(req, res) {
 }
 
 module.exports = { handleChat };
+

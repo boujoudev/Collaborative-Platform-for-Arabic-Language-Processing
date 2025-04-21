@@ -1,5 +1,7 @@
 const dotnenv = require('dotenv')// services/chatbotService.js
 const axios = require('axios');
+const { ChatHistory } = require('../models'); // Import the ChatHistory model
+
 dotnenv.config()
 console.log(process.env.GOOGLE_API_KEY)
 
@@ -22,10 +24,17 @@ async function callGemini(prompt) {
   }
 }
 
-// Main function to process chat
-async function processChat(message) {
+async function processChat(message, userId) {
+  // Step 1: Retrieve past conversations for context
+  const pastConversations = await retrieveContext(userId);
+
+  // Step 2: Craft the prompt with context
+  const contextText = pastConversations
+    .map((entry, index) => `Interaction ${index + 1}:\nUser: ${entry.input_text}\nBot: ${entry.response_text}`)
+    .join('\n\n');
+
   
-  const prompt = `
+    const prompt = `
     
     You are a chatbot designed to assist users on a platform focused on Natural Language Processing (NLP) and Arabic language research. 
 The platform is used by researchers, students, and professionals working on projects related to Arabic NLP, machine translation, sentiment analysis, and other linguistic tasks.
@@ -50,11 +59,48 @@ ${message}
 ### Response:
   `;
 
-  // Step 2: Call the Gemini API with the crafted prompt
+  // Step 3: Call the Gemini API with the crafted prompt
   const geminiResponse = await callGemini(prompt);
 
-  // Step 3: Return the response from Gemini
+  // Step 4: Store the current interaction in the database
+  await storeConversation(userId, message, geminiResponse);
+
+  // Step 5: Return the response from Gemini
   return geminiResponse || "I'm not sure how to respond to that.";
 }
+
+// Helper function to retrieve context
+async function retrieveContext(userId, limit = 5) {
+  try {
+    const results = await ChatHistory.findAll({
+      where: { user_id: userId },
+      order: [['timestamp', 'DESC']],
+      limit: limit,
+    });
+    return results.map(entry => ({
+      input_text: entry.input_text,
+      response_text: entry.response_text,
+    }));
+  } catch (error) {
+    console.error('Error retrieving context:', error);
+    return [];
+  }
+}
+
+// Helper function to store a conversation
+async function storeConversation(userId, userInput, botResponse) {
+  try {
+    await ChatHistory.create({
+      user_id: userId,
+      input_text: userInput,
+      response_text: botResponse,
+    });
+    console.log('Conversation stored successfully.');
+  } catch (error) {
+    console.error('Error storing conversation:', error);
+  }
+}
+
+module.exports = { processChat };
 
 module.exports = { processChat };

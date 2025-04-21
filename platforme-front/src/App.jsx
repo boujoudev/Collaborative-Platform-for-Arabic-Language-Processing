@@ -34,6 +34,8 @@ import InformationPage from "./component/Profil/InformationPage.jsx";
 import ProfilProject from "./component/Profil/ProfilProject.jsx";
 import ProfilActivité from "./component/Profil/ProfilActivité.jsx";
 
+import CommentForm from "./component/Comment/CommentForm";
+
 function App() {
   const connect = false;
   return (
@@ -49,6 +51,8 @@ function App() {
         <SIdeBarre1 />
       </aside>
       <main>
+        <CommentForm />
+
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/Forum" element={<ForumPage />} />

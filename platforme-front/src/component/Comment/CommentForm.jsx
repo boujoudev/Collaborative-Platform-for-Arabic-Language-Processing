@@ -6,7 +6,8 @@ const CommentForm = () => {
   const [newComment, setNewComment] = useState("");
   const UserCurrent = "aymene"; // Utilisateur actuel
 
-  // Ajouter un nouveau commentaire
+  // Ajouter un nouveau commentaire  
+  
   function handleAddComment(e) {
     e.preventDefault();
     if (!newComment.trim()) return;

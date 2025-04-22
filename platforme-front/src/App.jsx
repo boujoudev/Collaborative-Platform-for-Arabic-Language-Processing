@@ -37,7 +37,8 @@ import ProfilActivité from "./component/Profil/ProfilActivité.jsx";
 import CommentForm from "./component/Comment/CommentForm";
 
 function App() {
-  const connect = false;
+
+  const [Connect,setConnect] = useState(false);
   return (
     <div className="grid-container">
       <div className="platformName">TAL-Arabic Platforme</div>
@@ -45,14 +46,13 @@ function App() {
         <BarreDERecherche />
       </div>
       <div className="otherButton">
-        {connect ? <ButtonForConnectUser /> : <SignInSignUp />}
+        {Connect ? <ButtonForConnectUser /> : <SignInSignUp />}
       </div>
       <aside className="aside1">
         <SIdeBarre1 />
       </aside>
       <main>
         <CommentForm />
-
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/Forum" element={<ForumPage />} />

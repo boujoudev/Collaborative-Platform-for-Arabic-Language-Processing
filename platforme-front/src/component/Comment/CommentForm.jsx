@@ -4,10 +4,9 @@ import React, { useState } from "react";
 const CommentForm = () => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  const UserCurrent = "aymene";
+  const UserCurrent = "aymene"; // Utilisateur actuel
 
-  // ajouter commentaire jdid
-
+  // Ajouter un nouveau commentaire
   function handleAddComment(e) {
     e.preventDefault();
     if (!newComment.trim()) return;
@@ -24,28 +23,27 @@ const CommentForm = () => {
     setNewComment("");
   }
 
-  // hna bach nsuprimer commentaire
-
+  // Supprimer un commentaire (uniquement si c'est le commentaire de l'utilisateur actuel)
   function handleDelete(id, items = comments) {
     return items.filter((item) => {
+      if (item.id === id && item.User !== UserCurrent) return true; // Ne pas supprimer si ce n'est pas le commentaire de l'utilisateur actuel
       if (item.id === id) return false;
       item.replies = handleDelete(id, item.replies);
       return true;
     });
   }
-  //  hna bach nmodifier commentaire
 
+  // Modifier un commentaire (uniquement si c'est le commentaire de l'utilisateur actuel)
   function handleEdit(id, newContent, items = comments) {
     return items.map((item) => {
-      if (item.id === id) {
+      if (item.id === id && item.User === UserCurrent) {
         return { ...item, content: newContent };
       }
       return { ...item, replies: handleEdit(id, newContent, item.replies) };
     });
   }
 
-  // hna bach nripondi 3la kach commentaireire wla 3la commentaire jdid
-
+  // Répondre à un commentaire
   function handleReply(parentId, content, items = comments) {
     return items.map((item) => {
       if (item.id === parentId) {
@@ -77,6 +75,7 @@ const CommentForm = () => {
           <CommentItem
             key={c.id}
             comment={c}
+            currentUser={UserCurrent}
             onDelete={(id) => setComments(handleDelete(id))}
             onEdit={(id, content) => setComments(handleEdit(id, content))}
             onReply={(id, content) => setComments(handleReply(id, content))}
@@ -87,10 +86,8 @@ const CommentForm = () => {
   );
 };
 
-//  commentItem Component yaficher commente w tan les reponse dyawlo
-
-
-const CommentItem = ({ comment, onDelete, onEdit, onReply }) => {
+// Composant CommentItem
+const CommentItem = ({ comment, currentUser, onDelete, onEdit, onReply }) => {
   const [editing, setEditing] = useState(false);
   const [editContent, setEditContent] = useState(comment.content);
   const [replying, setReplying] = useState(false);
@@ -125,8 +122,12 @@ const CommentItem = ({ comment, onDelete, onEdit, onReply }) => {
       )}
       <div className="comment-actions">
         <button onClick={() => setReplying(!replying)}>Répondre</button>
-        <button onClick={() => setEditing(true)}>Modifier</button>
-        <button onClick={() => onDelete(comment.id)}>Supprimer</button>
+        {comment.User === currentUser && ( // Vérifie si l'utilisateur actuel est l'auteur du commentaire
+          <>
+            <button onClick={() => setEditing(true)}>Modifier</button>
+            <button onClick={() => onDelete(comment.id)}>Supprimer</button>
+          </>
+        )}
       </div>
       {replying && (
         <div className="reply-form">
@@ -152,6 +153,7 @@ const CommentItem = ({ comment, onDelete, onEdit, onReply }) => {
             <CommentItem
               key={reply.id}
               comment={reply}
+              currentUser={currentUser}
               onDelete={onDelete}
               onEdit={onEdit}
               onReply={onReply}

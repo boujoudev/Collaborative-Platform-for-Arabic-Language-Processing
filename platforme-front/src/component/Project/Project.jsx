@@ -41,7 +41,7 @@ const Project = () => {
         style={{
           display: "flex",
           flexDirection: "row",
-          margin: "5px",
+          marginTop: "5px",
           alignItems: "flex-start",
         }}
       >
@@ -50,8 +50,8 @@ const Project = () => {
             width: "35px",
             height: "35px",
             borderRadius: "50%",
-            paddingTop: "5px",
-            paddingBottom: "0px",
+            marginLeft: "10PX",
+            // paddingBottom: "0px",
           }}
           src="image.jpg"
           alt=""
@@ -90,7 +90,7 @@ const Project = () => {
             height: "5px",
             border: "none",
             backgroundColor: "white",
-            marginLeft: "72%",
+            marginLeft: "70%",
             marginTop: "0px",
             paddingTop: "0px",
             paddingBottom: "0px",
@@ -138,8 +138,8 @@ const Project = () => {
             fontFamily: "Arial , sans-serif",
             fontWeight: "bold",
             color: "black",
-            padding: "0px",
-            paddingLeft: "15px",
+            padding: "5px",
+            paddingLeft: "10px",
             paddingBottom: "2px",
             margin: "0px",
           }}
@@ -153,7 +153,7 @@ const Project = () => {
             fontWeight: "bold",
             color: "black",
             padding: "0px",
-            paddingLeft: "15px",
+            paddingLeft: "10px",
             paddingBottom: "2px",
             margin: "0px",
           }}
@@ -167,7 +167,7 @@ const Project = () => {
               fontWeight: "normal",
               color: "black",
               padding: "0px",
-              paddingLeft: "15px",
+              paddingLeft: "10px",
               margin: "0px",
               fontSize: "12px",
             }}
@@ -180,7 +180,7 @@ const Project = () => {
               fontWeight: "normal",
               color: "black",
               padding: "0px",
-              paddingLeft: "15px",
+              paddingLeft: "10px",
               margin: "0px",
               fontSize: "12px",
             }}
@@ -193,7 +193,7 @@ const Project = () => {
               fontWeight: "normal",
               color: "black",
               padding: "0px",
-              paddingLeft: "15px",
+              paddingLeft: "10px",
               margin: "0px",
               fontSize: "12px",
             }}
@@ -217,9 +217,10 @@ const Project = () => {
       </div>
       <hr
         style={{
-          width: "80%",
-          height: "1px",
-          backgroundColor: "gray",
+          marginTop: "0px",
+          width: "97%",
+          height: "0.5px",
+          backgroundColor: "#D3D3D3",
           border: "none",
         }}
       />
@@ -230,7 +231,8 @@ const Project = () => {
           display: "flex",
           flexDirection: "row",
           justifyContent: "flex-start",
-          margin: "10px",
+          marginTop: "10px",
+          marginBottom: "10px",
           padding: "0px",
         }}
       >

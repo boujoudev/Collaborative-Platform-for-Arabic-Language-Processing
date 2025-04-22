@@ -31,14 +31,14 @@ const ButtonForConnectUser = () => {
         alignItems: "center",
         justifyContent: "center",
         color: "white",
-        backgroundColor: "rgb(3, 25, 81)",
+        backgroundColor: "#1A237E",
       }}
     >
       <button
         className="DiscussionList"
         style={{
           color: "white",
-          backgroundColor: "rgb(3, 25, 81)",
+          backgroundColor: "#1A237E",
           border: "none",
           cursor: "pointer",
         }}
@@ -48,7 +48,7 @@ const ButtonForConnectUser = () => {
       <button
         style={{
           color: "white",
-          backgroundColor: "rgb(3, 25, 81)",
+          backgroundColor: "#1A237E",
           border: "none",
           cursor: "pointer",
         }}

@@ -55,7 +55,7 @@ const Event = () => {
         style={{
           display: "flex",
           flexDirection: "row",
-          margin: "5px",
+          marginTop: "5px",
           alignItems: "flex-start",
         }}
       >
@@ -64,8 +64,8 @@ const Event = () => {
             width: "35px",
             height: "35px",
             borderRadius: "50%",
-            paddingTop: "5px",
-            paddingBottom: "0px",
+            marginLeft: "10PX",
+            // paddingBottom: "0px",
           }}
           src="image.jpg"
           alt=""
@@ -104,7 +104,7 @@ const Event = () => {
             height: "5px",
             border: "none",
             backgroundColor: "white",
-            marginLeft: "72%",
+            marginLeft: "70%",
             marginTop: "0px",
             paddingTop: "0px",
             paddingBottom: "0px",
@@ -155,7 +155,7 @@ const Event = () => {
             fontWeight: "bold",
             color: "black",
             padding: "5px",
-            paddingLeft: "15px",
+            paddingLeft: "10px",
             paddingBottom: "5px",
             margin: "0px",
           }}
@@ -169,7 +169,7 @@ const Event = () => {
               fontWeight: "normal",
               color: "black",
               padding: "0px",
-              paddingLeft: "15px",
+              paddingLeft: "10px",
               margin: "0px",
               fontSize: "12px",
             }}
@@ -182,7 +182,7 @@ const Event = () => {
               fontWeight: "normal",
               color: "black",
               padding: "0px",
-              paddingLeft: "15px",
+              paddingLeft: "10px",
               margin: "0px",
               fontSize: "12px",
             }}
@@ -195,7 +195,7 @@ const Event = () => {
               fontWeight: "normal",
               color: "black",
               padding: "0px",
-              paddingLeft: "15px",
+              paddingLeft: "10px",
               margin: "0px",
               wordWrap: "break-word",
               whiteSpace: "normal",
@@ -212,9 +212,9 @@ const Event = () => {
       <hr
         style={{
           marginTop: "0px",
-          width: "80%",
-          height: "1px",
-          backgroundColor: "gray",
+          width: "97%",
+          height: "0.5px",
+          backgroundColor: "#D3D3D3",
           border: "none",
         }}
       />
@@ -225,7 +225,8 @@ const Event = () => {
           display: "flex",
           flexDirection: "row",
           justifyContent: "flex-start",
-          margin: "10px",
+          marginTop: "10px",
+          marginBottom: "10px",
           padding: "0px",
         }}
       >

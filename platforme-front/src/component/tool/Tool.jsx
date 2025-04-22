@@ -31,7 +31,7 @@ function Tool() {
       style={{
         marginBottom: "10px",
         borderRadius: "5px",
-        boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
+        boxShadow: " 0 2px 5px rgba(0, 0, 0, 0.1)",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
@@ -42,7 +42,7 @@ function Tool() {
         style={{
           display: "flex",
           flexDirection: "row",
-          margin: "5px",
+          marginTop: "5px",
           alignItems: "flex-start",
         }}
       >
@@ -51,8 +51,8 @@ function Tool() {
             width: "35px",
             height: "35px",
             borderRadius: "50%",
-            paddingTop: "5px",
-            paddingBottom: "0px",
+            marginLeft: "10PX",
+            // paddingBottom: "0px",
           }}
           src="image.jpg"
           alt=""
@@ -83,13 +83,15 @@ function Tool() {
           </p>
         </div>
         <button
-        onClick={()=>{setthree(!three)}}
+          onClick={() => {
+            setthree(!three);
+          }}
           style={{
             width: "5px",
             height: "5px",
             border: "none",
             backgroundColor: "white",
-            marginLeft: "72%",
+            marginLeft: "70%",
             marginTop: "0px",
             paddingTop: "0px",
             paddingBottom: "0px",
@@ -132,15 +134,13 @@ function Tool() {
         }}
       >
         <div
-          className="ToolTitre"
           style={{
-            fontSize: "14px",
             fontFamily: "Arial , sans-serif",
             fontWeight: "bold",
             color: "black",
             padding: "5px",
-            paddingLeft: "15px",
-            paddingBottom: "0px",
+            paddingLeft: "10px",
+            paddingBottom: "2px",
             margin: "0px",
           }}
         >
@@ -154,9 +154,10 @@ function Tool() {
       </div>
       <hr
         style={{
-          width: "80%",
-          height: "1px",
-          backgroundColor: "gray",
+          marginTop: "5px",
+          width: "97%",
+          height: "0.5px",
+          backgroundColor: "#D3D3D3",
           border: "none",
         }}
       />
@@ -167,7 +168,8 @@ function Tool() {
           display: "flex",
           flexDirection: "row",
           justifyContent: "flex-start",
-          margin: "10px",
+          marginTop: "10px",
+          marginBottom: "10px",
           padding: "0px",
         }}
       >

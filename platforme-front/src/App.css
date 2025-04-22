@@ -4,7 +4,7 @@ body {
   width: 100vw;
   display: flex;
   font-family: Arial, sans-serif;
-  background-color: white;
+  background-color: #f9fafc;
 }
 .grid-container {
   height: 100vh;
@@ -44,9 +44,9 @@ body {
 }
 
 .aside2 {
-  padding-top: 20px;
+  padding-top: 5%;
   grid-area: side2;
-  background-color: white;
+  background-color: #f9fafc;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -55,7 +55,7 @@ body {
 
 main {
   grid-area: main;
-  background-color: rgb(254, 254, 254);
+  background-color: #f9fafc;
   color: #1a237a;
   margin: 10px;
   padding: 10px;
@@ -72,9 +72,9 @@ main {
 /* hada kamel mna w ahbet kamel side barre a gauche */
 /* ******************************************************** */
 .aside1 {
-  padding-top: 20px;
+  padding-top: 5%;
   grid-area: side1;
-  background-color: rgb(254, 254, 254);
+  background-color: #f9fafc;
   display: flex;
   flex-direction: row;
   align-items: start;
@@ -97,10 +97,12 @@ main {
 }
 
 .false {
+  font-size: 16px;
+  border: none;
   margin: 5px;
   height: 30px;
   background-color: white;
-  color: #1a237a;
+  color: #000000;
   border: none;
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -111,6 +113,7 @@ main {
 }
 
 .false:hover {
+  border: none;
   margin: 5px;
   background-color: #1a237a;
   color: rgb(255, 255, 255);
@@ -119,10 +122,12 @@ main {
 }
 
 .true {
+  font-size: 16px;
   margin: 5px;
   height: 30px;
   background-color: #1a237a;
   color: rgb(255, 255, 255);
+  border: none;
   transform: scale(0.95);
   border-radius: 5px;
   -webkit-border-radius: 5px;
@@ -136,6 +141,49 @@ main {
 /* ******************************************************** */
 
 /* barre de recherch principale */
+.recommendations-list {
+  position: absolute; /* Permet de superposer la liste */
+  z-index: 1000; /* Assure que la liste est au-dessus des autres éléments */
+  overflow-y: auto; /* Ajoute un défilement vertical si nécessaire */
+  max-height: 200px; /* Limite la hauteur pour éviter qu'elle prenne trop de place */
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  width: 90%; /* Adapte la largeur à celle de la barre de recherche */
+  top: 100%; /* Positionne la liste juste en dessous de la barre de recherche */
+  left: 0; /* Aligne la liste avec la barre de recherche */
+  margin-top: 10px; /* Ajoute un petit espace entre la barre de recherche et la liste */
+  border: 1px solid #ddd; /* Ajoute une bordure pour délimiter la liste */
+  border-radius: 5px; /* Ajoute des coins arrondis */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Ajoute une ombre pour un effet visuel */
+}
+.recommendation-item {
+  border-radius: 10px;
+  width: 90%;
+  resize: none;
+  /*optionnel:;
+  empêchederedimensionner*/
+  overflow-wrap: break-word;
+  /*pourcouperlesmotslongs*/
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  /*gardelesretoursàlaligne*/
+  padding: 5px;
+  cursor: pointer;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
+}
+
+.recommendation-item:hover {
+  background: #d3d3d3;
+  color: #000000;
+}
 
 .barreDeRecherch {
   grid-area: barR;
@@ -146,7 +194,9 @@ main {
   justify-content: center;
 }
 .search-box {
+  position: relative;
   width: 80%;
+  height: 70%;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -162,7 +212,7 @@ main {
 #barreDeRecherchePrincipale {
   color: #1a237a;
   width: 90%;
-  height: 30px;
+  height: 60%;
   padding: 5px;
   font-size: auto;
   border: none;
@@ -213,6 +263,7 @@ main {
 page de signup */
 
 .labelText {
+  font-size: 14px;
   color: gray;
 }
 
@@ -506,9 +557,10 @@ Tools
 }
 
 .ToolText {
+  color: black;
   margin: 0px;
   padding-top: 7px;
-  margin-left: 15px;
+  margin-left: 10px;
   font-size: 12px;
   font-family: Arial, sans-serif;
   width: 590px;
@@ -1065,12 +1117,16 @@ Profil  user activité
 
 /* commentaire ////////////////////////////////////////////////////////////////////////////////// */
 .comment-section {
-  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 100%;
   margin: 0px;
-  background: #fff;
+  margin-bottom: 10px;
+  background: #ffffff;
   border-radius: 10px;
   padding: 10px;
-  box-shadow: 1px 3px 16px rgba(11, 24, 143, 0.05);
+  box-shadow: 3px 3px 16px rgba(0, 0, 0, 0.05);
   -webkit-border-radius: 10px;
   -moz-border-radius: 10px;
   -ms-border-radius: 10px;
@@ -1080,8 +1136,9 @@ Profil  user activité
   margin-bottom: 5px;
 }
 .comment-section textarea {
-  width: 100%;
+  width: 95%;
   min-height: 20px;
+  margin: 0px;
   padding: 10px;
   margin-bottom: 10px;
   border-radius: 10px;
@@ -1093,6 +1150,7 @@ Profil  user activité
   -o-border-radius: 10px;
 }
 .comment-section button {
+  margin: 0px;
   background: #1a237e;
   color: #fff;
   padding: 6px 22px;

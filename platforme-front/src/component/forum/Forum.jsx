@@ -127,7 +127,7 @@ const Forum = () => {
       </div>
       <hr
         style={{
-          width: "80%",
+          width: "95%",
           height: "1px",
           backgroundColor: "gray",
           border: "none",

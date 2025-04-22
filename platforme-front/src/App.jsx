@@ -33,12 +33,12 @@ import ProfilInformation from "./component/Profil/ProfilInformation.jsx";
 import InformationPage from "./component/Profil/InformationPage.jsx";
 import ProfilProject from "./component/Profil/ProfilProject.jsx";
 import ProfilActivité from "./component/Profil/ProfilActivité.jsx";
+import React, { useState } from "react";
 
 import CommentForm from "./component/Comment/CommentForm";
 
 function App() {
-
-  const [Connect,setConnect] = useState(false);
+  const [Connect, setConnect] = useState(false);
   return (
     <div className="grid-container">
       <div className="platformName">TAL-Arabic Platforme</div>

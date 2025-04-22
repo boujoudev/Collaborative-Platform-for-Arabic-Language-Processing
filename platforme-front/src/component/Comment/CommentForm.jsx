@@ -3,7 +3,7 @@ import React, { useState } from "react";
 const CommentForm = () => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  const UserCurrent = "aymene"; // Utilisateur actuel
+  const UserCurrent = "yasser"; // Utilisateur actuel
 
   // Ajouter un nouveau commentaire
   function handleAddComment(e) {

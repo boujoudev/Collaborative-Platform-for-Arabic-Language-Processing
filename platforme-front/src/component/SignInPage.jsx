@@ -2,33 +2,78 @@ import React, { useState } from "react";
 
 const SignInPage = () => {
   const [show, setShow] = useState(false);
+  const [EmailConnect, setEmailConnect] = useState("");
+  const [PassWordConnect, setPassWordConnect] = useState("");
+  const [UserInfoConnect, setUserInfoConnect] = useState({
+    PassWord: "",
+    Email: "",
+  });
+  const [TryToConnect, setTryToConnect] = useState(false);
 
   function ChangeShowButton() {
     setShow((prev) => !prev);
   }
 
   return (
-    <div className=" SignInPage">
+    <form
+      onSubmit={
+        () => {
+          
+          setUserInfoConnect({ PassWordConnect, EmailConnect });
+          console.log(UserInfoConnect);
+          setEmailConnect("");
+          setPassWordConnect("");
+          console.log(UserInfoConnect);
+          setTryToConnect(true);
+        } // handleSubmit()  // setUserInfo({FullName,PassWord,Email})  // console.log(UserInfo)  // setFullName("")  // setPassWord("")  // setEmail("");
+      }
+      className=" SignInPage"
+    >
       <h1>Name Platform</h1>
       <h2 style={{ color: "black" }}>Create an account</h2>
       <div className="InfoInput">
-        <form className="formSignInPage">
-          <label className="labelText" htmlFor="Email Address">Email Address</label>
+        <div className="formSignInPage">
+          <label className="labelText" htmlFor="Email Address">
+            Email Address
+          </label>
           <input
+          
+            required
+            value={EmailConnect}
             id="Email Address"
             type="email"
             placeholder="Enter your email address"
             className="input"
+            onChange={(e) => setEmailConnect(e.target.value)}
           />
 
-          <label className="labelText" htmlFor="Password">Password</label>
+          <label className="labelText" htmlFor="Password">
+            Password
+          </label>
           <div className="Passworddd">
-            <input className="inputPassword" placeholder="Enter your password" type={show ? "text" : "password"} />
-            <button type="button" className="buttonShow" onClick={ChangeShowButton}>
-              {!show ? <i class="fa-solid fa-eye-slash"></i> : <i class="fa-solid fa-eye"></i>}
+            <input
+              
+              required
+              id="Password"
+              value={PassWordConnect}
+              className="inputPassword"
+              placeholder="Enter your password"
+              type={show ? "text" : "password"}
+              onChange={(e) => setPassWordConnect(e.target.value)}
+            />
+            <button
+              type="button"
+              className="buttonShow"
+              onClick={ChangeShowButton}
+            >
+              {!show ? (
+                <i class="fa-solid fa-eye-slash"></i>
+              ) : (
+                <i class="fa-solid fa-eye"></i>
+              )}
             </button>
           </div>
-        </form>
+        </div>
       </div>
       <button type="submit" className="ButtonSignIn">
         Sign In
@@ -53,7 +98,7 @@ const SignInPage = () => {
           <i class="fa-brands fa-linkedin"></i>
         </a>
       </div>
-    </div>
+    </form>
   );
 };
 

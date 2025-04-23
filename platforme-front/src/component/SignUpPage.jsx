@@ -11,20 +11,35 @@ const SignUpPage = () => {
     PassWord: "",
     Email: "",
   });
+  const [TryToCreate, setTryTryToCreate] = useState(false);
 
   function ChangeShowButton() {
     setShow((prev) => !prev);
   }
   return (
-    <div className=" SignUpPage">
+    <form
+      onSubmit={
+        () => {
+          setUserInfo({ FullName, PassWord, Email });
+          console.log(UserInfo);
+          setEmail("");
+          setFullName("");
+          setPassWord("");
+          console.log(UserInfo);
+          setTryTryToCreate(true);
+        } // handleSubmit()  // setUserInfo({FullName,PassWord,Email})  // console.log(UserInfo)  // setFullName("")  // setPassWord("")  // setEmail("");
+      }
+      className=" SignUpPage"
+    >
       <h1>Name Platform</h1>
       <h2 style={{ color: "black" }}>Create an account</h2>
       <div className="InfoInput">
-        <form className="formSignUpPage">
+        <div className="formSignUpPage">
           <label className="labelText" htmlFor="Email Address">
             Email Address
           </label>
           <input
+            required
             value={Email}
             onChange={(e) => setEmail(e.target.value)}
             id="Email Address"
@@ -37,6 +52,7 @@ const SignUpPage = () => {
             Full Name
           </label>
           <input
+            required
             value={FullName}
             onChange={(e) => setFullName(e.target.value)}
             id="Full Name"
@@ -50,6 +66,7 @@ const SignUpPage = () => {
           </label>
           <div className="Passworddd">
             <input
+              required
               value={PassWord}
               onChange={(e) => setPassWord(e.target.value)}
               className="inputPassword"
@@ -68,22 +85,9 @@ const SignUpPage = () => {
               )}
             </button>
           </div>
-        </form>
+        </div>
       </div>
-      <button
-        onClick={
-          () => {
-            setUserInfo({ FullName, PassWord, Email });
-            console.log(UserInfo);
-            setEmail("");
-            setFullName("");
-            setPassWord("");
-            console.log(UserInfo);
-          } // handleSubmit()  // setUserInfo({FullName,PassWord,Email})  // console.log(UserInfo)  // setFullName("")  // setPassWord("")  // setEmail("");
-        }
-        type="submit"
-        className="ButtonCreateAccount"
-      >
+      <button type="submit" className="ButtonCreateAccount">
         Create an account
       </button>
       <p className="login-text">
@@ -106,7 +110,7 @@ const SignUpPage = () => {
           <i class="fa-brands fa-linkedin"></i>
         </a>
       </div>
-    </div>
+    </form>
   );
 };
 

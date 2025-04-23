@@ -8,11 +8,14 @@ const CommentForm = () => {
   // Ajouter un nouveau commentaire
   function handleAddComment(e) {
     e.preventDefault();
+
+    // hna ni nverifier ida machi vide comment dyali
     if (!newComment.trim()) return;
     setComments([
       ...comments,
       {
-        id: Date.now(),
+        // creation l objet jdid w nzido f liste dyal comments
+        id: Date.now(), //unique id pour chaque commentaire ili howa la date dyal creation
         content: newComment,
         User: UserCurrent,
         createdAt: new Date(),
@@ -23,6 +26,7 @@ const CommentForm = () => {
   }
 
   // Supprimer un commentaire (uniquement si c'est le commentaire de l'utilisateur actuel)
+ //items hia liste ta3 comment
   function handleDelete(id, items = comments) {
     return items.filter((item) => {
       if (item.id === id && item.User !== UserCurrent) return true; // Ne pas supprimer si ce n'est pas le commentaire de l'utilisateur actuel
@@ -63,11 +67,11 @@ const CommentForm = () => {
     <div className="comment-section">
       <form onSubmit={handleAddComment}>
         <textarea
-          placeholder="Votre commentaire..."
+          placeholder="Your comment.."
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
         />
-        <button type="submit">Ajouter</button>
+        <button type="submit">Add</button>
       </form>
       <div>
         {comments.map((c) => (
@@ -85,7 +89,7 @@ const CommentForm = () => {
   );
 };
 
-// Composant CommentItem
+// Composant CommentItem commaantaire single
 const CommentItem = ({ comment, currentUser, onDelete, onEdit, onReply }) => {
   const [editing, setEditing] = useState(false);
   const [editContent, setEditContent] = useState(comment.content);
@@ -112,19 +116,20 @@ const CommentItem = ({ comment, currentUser, onDelete, onEdit, onReply }) => {
               setEditing(false);
             }}
           >
-            Enregistrer
+            Save
           </button>
           <button onClick={() => setEditing(false)}>Annuler</button>
         </div>
       ) : (
+        // Afficher le contenu du commentaire
         <div className="comment-content">{comment.content}</div>
       )}
       <div className="comment-actions">
-        <button onClick={() => setReplying(!replying)}>Répondre</button>
+        <button onClick={() => setReplying(!replying)}>Reply</button>
         {comment.User === currentUser && ( // Vérifie si l'utilisateur actuel est l'auteur du commentaire
           <>
-            <button onClick={() => setEditing(true)}>Modifier</button>
-            <button onClick={() => onDelete(comment.id)}>Supprimer</button>
+            <button onClick={() => setEditing(true)}>Edit</button>
+            <button onClick={() => onDelete(comment.id)}>Delete</button>
           </>
         )}
       </div>

@@ -8,6 +8,9 @@ const { authenticate, isAdmin, isModeratorOrAdmin } = require('../middlewares/au
 // POST /api/users/register
 router.post('/register', userController.register);
 
+// POST /api/users/verify-email
+router.post('/verify-email', userController.verifyEmail);
+
 // Login user
 // POST /api/users/login
 router.post('/login', userController.login);

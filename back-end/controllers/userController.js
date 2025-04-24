@@ -3,6 +3,17 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { Op } = Sequelize;
 
+const { generateTokenAndSetCookie } = require('../service/generateTokenAndSetCookie.js');
+
+
+const {
+	sendPasswordResetEmail,
+	sendResetSuccessEmail,
+	sendVerificationEmail,
+	//sendWelcomeEmail,
+} = require('../sendgrid/sendgrid.service.js');
+
+
 // Secret key for JWT (should be in environment variables in production)
 const JWT_SECRET = 'your_jwt_secret_key';
 
@@ -35,6 +46,8 @@ const userController = {
       // Hash password
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(password, salt);
+      // verification Token 
+      const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
 
       // Create new user
       const newUser = await User.create({
@@ -43,16 +56,22 @@ const userController = {
         username,
         password: hashedPassword,
         role: 'user', // Default role
-        certified: false // Default certification status
+        certified: false, // Default certification status
+        isVerified: false, // Default verification status 
+        verificationToken,
+			  verificationTokenExpiresAt: new Date(Date.now() + 3600000), // 24 hours
       });
 
       // Generate JWT token
-      const token = jwt.sign(
+      /*const token = jwt.sign(
         { id: newUser.id, username: newUser.username, role: newUser.role },
         JWT_SECRET,
         { expiresIn: '24h' }
       );
+      */
+      const token = generateTokenAndSetCookie(res, newUser.id, newUser.username, newUser.role);
 
+      await sendVerificationEmail(newUser.email, verificationToken);
       // Return user data (excluding password) and token
       return res.status(201).json({
         user: {
@@ -62,7 +81,10 @@ const userController = {
           username: newUser.username,
           role: newUser.role,
           certified: newUser.certified,
-          created_at: newUser.created_at
+          created_at: newUser.created_at,
+          isVerified: newUser.isVerified,
+          verificationToken: newUser.verificationToken,
+			    verificationTokenExpiresAt:newUser.verificationTokenExpiresAt,
         },
         token
       });
@@ -71,6 +93,56 @@ const userController = {
       return res.status(500).json({ message: 'Internal server error' });
     }
   },
+
+
+  // verifyEmail
+  verifyEmail: async (req, res) => {
+    const { code } = req.body;
+    try {
+      const user = await User.findOne({
+        where: {
+          verificationToken: code,
+          verificationTokenExpiresAt: {
+            [Op.gt]: new Date(),
+          },
+        },
+      });
+  
+      if (!user) {
+        return res.status(400).json({ success: false, message: "Invalid or expired verification code" });
+      }
+      console.log("isVerified:", user.isVerified);
+      user.isVerified = true;
+      user.verificationToken = null;
+      user.verificationTokenExpiresAt = null;
+      await user.save();
+      await user.reload(); // ⬅ recharge l'utilisateur depuis la BDD
+      console.log("Saved + reloaded isVerified:", user.isVerified);
+  
+      //await sendWelcomeEmail(user.email, user.name);
+  
+      res.status(200).json({
+        success: true,
+        message: "Email verified successfully",
+        user: {
+          id: user.id,
+          full_name: user.full_name,
+          email: user.email,
+          username: user.username,
+          role: user.role,
+          certified: user.certified,
+          created_at: user.created_at,
+          isVerified: user.isVerified,
+          verificationToken: user.verificationToken,
+			    verificationTokenExpiresAt:user.verificationTokenExpiresAt,
+        },
+      });
+    } catch (error) {
+      console.log("error in verifyEmail ", error);
+      res.status(500).json({ success: false, message: "Server error" });
+    }
+  },
+
 
   // Login user
   login: async (req, res) => {
@@ -98,11 +170,13 @@ const userController = {
       }
 
       // Generate JWT token
-      const token = jwt.sign(
+      /*const token = jwt.sign(
         { id: user.id, username: user.username, role: user.role },
         JWT_SECRET,
         { expiresIn: '24h' }
       );
+      */
+      const token = generateTokenAndSetCookie(res, newUser.id, newUser.username, newUser.role);
 
       // Return user data (excluding password) and token
       return res.status(200).json({

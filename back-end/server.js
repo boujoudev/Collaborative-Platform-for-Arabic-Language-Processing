@@ -3,8 +3,11 @@ const morgan = require('morgan');
 const cors = require('cors');
 const db = require('./config/db');
 const { sequelize } = require('./models');
+const dotenv = require('dotenv');
 
-const port = 3000;
+dotenv.config();
+
+const port = process.env.PORT || 3000;
 
 // Create the Express app
 const app = express();

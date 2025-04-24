@@ -1,4 +1,6 @@
 import React from "react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import AddEvent from "../Event/AddEvent";
 
 const HomeFirstElement = () => {
   return (
@@ -81,9 +83,16 @@ const HomeFirstElement = () => {
         <button className="accueilButton">
           <i class="fa-solid fa-comments"></i> Forum
         </button>
-        <button className="accueilButton">
-          <i class="fa-solid fa-calendar-days"></i> Event
-        </button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <button className="accueilButton">
+              <i class="fa-solid fa-calendar-days"></i> Event
+            </button>
+          </DialogTrigger>
+          <DialogContent className="EventDialogContent">
+            <AddEvent />
+          </DialogContent>
+        </Dialog>
         <button className="accueilButton">
           <i class="fa-solid fa-file"></i> Resources
         </button>

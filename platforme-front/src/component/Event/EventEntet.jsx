@@ -1,4 +1,6 @@
 import React from "react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import AddEvent from "./AddEvent";
 
 const EventEntet = () => {
   return (
@@ -16,17 +18,25 @@ const EventEntet = () => {
         >
           Events
         </h3>
-        <button
-          className="AddEvent"
-          style={{
-            "font-family": "Arial , sans-serif",
-            color: "white",
-            marginLeft: "10px",
-            
-          }}
-        >
-          + New Event
-        </button>
+
+        <Dialog>
+          <DialogTrigger asChild>
+            <button
+              className="AddEvent"
+              style={{
+                "font-family": "Arial , sans-serif",
+                color: "white",
+                marginLeft: "10px",
+              }}
+            >
+              + New Event
+            </button>
+          </DialogTrigger>
+
+          <DialogContent className="EventDialogContent">
+            <AddEvent/>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

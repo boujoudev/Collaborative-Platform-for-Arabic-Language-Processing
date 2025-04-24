@@ -572,6 +572,108 @@ Tools
   font-family: Arial, sans-serif;
 }
 
+.ToolDialogContent {
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  padding: 0px;
+  margin: 0;
+  min-width: 550px;
+  min-height: 450px;
+  max-width: 100%; /* Limite la largeur maximale */
+  max-height: 100%; /* Limite la hauteur maximale */
+  overflow: auto; /* Ajoute un défilement si le contenu dépasse */
+}
+
+.form-container {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  height: 100%;
+  margin: 0;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.inputAddTool {
+  width: 80%;
+  height: 50px;
+  padding: 8px 12px;
+  border: 1px solid #ffffff;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.inputAddTool {
+  outline: none;
+  border-color: #1a237e;
+}
+
+.inputAddTool {
+  resize: vertical;
+}
+
+.AddToolPage {
+  background: #000000;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  float: right;
+}
+
+.AddToolPage:hover {
+  background: #1a237e;
+}
+
+.selectDomain {
+  background-color: rgb(255, 255, 255);
+  padding: 5px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  cursor: pointer;
+}
+.selectDomain:hover {
+  background-color: rgb(230, 230, 230);
+  color: #1a237a;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
+.Domain {
+  background-color: white;
+  color: black;
+}
+.Domain:hover {
+  background-color: gray;
+  color: black;
+}
+
 /* ************************************************************************ */
 /* ************************************************************************ */
 /* ************************************************************************ */
@@ -639,6 +741,131 @@ project
 /* 
 event
  */
+.EventDialogContent {
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  padding: 0px;
+  margin: 0px;
+  min-width: 550px;
+  min-height: 500px;
+  max-width: 90%; /* Limite la largeur maximale */
+  max-height: 90%; /* Limite la hauteur maximale */
+  overflow: auto; /* Ajoute un défilement si le contenu dépasse */
+}
+.event-form-container {
+  background: white;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 550px;
+  margin: 0px;
+  /* box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); */
+}
+
+.event-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 20px;
+  border-bottom: 1px solid #eee;
+}
+
+.event-form-header h2 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.event-form-close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  color: #666;
+}
+
+.event-form {
+  padding: 20px;
+}
+
+.event-type-selector {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.event-type-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.event-type-option input {
+  margin: 0;
+}
+
+.event-type-option.active {
+  color: #1a73e8;
+}
+
+.event-form-field {
+  margin-bottom: 5px;
+}
+
+.event-form-row {
+  display: flex;
+  gap: 30px;
+  margin-bottom: 5px;
+}
+
+.event-form-input,
+.event-form-select {
+  width: 90%;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.event-form-textarea {
+  width: 90%;
+  min-height: 110px;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  resize: vertical;
+}
+
+.event-form-submit {
+  background: black;
+  color: white;
+  padding: 8px 24px;
+  margin-bottom: 5px;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  float: right;
+}
+
+.event-form-submit:hover {
+  background: #1a237e;
+}
+
+.event-form-input:focus,
+.event-form-select:focus,
+.event-form-textarea:focus {
+  outline: none;
+  border-color: #1a73e8;
+}
+
 .THreepoint {
   padding: 5px;
   position: relative;
@@ -1111,8 +1338,8 @@ Profil  user activité
   inset: 0;
   z-index: 40;
   background-color: rgba(0, 0, 0, 0.3); /* Arrière-plan semi-transparent */
-  backdrop-filter: blur(1px); /* Applique un flou */
-  -webkit-backdrop-filter: blur(1px); /* Support pour Safari */
+  backdrop-filter: blur(10px); /* Applique un flou */
+  -webkit-backdrop-filter: blur(10px); /* Support pour Safari */
 }
 
 /* commentaire ////////////////////////////////////////////////////////////////////////////////// */

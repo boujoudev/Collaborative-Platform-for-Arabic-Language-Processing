@@ -1,14 +1,14 @@
-import React from 'react'
-import EventEntet from './EventEntet'
-import Event from './Event'
+import React from "react";
+import EventEntet from "./EventEntet";
+import Event from "./Event";
 
 const EventPage = () => {
   return (
     <div>
-        <EventEntet/>
-        <Event/>
+      <EventEntet />
+      <Event />
     </div>
-  )
-}
+  );
+};
 
-export default EventPage
+export default EventPage;

@@ -1,5 +1,6 @@
 import React from "react";
-
+import AddProject from "./AddProject";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 const ProjectEntet = () => {
   return (
     <div>
@@ -15,17 +16,23 @@ const ProjectEntet = () => {
         >
           Research Projects
         </h3>
-
-        <button
-          style={{
-            "font-family": "Arial , sans-serif",
-            color: "white",
-            marginLeft: "10px",
-          }}
-          className="AddProject"
-        >
-          + New Project
-        </button>
+        <Dialog>
+          <DialogTrigger asChild>
+            <button
+              style={{
+                "font-family": "Arial , sans-serif",
+                color: "white",
+                marginLeft: "10px",
+              }}
+              className="AddProject"
+            >
+              + New Project
+            </button>
+          </DialogTrigger>
+          <DialogContent className="ProjectDialogContent">
+            <AddProject />
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

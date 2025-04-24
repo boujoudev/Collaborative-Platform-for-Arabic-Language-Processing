@@ -681,6 +681,109 @@ Tools
 project
  */
 
+.ProjectDialogContent {
+  background-color: rgb(255, 255, 255);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  padding: 0px;
+  margin: 0;
+  min-width: 550px;
+  min-height: 450px;
+  max-width: 100%; /* Limite la largeur maximale */
+  max-height: 100%; /* Limite la hauteur maximale */
+  overflow: auto; /* Ajoute un défilement si le contenu dépasse */
+}
+
+.form-container {
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+  background: white;
+  padding: 20px;
+  border-radius: 8px;
+  width: 90%;
+  height: 100%;
+  margin: 0;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+}
+
+.title {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.inputAddProject {
+  width: 80%;
+  height: 50px;
+  padding: 8px 12px;
+  border: 1px solid #ffffff;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.inputAddProject {
+  outline: none;
+  border-color: #1a237e;
+}
+
+.inputAddProject {
+  resize: vertical;
+}
+
+.AddProjectPage {
+  background: #000000;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  float: right;
+}
+
+.AddProjectPage:hover {
+  background: #1a237e;
+}
+
+.selectDomain {
+  background-color: rgb(255, 255, 255);
+  margin-right: 10px;
+  padding: 5px;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+  cursor: pointer;
+}
+.selectDomain:hover {
+  background-color: rgb(230, 230, 230);
+  color: #1a237a;
+  border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -moz-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -o-border-radius: 5px;
+}
+
+.Domain {
+  background-color: white;
+  color: black;
+}
+.Domain:hover {
+  background-color: gray;
+  color: black;
+}
+
 .ProjectEntet {
   margin-bottom: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);

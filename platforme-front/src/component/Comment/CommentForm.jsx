@@ -26,7 +26,7 @@ const CommentForm = () => {
   }
 
   // Supprimer un commentaire (uniquement si c'est le commentaire de l'utilisateur actuel)
- //items hia liste ta3 comment
+  //items hia liste ta3 comment
   function handleDelete(id, items = comments) {
     return items.filter((item) => {
       if (item.id === id && item.User !== UserCurrent) return true; // Ne pas supprimer si ce n'est pas le commentaire de l'utilisateur actuel
@@ -71,7 +71,7 @@ const CommentForm = () => {
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
         />
-        <button type="submit">Add</button>
+        <button type="submit"> + Add</button>
       </form>
       <div>
         {comments.map((c) => (
@@ -111,6 +111,7 @@ const CommentItem = ({ comment, currentUser, onDelete, onEdit, onReply }) => {
             onChange={(e) => setEditContent(e.target.value)}
           />
           <button
+            className="save-NoSave-button"
             onClick={() => {
               onEdit(comment.id, editContent);
               setEditing(false);
@@ -118,7 +119,12 @@ const CommentItem = ({ comment, currentUser, onDelete, onEdit, onReply }) => {
           >
             Save
           </button>
-          <button onClick={() => setEditing(false)}>Annuler</button>
+          <button
+            className="save-NoSave-button"
+            onClick={() => setEditing(false)}
+          >
+            cancel
+          </button>
         </div>
       ) : (
         // Afficher le contenu du commentaire
@@ -147,7 +153,7 @@ const CommentItem = ({ comment, currentUser, onDelete, onEdit, onReply }) => {
               setReplying(false);
             }}
           >
-            Publier
+            Publish
           </button>
         </div>
       )}

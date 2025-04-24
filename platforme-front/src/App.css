@@ -1446,85 +1446,129 @@ Profil  user activité
 }
 
 /* commentaire ////////////////////////////////////////////////////////////////////////////////// */
+/* Styling principal pour la section des commentaires */
 .comment-section {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  max-width: 100%;
-  margin: 0px;
-  margin-bottom: 10px;
-  background: #ffffff;
-  border-radius: 10px;
-  padding: 10px;
-  box-shadow: 3px 3px 16px rgba(0, 0, 0, 0.05);
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -o-border-radius: 10px;
+  max-width: 100%; /* Limite la largeur de la section */
+  background: #ffffff; /* Fond blanc */
+  border-radius: 10px; /* Coins arrondis */
+  padding: 15px; /* Espacement interne */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
 }
+
+/* Styling pour le formulaire d'ajout de commentaire */
 .comment-section form {
-  margin-bottom: 5px;
+  margin-bottom: 10px; /* Espacement en bas du formulaire */
 }
+
 .comment-section textarea {
-  width: 95%;
-  min-height: 20px;
-  margin: 0px;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 10px;
-  border: 1px solid #bdbdbd;
-  resize: vertical;
-  -webkit-border-radius: 10px;
-  -moz-border-radius: 10px;
-  -ms-border-radius: 10px;
-  -o-border-radius: 10px;
+  width: auto;
+  min-width: 95%; /* Prend toute la largeur disponible */
+  min-height: 40px; /* Hauteur minimale */
+  padding: 10px; /* Espacement interne */
+  border-radius: 5px; /* Coins arrondis */
+  border: 1px solid #ddd; /* Bordure grise */
+  resize: vertical; /* Permet de redimensionner verticalement */
+  font-size: 14px; /* Taille de la police */
 }
+
 .comment-section button {
-  margin: 0px;
-  background: #1a237e;
-  color: #fff;
-  padding: 6px 22px;
-  border: none;
-  border-radius: 6px;
-  margin-left: 4px;
-  cursor: pointer;
+  background: #1a237e; /* Couleur de fond bleu foncé */
+  color: #fff; /* Texte blanc */
+  padding: 8px 16px; /* Espacement interne */
+  border: none; /* Pas de bordure */
+  border-radius: 5px; /* Coins arrondis */
+  cursor: pointer; /* Curseur en forme de main */
+  font-size: 14px; /* Taille de la police */
 }
+
 .comment-section button:hover {
-  background: #3949ab;
+  background: #007bd9; /* Couleur de fond bleu clair au survol */
 }
+
+/* Styling pour chaque commentaire */
 .comment-item {
-  border-left: 2px solid #e0e7ef;
-  margin: 16px 0 0 0;
-  padding-left: 16px;
+  margin-top : 5px; ;
+  margin-bottom: 10px; /* Espacement entre les commentaires */
+  padding: 5px; /* Espacement interne */
+  border-left: 3px solid #1a237e; /* Bordure gauche bleue */
+  background: #f9fafc; /* Fond gris clair */
 }
+
+/* En-tête du commentaire */
 .comment-header {
-  font-size: 12px;
-  color: #666;
-  font-weight: bold;
-  margin-bottom: 3px;
-  display: flex;
-  gap: 8px;
+  font-size: 12px; /* Taille de la police */
+  color: #666; /* Couleur grise */
+  font-weight: bold; /* Texte en gras */
+  margin-bottom: 5px; /* Espacement en bas */
+  display: flex;/* Affichage en ligne */
+  gap: 20px; 
+  justify-content: flex-start; 
+  
+ 
 }
+
+/* Contenu du commentaire */
 .comment-content {
-  font-size: 12px;
-  margin-bottom: 3px;
+  font-size: 14px; /* Taille de la police */
+  margin-bottom: 10px; /* Espacement en bas */
+  color:#000000; /* Couleur du texte */
 }
+
+/* Actions sur le commentaire */
 .comment-actions button {
-  background: none;
-  color: #1a237e;
-  border: none;
-  margin-right: 8px;
-  padding: 3px;
-  cursor: pointer;
+  background: none; /* Pas de fond */
+  color: #1a237e; /* Texte bleu */
+  border: none; /* Pas de bordure */
+  margin-right: 10px; /* Espacement entre les boutons */
+  padding: 5px; /* Espacement interne */
+  cursor: pointer; /* Curseur en forme de main */
+  font-size: 12px; /* Taille de la police */
 }
+
 .comment-actions button:hover {
-  text-decoration: underline;
-  color: white;
-  background-color: #1a237e;
+  text-decoration: underline; /* Soulignement au survol */
+  color: #ffffff; /* Texte blanc au survol */
+  background: #1a237e; /* Fond bleu au survol */
 }
+
+/* Styling pour les réponses */
 .comment-replies {
-  margin-left: 10px;
+  margin-left: 20px; /* Décalage à gauche pour indiquer une hiérarchie */
+  border-left: 2px solid #ddd; /* Bordure gauche grise */
+  padding-left: 10px; /* Espacement interne à gauche */
 }
+
 .reply-form textarea {
-  margin-bottom: 6px;
+  width: 100%; /* Prend toute la largeur disponible */
+  min-height: 40px; /* Hauteur minimale */
+  padding: 8px; /* Espacement interne */
+
+  border: 1px solid #ddd; /* Bordure grise */
+  resize: vertical; /* Permet de redimensionner verticalement */
+  font-size: 12px; /* Taille de la police */
+}
+
+.reply-form button {
+  background: #1a237e; /* Couleur de fond bleu foncé */
+  color: #fff; /* Texte blanc */
+  padding: 6px 12px; /* Espacement interne */
+  border: none; /* Pas de bordure */
+  border-radius: 5px; /* Coins arrondis */
+  cursor: pointer; /* Curseur en forme de main */
+  font-size: 12px; /* Taille de la police */
+}
+
+.reply-form button:hover {
+  background: #3949ab; /* Couleur de fond bleu clair au survol */
+}
+
+.save-NoSave-button {
+  background: #1a237e;
+  color: white ; 
+  border: none; /* Pas de bordure */
+  margin-right: 10px; /* Espacement entre les boutons */
+  margin-bottom: 5px;
+  padding: 3px !important; /* Espacement interne */
+  cursor: pointer !important;/* forcer le style avec !important */
+  font-size: 12px !important; /* Taille de la police */
 }

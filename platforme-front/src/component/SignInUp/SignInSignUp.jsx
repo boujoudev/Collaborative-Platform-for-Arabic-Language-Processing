@@ -39,7 +39,6 @@ const SignInSignUp = () => {
 
       <DialogContent>
         {select === "SignIn" ? <SignInPage /> : <SignUpPage />}
-        {select === "CodeVerification" ? <CodeVerification /> : null}
       </DialogContent>
     </Dialog>
   );

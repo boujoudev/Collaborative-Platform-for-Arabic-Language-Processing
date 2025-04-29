@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import CodeVerification from "./CodeVerification";
 const SignUpPage = () => {
+  const [SendInfo, setSendInfo] = useState(false);
   const [show, setShow] = useState(false);
   const [FullName, setFullName] = useState("");
   const [PassWord, setPassWord] = useState("");
@@ -9,27 +12,20 @@ const SignUpPage = () => {
     PassWord: "",
     Email: "",
   });
-  const [TryToCreate, setTryTryToCreate] = useState(false);
+
+  useEffect(() => {
+    if (SendInfo) {
+      setEmail("");
+      setFullName("");
+      setPassWord("");
+    }
+  }, [UserInfo, SendInfo]);
 
   function ChangeShowButton() {
     setShow((prev) => !prev);
   }
   return (
-    <form
-      onSubmit={
-        (e) => {
-          e.preventDefault;
-          setUserInfo({ FullName, PassWord, Email });
-          console.log(UserInfo);
-          setEmail("");
-          setFullName("");
-          setPassWord("");
-          console.log(UserInfo);
-          setTryTryToCreate(true);
-        } // handleSubmit()  // setUserInfo({FullName,PassWord,Email})  // console.log(UserInfo)  // setFullName("")  // setPassWord("")  // setEmail("");
-      }
-      className=" SignUpPage"
-    >
+    <form className=" SignUpPage">
       <h1>Name Platform</h1>
       <h2 style={{ color: "black" }}>Create an account</h2>
       <div className="InfoInput">
@@ -87,9 +83,23 @@ const SignUpPage = () => {
         </div>
       </div>
 
-      <button type="submit" className="ButtonCreateAccount">
-        Create an account
-      </button>
+      <Dialog>
+        <DialogTrigger asChild>
+          <button
+            type="button"
+            onClick={() => {
+              setUserInfo({ FullName, PassWord, Email });
+              setSendInfo(!SendInfo);
+            }}
+            className="ButtonCreateAccount"
+          >
+            Create an account
+          </button>
+        </DialogTrigger>
+        <DialogContent>
+          <CodeVerification />
+        </DialogContent>
+      </Dialog>
       <p className="login-text">
         Already have an account?{" "}
         <a href="#" className="login-link">

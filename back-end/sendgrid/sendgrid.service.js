@@ -22,14 +22,15 @@ const sendVerificationEmail = async (email, verificationToken) => {
   }
 };
 
-/*const sendPasswordResetEmail = async (email, resetURL) => {
+const sendPasswordResetEmail = async (email, resetURL) => {
   try {
-    await sgMail.send({
+    const response = await sgMail.send({
       to: email,
       from: sender,
       subject: 'Reset your password',
       html: PASSWORD_RESET_REQUEST_TEMPLATE.replace("{resetURL}", resetURL),
     });
+    console.log('Password Reset email sent:', response[0].statusCode);
   } catch (error) {
     console.error('Error sending reset email:', error.response?.body || error.message);
     throw new Error(`Error sending password reset email: ${error}`);
@@ -38,21 +39,22 @@ const sendVerificationEmail = async (email, verificationToken) => {
 
 const sendResetSuccessEmail = async (email) => {
   try {
-    await sgMail.send({
+    const response = await sgMail.send({
       to: email,
       from: sender,
       subject: 'Password Reset Successful',
       html: PASSWORD_RESET_SUCCESS_TEMPLATE,
     });
+    console.log('Success Password Reset email sent:', response[0].statusCode);
   } catch (error) {
     console.error('Error sending success email:', error.response?.body || error.message);
     throw new Error(`Error sending success email: ${error}`);
   }
 };
-*/
+
 module.exports = {
   sendVerificationEmail,
-  /*sendPasswordResetEmail,
+  sendPasswordResetEmail,
   sendResetSuccessEmail,
-  */
+  
 };

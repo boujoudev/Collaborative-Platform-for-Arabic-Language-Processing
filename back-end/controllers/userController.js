@@ -1,6 +1,7 @@
 const { User, Sequelize } = require('../models');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const crypto = require('crypto');
 const { Op } = Sequelize;
 
 const { generateTokenAndSetCookie } = require('../service/generateTokenAndSetCookie.js');
@@ -12,6 +13,7 @@ const {
 	sendVerificationEmail,
 	//sendWelcomeEmail,
 } = require('../sendgrid/sendgrid.service.js');
+const { where } = require('sequelize');
 
 
 // Secret key for JWT (should be in environment variables in production)
@@ -176,7 +178,7 @@ const userController = {
         { expiresIn: '24h' }
       );
       */
-      const token = generateTokenAndSetCookie(res, newUser.id, newUser.username, newUser.role);
+      const token = generateTokenAndSetCookie(res, user.id, user.username, user.role);
 
       // Return user data (excluding password) and token
       return res.status(200).json({
@@ -195,6 +197,13 @@ const userController = {
       console.error('Error logging in user:', error);
       return res.status(500).json({ message: 'Internal server error' });
     }
+  },
+
+
+  // Logout user
+  logout: async (req, res) => {
+    res.clearCookie("token");
+    res.status(200).json({ success: true, message: "Logged out successfully" });
   },
 
   // Get current user profile
@@ -236,6 +245,70 @@ const userController = {
     } catch (error) {
       console.error('Error updating user profile:', error);
       return res.status(500).json({ message: 'Internal server error' });
+    }
+  },
+
+
+  // Request password reset
+  requestPasswordReset: async (req, res) => {
+    const { email } = req.body;
+    try {
+      const user = await User.findOne({ where: { email } });
+  
+      if (!user) {
+        return res.status(400).json({ success: false, message: "User not found" });
+      }
+  
+      // Generate reset token
+      const resetToken = crypto.randomBytes(20).toString("hex");
+      const resetTokenExpiresAt = Date.now() + 1 * 60 * 60 * 1000; // 1 hour
+  
+      user.resetPasswordToken = resetToken;
+      user.resetPasswordExpiresAt = resetTokenExpiresAt;
+  
+      await user.save();
+  
+      // send email
+      await sendPasswordResetEmail(user.email, `${process.env.CLIENT_URL}/reset-password/${resetToken}`);
+  
+      res.status(200).json({ success: true, message: "Password reset link sent to your email" });
+    } catch (error) {
+      console.log("Error in forgotPassword ", error);
+      res.status(400).json({ success: false, message: error.message });
+    }
+
+  },
+
+  // Reset password
+  resetPassword: async (req, res) => {
+    try {
+      const { token } = req.params;
+      const { password } = req.body;
+  
+      const user = await User.findOne({where:{
+        resetPasswordToken: token,
+        resetPasswordExpiresAt: { [Op.gt]: new Date() } // Check if token is not expired,
+      }});
+  
+      if (!user) {
+        return res.status(400).json({ success: false, message: "Invalid or expired reset token" });
+      }
+  
+      // update password
+      const salt = await bcrypt.genSalt(10);
+      const hashedPassword = await bcrypt.hash(password, salt);
+  
+      user.password = hashedPassword;
+      user.resetPasswordToken = undefined;
+      user.resetPasswordExpiresAt = undefined;
+      await user.save();
+  
+      await sendResetSuccessEmail(user.email);
+  
+      res.status(200).json({ success: true, message: "Password reset successful" });
+    } catch (error) {
+      console.log("Error in resetPassword ", error);
+      res.status(400).json({ success: false, message: error.message });
     }
   },
 

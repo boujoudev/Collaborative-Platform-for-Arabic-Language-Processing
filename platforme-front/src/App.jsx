@@ -1,9 +1,9 @@
 import "./App.css";
 import SIdeBarre1 from "./component/SIdeBarre1";
 import BarreDERecherche from "./component/BarreDERecherche";
-import SignInSignUp from "./component/SignInSignUp";
-import SignUpPage from "./component/SignUpPage";
-import SignInPage from "./component/SignInPage";
+import SignInSignUp from "./component/SignInUp/SignInSignUp";
+import SignUpPage from "./component/SignInUp/SignUpPage";
+import SignInPage from "./component/SignInUp/SignInPage";
 import HomeFirstElement from "./component/Home/HomeFirstElement";
 import ForumEntet from "./component/forum/ForumEntet";
 import Forum from "./component/forum/Forum";
@@ -34,6 +34,8 @@ import InformationPage from "./component/Profil/InformationPage.jsx";
 import ProfilProject from "./component/Profil/ProfilProject.jsx";
 import ProfilActivité from "./component/Profil/ProfilActivité.jsx";
 import React, { useState } from "react";
+import ForumEntetIn from "./component/forum/ForumEntetIn";
+import CodeVerification from "./component/SignInUp/CodeVerification";
 
 import CommentForm from "./component/Comment/CommentForm";
 
@@ -52,7 +54,9 @@ function App() {
         <SIdeBarre1 />
       </aside>
       <main>
-        <CommentForm />
+        <ForumEntetIn />
+
+        <CodeVerification/>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/Forum" element={<ForumPage />} />

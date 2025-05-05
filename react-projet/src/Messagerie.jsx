@@ -103,6 +103,7 @@ function Messagerie() {
     try {
       const sentMessage = await sendMessage(selectedMessenger, newMessage);
       if (sentMessage) {
+        // Ajouter le message à la liste des messages
         setMessages(prev => [...prev, {
           ...sentMessage,
           sender_id: currentUser.id,
@@ -113,12 +114,12 @@ function Messagerie() {
             full_name: currentUser.name
           }
         }]);
-        setConversations(prev => prev.map(conv => 
-          conv.user.id === selectedMessenger ? { 
-            ...conv, 
-            last_message: { content: newMessage, created_at: new Date().toISOString() }
-          } : conv
-        ));
+
+        // Rafraîchir la liste des conversations
+        const updatedConversations = await fetchConversations();
+        setConversations(updatedConversations);
+
+        // Réinitialiser le champ de saisie
         setNewMessage('');
       }
     } catch (error) {

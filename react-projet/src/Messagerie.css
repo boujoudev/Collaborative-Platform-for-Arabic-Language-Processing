@@ -231,7 +231,7 @@ ENVOYER UN MESSAGE  */
     background-color: #E7EAEC ;
     border-radius: 20px 0 0 20px;
     resize: none;
-    padding: 12.5px 15px;
+    padding: 11px 15px;
     height: 41px;
     width: 240px;
 }
@@ -268,4 +268,14 @@ textarea:focus {
 .square-msg{
     display: flex;
     flex-direction: row;
+}
+
+
+/* EMOJI PICKER CONTAINER  */
+.emoji-picker-container{
+    position: absolute;
+    bottom: 60px;
+    right: 40px;
+    z-index: 1000;
+    
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { format } from 'date-fns';
 import { jwtDecode } from 'jwt-decode';
+import EmojiPicker from 'emoji-picker-react'; // Importer Emoji Picker
 import newChat from './assets/chat-new-svgrepo-com.svg';
 import infoButton from './assets/info-circle-svgrepo-com.svg';
 import closeButton from './assets/close-lg-svgrepo-com.svg';
@@ -79,6 +80,7 @@ function Messagerie() {
   const [messages, setMessages] = useState([]);
   const [selectedMessenger, setSelectedMessenger] = useState(null);
   const [newMessage, setNewMessage] = useState('');
+  const [showEmojiPicker, setShowEmojiPicker] = useState(false); // État pour afficher ou masquer l'Emoji Picker
 
   useEffect(() => {
     const loadConversations = async () => {
@@ -127,86 +129,103 @@ function Messagerie() {
     }
   };
 
-  return (
-    <div className='messagerie-container'>
-      <header className='main-header'>
-        <div className='main-header-left'>
-          <span>Chats</span>
-          <button className='newchat-button'><img className='img-button' src={newChat} alt="new chat" /></button>
-        </div>
-        <div className='main-header-right'>
-          <button className='header-button'><img className='img-button' src={infoButton} alt="info" /></button>
-          <button className='header-button'><img className='img-button' src={closeButton} alt="close" /></button>
-        </div>
-      </header>
+  // Gérer l'ajout d'un emoji
+  const handleEmojiClick = (emojiData) => {
+    setNewMessage((prev) => prev + emojiData.emoji); // Ajouter l'emoji au message
+    setShowEmojiPicker(false); // Masquer l'Emoji Picker après sélection
+  };
 
-      <div className='conv-container'>
-        <div className='left-side'>
-          {conversations.map(conv => (
+  return (
+    
+  <div className='messagerie-container'>
+    <header className='main-header'>
+      <div className='main-header-left'>
+        <span>Chats</span>
+        <button className='newchat-button'><img className='img-button' src={newChat} alt="new chat" /></button>
+      </div>
+      <div className='main-header-right'>
+        <button className='header-button'><img className='img-button' src={infoButton} alt="info" /></button>
+        <button className='header-button'><img className='img-button' src={closeButton} alt="close" /></button>
+      </div>
+    </header>
+
+    <div className='conv-container'>
+      <div className='left-side'>
+        {conversations.map(conv => (
+          <div 
+            key={conv.id} 
+            className={`conv ${selectedMessenger === conv.user.id ? 'selected' : ''}`}
+            onClick={() => setSelectedMessenger(conv.user.id)}
+          >
+            <img src={picConv} alt="conversation" />
+            <div className='conv-c'>
+              <div className='conv-span'>
+                <span>{conv.user.full_name}</span>
+                <span>{format(new Date(conv.timestamp), 'HH:mm')}</span>
+              </div>
+              <p>{conv.last_message?.content || 'Nouvelle conversation'}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className='right-side'>
+        <header className='header-right-side'>
+          <span className='name-conv'>
+            {selectedMessenger 
+              ? conversations.find(c => c.user.id === selectedMessenger)?.user.full_name
+              : 'Sélectionnez une conversation'}
+          </span>
+          <button className='header-button'><img src={settingsButton} alt="settings" /></button>
+        </header>
+
+        <main className='main-right-side'>
+          {messages.map(msg => (
             <div 
-              key={conv.id} 
-              className={`conv ${selectedMessenger === conv.user.id ? 'selected' : ''}`}
-              onClick={() => setSelectedMessenger(conv.user.id)}
+              key={msg.id} 
+              className={`message ${msg.sender_id === currentUser.id ? 'sent' : 'received'}`}
             >
-              <img src={picConv} alt="conversation" />
-              <div className='conv-c'>
-                <div className='conv-span'>
-                  <span>{conv.user.full_name}</span>
-                  <span>{format(new Date(conv.timestamp), 'HH:mm')}</span>
+              <img src={picConv} alt="" />
+              <div className='message-droite'>
+                <div className='message-span'>
+                  <span>{msg.sender?.full_name || 'Utilisateur inconnu'}</span>
+                  <span>{msg.created_at}</span>
                 </div>
-                <p>{conv.last_message?.content || 'Nouvelle conversation'}</p>
+                <p>{msg.content}</p>
               </div>
             </div>
           ))}
-        </div>
+        </main>
 
-        <div className='right-side'>
-          <header className='header-right-side'>
-            <span className='name-conv'>
-              {selectedMessenger 
-                ? conversations.find(c => c.user.id === selectedMessenger)?.user.full_name
-                : 'Sélectionnez une conversation'}
-            </span>
-            <button className='header-button'><img src={settingsButton} alt="settings" /></button>
-          </header>
-
-          <main className='main-right-side'>
-            {messages.map(msg => (
-              <div 
-                key={msg.id} 
-                className={`message ${msg.sender_id === currentUser.id ? 'sent' : 'received'}`}
+        <footer className='footer-right-side'>
+          <button className='footer-button'><img src={cameraButton} alt="camera" /></button>
+          <div className='square-msg'>
+            <textarea
+              placeholder='Message'
+              value={newMessage}
+              onChange={(e) => setNewMessage(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && handleSend()}
+            />
+            <div className='footer-button-container'>
+              <button 
+                className='footer-button' 
+                onClick={() => setShowEmojiPicker((prev) => !prev)} // Afficher ou masquer l'Emoji Picker
               >
-                <img src={picConv} alt="" />
-                <div className='message-droite'>
-                  <div className='message-span'>
-                    <span>{msg.sender?.full_name || 'Utilisateur inconnu'}</span>
-                    <span>{msg.created_at}</span>
-                  </div>
-                  <p>{msg.content}</p>
-                </div>
-              </div>
-            ))}
-          </main>
-
-          <footer className='footer-right-side'>
-            <button className='footer-button'><img src={cameraButton} alt="camera" /></button>
-            <div className='square-msg'>
-              <textarea
-                placeholder='Message'
-                value={newMessage}
-                onChange={(e) => setNewMessage(e.target.value)}
-                onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-              />
-              <div className='footer-button-container'>
-                <button className='footer-button'><img src={gifButton} alt="gif" /></button>
-                <button className='footer-button'><img src={emojiButton} alt="emoji" /></button>
-              </div>
+                <img src={emojiButton} alt="emoji" />
+              </button>
+              <button className='footer-button'><img src={gifButton} alt="gif" /></button>
             </div>
-            <button className='footer-button' onClick={handleSend}><img src={sendButton} alt="send" /></button>
-          </footer>
-        </div>
+            {showEmojiPicker && (
+              <div className="emoji-picker-container">
+                <EmojiPicker onEmojiClick={handleEmojiClick} />
+              </div>
+            )}
+          </div>
+          <button className='footer-button' onClick={handleSend}><img src={sendButton} alt="send" /></button>
+        </footer>
       </div>
     </div>
+  </div>
   );
 }
 

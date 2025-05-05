@@ -198,7 +198,7 @@
 }
 .message span:nth-child(2){
     opacity: 0.5;
-    font-size: 14px;
+    font-size: 12px;
 }
 .message img{
     width: 35px;
@@ -209,6 +209,11 @@
 .message p{
     font-size: 14px;
     font-weight: 400;
+    max-width: 100%; 
+    word-break: break-word;
+}
+.message-droite{
+    max-width: 300px;
 }
 
 

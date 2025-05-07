@@ -66,7 +66,7 @@ const Forum = () => {
               fontWeight: "bold",
             }}
           >
-            Name de chercheur
+            Name forum
           </p>
           <p
             style={{
@@ -77,7 +77,7 @@ const Forum = () => {
               "font-family": "Arial , sans-serif",
             }}
           >
-            date de publication
+            user Name
           </p>
         </div>
         <button

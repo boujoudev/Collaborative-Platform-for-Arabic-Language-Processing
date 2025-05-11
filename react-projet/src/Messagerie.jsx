@@ -220,26 +220,29 @@ function Messagerie() {
           </header>
 
           <main className='main-right-side'>
-            {messages.map(msg => (
-              <div 
-                key={msg.id} 
-                className={`message ${msg.sender_id === currentUser.id ? 'sent' : 'received'}`}
-              >
-                <img src={picConv} alt="" />
-                <div className='message-droite'>
-                  <div className='message-span'>
-                    <span>{msg.sender?.full_name || 'Utilisateur inconnu'}</span>
-                    <span>{msg.created_at}</span>
-                  </div>
-                  {/* Vérifie si le contenu est une URL de GIF */}
+            <div className="imessage">
+              {messages.map(msg => (
+                <div key={msg.id}>
                   {msg.content.startsWith('https://media.giphy.com/') || msg.content.includes('giphy.com') ? (
-                    <img src={msg.content} alt="GIF" className="gif-message" />
+                    // Pour les GIFs
+                    <div className={msg.sender_id === currentUser.id ? 'from-me' : 'from-them'}>
+                      <img src={msg.content} alt="GIF" className="gif-message" />
+                    </div>
                   ) : (
-                    <p>{msg.content}</p>
+                    // Pour les messages texte
+                    <p 
+                      className={`
+                        ${msg.sender_id === currentUser.id ? 'from-me' : 'from-them'}
+                        ${messages[messages.indexOf(msg) + 1]?.sender_id === msg.sender_id ? 'no-tail' : ''}
+                        ${messages[messages.indexOf(msg) - 1]?.sender_id === msg.sender_id ? 'margin-b_none' : ''}
+                      `}
+                    >
+                      {msg.content}
+                    </p>
                   )}
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
           </main>
 
           <footer className='footer-right-side'>

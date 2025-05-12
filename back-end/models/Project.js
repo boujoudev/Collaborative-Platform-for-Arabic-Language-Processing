@@ -48,6 +48,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'project_id',
         as: 'requests'
       });
+      Project.hasMany(models.Resource, {
+  foreignKey: 'resource_id',
+  constraints: false,
+  scope: {
+    type: 'project'
+  },
+  as: 'resources'
+});
       Project.hasMany(models.ProjectFile, {
         foreignKey: 'project_id',
         as: 'files'

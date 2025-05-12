@@ -24,7 +24,14 @@ module.exports = (sequelize, DataTypes) => {
       createdAt: 'created_at',
       updatedAt: false
     });
-  
+  Course.hasMany(models.Resource, {
+  foreignKey: 'resource_id',
+  constraints: false,
+  scope: {
+    type: 'course'
+  },
+  as: 'resources'
+});
     Course.associate = (models) => {
       Course.belongsTo(models.User, {
         foreignKey: 'user_id',

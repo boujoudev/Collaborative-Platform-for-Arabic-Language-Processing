@@ -27,6 +27,14 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'corpus_id',
         onDelete: 'CASCADE'
       });
+        Corpus.hasMany(models.Resource, {
+         foreignKey: 'resource_id',
+           constraints: false,
+          scope: {
+        type: 'corpus'
+      },
+  as: 'resources'
+});
       CorpusFile.belongsTo(models.User, {
         foreignKey: 'user_id',
         onDelete: 'CASCADE'

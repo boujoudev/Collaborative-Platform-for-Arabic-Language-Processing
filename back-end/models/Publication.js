@@ -33,6 +33,14 @@ module.exports = (sequelize, DataTypes) => {
         }
       ]
     });
+    Publication.hasMany(models.Resource, {
+  foreignKey: 'resource_id',
+  constraints: false,
+  scope: {
+    type: 'publication'
+  },
+  as: 'resources'
+});
   
     Publication.associate = (models) => {
       Publication.belongsTo(models.User, {

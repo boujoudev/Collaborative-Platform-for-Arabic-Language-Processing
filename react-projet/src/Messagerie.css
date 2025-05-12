@@ -149,6 +149,11 @@
     text-overflow: ellipsis;
     font-size: 13px;
 }
+
+.envoye-il-ya{
+  opacity: 0.7;
+}
+
 /* PARTIE DE DROITE  */
 .right-side{
     width: 414px;
@@ -186,7 +191,32 @@
     display: none;
   }
 
+  /* PARTIE DROITE SELECTED CONV = NONE  */
+.empty-conversation{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
+.empty-conversation img{
+    width: 19px;
+    height: 19px;
+}
+.empty-conversation button{
+  background-color: #1A237E;
+  border: none;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: #FFFFFF;
+  padding: 5px 15px;
+  margin-top: 10px;
+  gap: 5px;
+}
   /* MESSAGERIE IMESSAGES */
   .imessage {
   background-color: #fff;
@@ -211,6 +241,9 @@
   position: relative;
   word-wrap: break-word;
   font-size: 15px;
+}
+.imessage p span.emoji {
+  font-family: "NotoEmoji", sans-serif;
 }
 
 .imessage p::before,
@@ -309,9 +342,8 @@ p[class^="from-"].emoji::before {
 
 /* GIF IMG  */
 .imessage .gif-message {
-  width: 200px;
+  width: 150px;
   height: auto;
-
 }
 
 .imessage div.from-me {
@@ -319,6 +351,35 @@ p[class^="from-"].emoji::before {
     margin-left: auto;
     max-width: 70%;
 }
+
+/* POUR LES EMOJIS  */
+.emoji-only {
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
+  font-size: 2.5rem !important;
+  padding: 0 !important;
+  font-family: "NotoEmoji" ;
+}
+
+.emoji-only::before,
+.emoji-only::after {
+  display: none !important;
+}
+
+/* Pour les messages emoji from-me */
+p.from-me.emoji-only {
+  background: none !important;
+  color: inherit !important;
+}
+
+/* Pour les messages emoji from-them */
+p.from-them.emoji-only {
+  background: none !important;
+}
+
+
+
 
 /* PARTIE DE DROITE, FOOTER, 
 ENVOYER UN MESSAGE  */
@@ -408,4 +469,5 @@ textarea::-webkit-scrollbar {
 .gif-picker-container::-webkit-scrollbar {
     display: none; 
   }
+
 

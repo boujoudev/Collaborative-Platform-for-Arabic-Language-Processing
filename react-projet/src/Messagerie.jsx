@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { format } from 'date-fns';
 import { jwtDecode } from 'jwt-decode';
 import EmojiPicker from 'emoji-picker-react'; // Importer Emoji Picker
@@ -88,6 +88,9 @@ function Messagerie() {
   const [showEmojiPicker, setShowEmojiPicker] = useState(false); 
   const [showGifPicker, setShowGifPicker] = useState(false); 
 
+  // Ajouter une référence pour l'intervalle
+  const pollingInterval = useRef(null);
+
   useEffect(() => {
     const loadConversations = async () => {
       const fetchedConversations = await fetchConversations();
@@ -97,13 +100,29 @@ function Messagerie() {
   }, []);
 
   useEffect(() => {
-    const loadMessages = async () => {
-      if (selectedMessenger) {
-        const fetchedMessages = await fetchMessages(selectedMessenger);
-        setMessages(fetchedMessages);
-      }
-    };
-    loadMessages();
+    if (selectedMessenger) {
+      // Charger les messages initialement
+      const loadMessages = async () => {
+        try {
+          const fetchedMessages = await fetchMessages(selectedMessenger);
+          setMessages(fetchedMessages);
+        } catch (error) {
+          console.error('Erreur lors du chargement des messages:', error);
+        }
+      };
+      
+      loadMessages();
+
+      // Mettre en place le polling
+      pollingInterval.current = setInterval(loadMessages, 1000); // Rafraîchir toutes les secondes
+
+      // Nettoyer l'intervalle quand le composant est démonté ou quand selectedMessenger change
+      return () => {
+        if (pollingInterval.current) {
+          clearInterval(pollingInterval.current);
+        }
+      };
+    }
   }, [selectedMessenger]);
 
   const handleSend = async () => {

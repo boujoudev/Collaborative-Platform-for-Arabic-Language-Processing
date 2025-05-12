@@ -217,6 +217,21 @@
   margin-top: 10px;
   gap: 5px;
 }
+
+
+/* MESSAGES DATE  */
+.imessage .message-date{
+  margin-top: 30px;
+  margin-bottom: 10px;
+  opacity: 0.7;
+  align-items: center;
+  font-size: 10.5px;
+  font-weight: 500;
+}
+
+.imessage :nth-child(1){
+  margin: 0;
+}
   /* MESSAGERIE IMESSAGES */
   .imessage {
   background-color: #fff;
@@ -278,20 +293,20 @@ p.from-me::after {
 }
 
 p[class^="from-"] {
-  margin: 0.5rem 0;
+  margin: 1px 0;
   width: fit-content;
 }
 
 p.from-me ~ p.from-me {
-  margin: 0.25rem 0 0;
+  margin: 1px 0;
 }
 
 p.from-me ~ p.from-me:not(:last-child) {
-  margin: 0.25rem 0 0;
+  margin: 1px 0;
 }
 
 p.from-me ~ p.from-me:last-child {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1px;
 }
 
 p.from-them {
@@ -344,6 +359,9 @@ p[class^="from-"].emoji::before {
 .imessage .gif-message {
   width: 150px;
   height: auto;
+  margin-top: 1px;
+  border-radius: 15px;
+  margin-bottom: 1px;
 }
 
 .imessage div.from-me {

@@ -52,7 +52,8 @@ async function fetchMessages(messengerId) {
     const data = await response.json();
     return data.map(msg => ({
       ...msg,
-      created_at: format(new Date(msg.created_at), 'HH:mm'),
+      created_at: msg.created_at, // Garde le timestamp complet
+      display_time: format(new Date(msg.created_at), 'HH:mm'), // Ajoute un champ pour l'heure d'affichage
       sender: msg.sender_id === currentUser.id 
         ? { ...msg.sender, full_name: currentUser.name } 
         : msg.sender
@@ -99,9 +100,7 @@ const isOnlyEmojis = (str) => {
   return emojiRegex.test(str) && !hasNumbers && emojiCount <= 5;
 };
 
-// Modifie également la fonction wrapEmojisInSpans
 const wrapEmojisInSpans = (content) => {
-  // Nouvelle regex qui exclut spécifiquement les chiffres
   const emojiRegex = /(\p{Emoji})/gu;
   
   return content.split(emojiRegex).map((part, index) => {
@@ -119,27 +118,38 @@ const getTimeElapsed = (timestamp) => {
   const diffInMinutes = Math.floor((now - messageTime) / (1000 * 60));
   const diffInHours = Math.floor(diffInMinutes / 60);
   const diffInDays = Math.floor(diffInHours / 24);
-
   // Moins d'une minute
   if (diffInMinutes < 1) {
     return "Envoyé à l'instant";
   }
-
   // Minutes (1-59 minutes)
   if (diffInMinutes < 60) {
     if (diffInMinutes === 1) return "Envoyé il y a 1 min";
     return `Envoyé il y a ${diffInMinutes} min`;
   }
-
   // Heures (1-23 heures)
   if (diffInHours < 24) {
     if (diffInHours === 1) return "Envoyé il y a 1 h";
     return `Envoyé il y a ${diffInHours} h`;
   }
-
   // Jours
   if (diffInDays === 1) return "Envoyé il y a 1 j";
   return `Envoyé il y a ${diffInDays} j`;
+};
+
+// Ajouter cette fonction helper pour formater la date
+const formatMessageDate = (timestamp) => {
+  const date = new Date(timestamp);
+  const today = new Date();
+  const yesterday = new Date(today);
+  yesterday.setDate(yesterday.getDate() - 1);
+  if (date.toDateString() === today.toDateString()) {
+    return "Aujourd'hui";
+  } else if (date.toDateString() === yesterday.toDateString()) {
+    return "Hier";
+  } else {
+    return format(date, 'd MMMM yyyy');
+  }
 };
 
 function Messagerie() {
@@ -149,7 +159,6 @@ function Messagerie() {
   const [newMessage, setNewMessage] = useState('');
   const [showEmojiPicker, setShowEmojiPicker] = useState(false); 
   const [showGifPicker, setShowGifPicker] = useState(false); 
-
   // Ajouter une référence pour l'intervalle
   const pollingInterval = useRef(null);
 
@@ -172,12 +181,9 @@ function Messagerie() {
           console.error('Erreur lors du chargement des messages:', error);
         }
       };
-      
       loadMessages();
-
       // Mettre en place le polling
       pollingInterval.current = setInterval(loadMessages, 1000); // Rafraîchir toutes les secondes
-
       // Nettoyer l'intervalle quand le composant est démonté ou quand selectedMessenger change
       return () => {
         if (pollingInterval.current) {
@@ -192,22 +198,23 @@ function Messagerie() {
     try {
       const sentMessage = await sendMessage(selectedMessenger, newMessage);
       if (sentMessage) {
-        
+        // Modifier cette partie pour inclure un timestamp complet
         setMessages(prev => [...prev, {
           ...sentMessage,
           sender_id: currentUser.id,
           receiver_id: selectedMessenger,
-          created_at: format(new Date(), 'HH:mm'),
+          // Utiliser un timestamp complet au lieu de juste l'heure
+          created_at: new Date().toISOString(),
+          // Ajouter display_time pour l'affichage de l'heure
+          display_time: format(new Date(), 'HH:mm'),
           sender: { 
             id: currentUser.id, 
             full_name: currentUser.name
           }
         }]);
 
-
         const updatedConversations = await fetchConversations();
         setConversations(updatedConversations);
-
 
         setNewMessage('');
       }
@@ -215,7 +222,6 @@ function Messagerie() {
       console.error('Erreur:', error);
     }
   };
-
 
   const handleEmojiClick = (emojiData) => {
     setNewMessage((prev) => prev + emojiData.emoji); 
@@ -225,15 +231,13 @@ function Messagerie() {
   // Gérer l'ajout d'un GIF
   const handleGifClick = async (gif, e) => {
     e.preventDefault(); // Empêche la redirection vers le site de Giphy
-
     if (!selectedMessenger) return;
-
     try {
       // Envoyer le GIF via l'API
       const sentMessage = await sendMessage(selectedMessenger, gif.images.original.url);
       if (sentMessage) {
         // Ajouter le GIF directement à la liste des messages
-        setMessages(prev => [...prev, {
+        setMessages(prev => [...prev, { 
           ...sentMessage,
           sender_id: currentUser.id,
           receiver_id: selectedMessenger,
@@ -244,11 +248,9 @@ function Messagerie() {
             full_name: currentUser.name
           }
         }]);
-
         // Rafraîchir la liste des conversations
         const updatedConversations = await fetchConversations();
         setConversations(updatedConversations);
-
         // Masquer le sélecteur de GIFs
         setShowGifPicker(false);
       }
@@ -269,7 +271,6 @@ function Messagerie() {
           <button className='header-button'><img className='img-button' src={closeButton} alt="close" /></button>
         </div>
       </header>
-
       <div className='conv-container'>
         <div className='left-side'>
           {conversations.map(conv => (
@@ -290,7 +291,6 @@ function Messagerie() {
                       <span className='envoye-il-ya'>
                         {getTimeElapsed(conv.last_message.created_at)}
                       </span>
-                      
                     ) : (
                       conv.last_message.content
                     )
@@ -302,7 +302,6 @@ function Messagerie() {
             </div>
           ))}
         </div>
-
         <div className='right-side'>
           {selectedMessenger ? (
             // Contenu normal quand une conversation est sélectionnée
@@ -315,34 +314,45 @@ function Messagerie() {
                   <img src={settingsButton} alt="settings" />
                 </button>
               </header>
-
               <main className='main-right-side'>
                 <div className="imessage">
-                  {messages.map(msg => (
-                    <div key={msg.id}>
-                      {msg.content.startsWith('https://media.giphy.com/') || msg.content.includes('giphy.com') ? (
-                        // Pour les GIFs
-                        <div className={msg.sender_id === currentUser.id ? 'from-me' : 'from-them'}>
-                          <img src={msg.content} alt="GIF" className="gif-message" />
+                  {messages.map((msg, index) => {
+                    // Vérifier si nous devons afficher la date
+                    const showDate = index === 0 || 
+                      new Date(msg.created_at).toDateString() !== 
+                      new Date(messages[index - 1].created_at).toDateString();
+                    return (
+                      <React.Fragment key={msg.id}>
+                        {showDate && (
+                          <div className="message-date">
+                            {formatMessageDate(msg.created_at)}
+                          </div>
+                        )}
+                        <div>
+                          {msg.content.startsWith('https://media.giphy.com/') || msg.content.includes('giphy.com') ? (
+                            // Pour les GIFs
+                            <div className={msg.sender_id === currentUser.id ? 'from-me' : 'from-them'}>
+                              <img src={msg.content} alt="GIF" className="gif-message" />
+                            </div>
+                          ) : (
+                            // Pour les messages texte
+                            <p 
+                              className={`
+                                ${msg.sender_id === currentUser.id ? 'from-me' : 'from-them'}
+                                ${isOnlyEmojis(msg.content) ? 'emoji-only' : ''}
+                                ${messages[messages.indexOf(msg) + 1]?.sender_id === msg.sender_id ? 'no-tail' : ''}
+                                ${messages[messages.indexOf(msg) - 1]?.sender_id === msg.sender_id ? 'margin-b_none' : ''}
+                              `}
+                            >
+                              {isOnlyEmojis(msg.content) ? msg.content : wrapEmojisInSpans(msg.content)}
+                            </p>
+                          )}
                         </div>
-                      ) : (
-                        // Pour les messages texte
-                        <p 
-                          className={`
-                            ${msg.sender_id === currentUser.id ? 'from-me' : 'from-them'}
-                            ${isOnlyEmojis(msg.content) ? 'emoji-only' : ''}
-                            ${messages[messages.indexOf(msg) + 1]?.sender_id === msg.sender_id ? 'no-tail' : ''}
-                            ${messages[messages.indexOf(msg) - 1]?.sender_id === msg.sender_id ? 'margin-b_none' : ''}
-                          `}
-                        >
-                          {isOnlyEmojis(msg.content) ? msg.content : wrapEmojisInSpans(msg.content)}
-                        </p>
-                      )}
-                    </div>
-                  ))}
+                      </React.Fragment>
+                    );
+                  })}
                 </div>
               </main>
-
               <footer className='footer-right-side'>
                 <button className='footer-button'><img src={cameraButton} alt="camera" /></button>
                 <div className='square-msg'>

@@ -1,14 +1,32 @@
 {
+  "name": "nodejs-express-sequelize-mysql-postgresql-starter",
+  "version": "1.0.0",
+  "description": "A starter template for Node.js, Express, Sequelize, MySQL, and PostgreSQL",
+  "main": "back-end/server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon back-end/server.js"
+  },
   "dependencies": {
+
     "axios": "^1.8.4",
+
+    "@sendgrid/mail": "^8.1.5",
+
     "bcryptjs": "^3.0.2",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+
+
+    "crypto": "^1.0.1",
+
     "dotenv": "^16.5.0",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "firebase-admin": "^13.2.0",
     "jsonwebtoken": "^9.0.2",
     "lodash": "^4.17.21",
+    "mailtrap": "^4.1.0",
     "morgan": "^1.10.0",
     "multer": "^1.4.5-lts.2",
     "mysql2": "^3.14.0",

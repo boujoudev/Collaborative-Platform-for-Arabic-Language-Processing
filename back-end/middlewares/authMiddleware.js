@@ -1,12 +1,26 @@
 const jwt = require('jsonwebtoken');
 const { User } = require('../models');
+require("dotenv").config();
 
 // Secret key for JWT (should be in environment variables in production)
 const JWT_SECRET = 'your_jwt_secret_key';
 
 // Middleware to authenticate users
 const authenticate = async (req, res, next) => {
+  const token = req.cookies.token;
+	if (!token) return res.status(401).json({ success: false, message: "Unauthorized - no token provided" });
   try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+		if (!decoded) return res.status(401).json({ success: false, message: "Unauthorized - invalid token" });
+
+		req.userId = decoded.userId;
+		next();
+	} catch (error) {
+		console.log("Error in verifyToken ", error);
+		return res.status(500).json({ success: false, message: "Server error" });
+	}
+    /*
     // Get token from Authorization header
     const authHeader = req.headers.authorization;
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -38,7 +52,9 @@ const authenticate = async (req, res, next) => {
       return res.status(401).json({ message: 'Token expired' });
     }
     return res.status(500).json({ message: 'Internal server error' });
+    
   }
+*/  
 };
 
 // Middleware to check if user is admin

@@ -33,8 +33,36 @@ module.exports = (sequelize, DataTypes) => {
       certified: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
+      },
+      profile_picture: {
+        type: DataTypes.STRING(255),
+        allowNull: true
+      },
+      bio: {
+        type: DataTypes.TEXT,
+        allowNull: true
+      },
+      lastLogin: {
+        type: DataTypes.DATE,
+        defaultValue: DataTypes.NOW
+      },
+      isVerified: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+      },
+      resetPasswordToken: {
+        type: DataTypes.STRING
+      },
+      resetPasswordExpiresAt: {
+        type: DataTypes.DATE
+      },
+      verificationToken: {
+        type: DataTypes.STRING
+      },
+      verificationTokenExpiresAt: {
+        type: DataTypes.DATE
       }
-    }, {
+  }, {
       tableName: 'users',
       timestamps: true,
       createdAt: 'created_at',

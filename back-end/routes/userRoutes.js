@@ -8,9 +8,16 @@ const { authenticate, isAdmin, isModeratorOrAdmin } = require('../middlewares/au
 // POST /api/users/register
 router.post('/register', userController.register);
 
+// POST /api/users/verify-email
+router.post('/verify-email', userController.verifyEmail);
+
 // Login user
 // POST /api/users/login
 router.post('/login', userController.login);
+
+// Logout user
+// POST /api/users/logout
+router.post('/logout', userController.logout);
 
 // Get user by ID (public profile)
 // GET /api/users/:id
@@ -25,6 +32,13 @@ router.get('/profile', authenticate, userController.getProfile);
 // PUT /api/users/profile
 router.put('/profile', authenticate, userController.updateProfile);
 
+// forgot password
+// POST /api/users/forgot-password
+router.post('/forgot-password', userController.requestPasswordReset);
+
+// Reset password
+// POST /api/users/reset-password
+router.post('/reset-password/:token', userController.resetPassword);
 // Change password
 // PUT /api/users/change-password
 router.put('/change-password', authenticate, userController.changePassword);

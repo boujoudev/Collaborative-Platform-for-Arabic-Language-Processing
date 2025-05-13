@@ -352,7 +352,7 @@ page de signup */
 }
 
 .ButtonCreateAccount {
-  width: 350px;
+  width: 400px;
   height: 30px;
   background-color: #1a237a;
   color: white;
@@ -475,11 +475,259 @@ page de signup */
   text-decoration: underline;
 }
 
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* ************************************************************************ */
-/* 
-page de signIn */
+/* ForgetPassword ***************************************************************** */
+
+.forgot-password-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: auto;
+  background-color: #f5f5f5;
+  padding: 0px;
+  font-family: Arial, sans-serif;
+  border-radius: 12px;
+}
+
+.forgot-password-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 30px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.platform-title {
+  color: #1e2b7a;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+  text-align: center;
+}
+
+.forgot-title {
+  font-size: 18px;
+  font-weight: bold;
+  margin: 0 0 20px 0;
+  text-align: center;
+  color: #333;
+}
+
+.instruction-text {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.email-input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #1e2b7a;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+
+.submit-button:hover {
+  background-color: #161f57;
+}
+
+/* after forget password ****************************************************************** */
+
+.confirmation-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: auto;
+  background-color: #f5f5f5;
+  padding: 0px;
+  font-family: Arial, sans-serif;
+}
+
+.confirmation-card {
+  background-color: white;
+  border-radius: 12px;
+  padding: 30px;
+  min-width: 300px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.confirmation-title {
+  color: #1e2b7a;
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 0 30px 0;
+  text-align: center;
+}
+
+.confirmation-icon {
+  margin: 10px 0 20px 0;
+}
+
+.confirmation-text {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 30px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.confirmation-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #1e2b7a;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+
+.confirmation-button:hover {
+  background-color: #161f57;
+}
+
+/* change password  ***************************************************************************/
+.change-password-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: auto;
+  background-color: #f5f5f5;
+  font-family: Arial, sans-serif;
+  padding: 0px;
+  border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -moz-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -o-border-radius: 15px;
+}
+
+.change-password-card {
+  background-color: white;
+  border-radius: 15px;
+  padding: 30px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.change-password-platform-title {
+  color: #1e2b7b;
+  font-size: 24px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.change-password-title {
+  font-size: 20px;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.change-password-input-group {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.change-password-label {
+  display: block;
+  margin-bottom: 8px;
+  color: #666;
+  font-size: 14px;
+}
+
+.change-password-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.change-password-input {
+  width: 100%;
+  padding: 12px 40px 12px 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+}
+
+.change-password-input:focus {
+  border-color: #1e2b7b;
+}
+
+.change-password-toggle {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #666;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.change-password-toggle:hover {
+  color: #1e2b7b;
+}
+
+.change-password-submit-button {
+  width: 100%;
+  padding: 12px;
+  background-color: #1e2b7b;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: background-color 0.3s;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}
+
+.change-password-submit-button:hover {
+  background-color: #151f5a;
+}
+
+/******************************************************/
 .SignInPage {
   background-color: rgb(255, 255, 255);
   display: flex;
@@ -498,7 +746,7 @@ page de signIn */
 }
 
 .ButtonSignIn {
-  width: 350px;
+  width: 400px;
   height: 30px;
   background-color: #1a237a;
   color: white;
@@ -780,6 +1028,26 @@ Entet dyalha */
   max-height: 100%; /* Limite la hauteur maximale */
   overflow: auto; /* Ajoute un défilement si le contenu dépasse */
 }
+.inputAddPostFile {
+  width: 80%; /* Same width as other input fields */
+  height: 50px; /* Same height as other input fields */
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #666;
+  text-align: center;
+  border-color: #1a237e;
+}
+
+.inputAddPostFile:hover {
+  background-color: #e0e0e0;
+}
 
 /* ************************************************************************ */
 /* 
@@ -1000,6 +1268,27 @@ project
   outline: none;
   border-color: #1a237e;
   resize: vertical;
+}
+
+.inputAddProjectFile {
+  width: 80%; /* Same width as other input fields */
+  height: 50px; /* Same height as other input fields */
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: #f5f5f5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: #666;
+  text-align: center;
+  border-color: #1a237e;
+}
+
+.inputAddProjectFile:hover {
+  background-color: #e0e0e0;
 }
 
 .AddProjectPage {

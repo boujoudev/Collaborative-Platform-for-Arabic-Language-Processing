@@ -1,9 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router"; 
 
-const Forum = () => {
+const PostInForum = () => {
   const [likes, setLikes] = useState(100);
   const [liked, setLiked] = useState(false);
-  const [Disliked, setDisLiked] = useState(true);
+  const [disliked, setDisliked] = useState(true);
+  const [three, setThree] = useState(false);
+  const GoTo = useNavigate();
 
   const handleLike = () => {
     if (liked) {
@@ -14,33 +17,36 @@ const Forum = () => {
       setLiked(!liked);
     }
   };
+
   const handleDislike = () => {
-    if (Disliked) {
+    if (disliked) {
       setLikes(likes - 1);
-      setDisLiked(!Disliked);
+      setDisliked(!disliked);
     } else {
       setLikes(likes + 1);
-      setDisLiked(!Disliked);
+      setDisliked(!disliked);
     }
   };
+
   return (
     <div
-      className="Forum"
+      className="PostInForum"
       style={{
         marginBottom: "10px",
         borderRadius: "5px",
-        boxShadow: " 1px 1px 2px 2px rgb(223, 223, 225)",
+        boxShadow: "0 2px 5px rgba(0, 0, 0, 0.1)",
         display: "flex",
         flexDirection: "column",
         justifyContent: "center",
       }}
     >
+      {/* Header Section */}
       <div
-        className="EntetForumPublie"
+        className="EntetPostInForum"
         style={{
           display: "flex",
           flexDirection: "row",
-          margin: "5px",
+          marginTop: "5px",
           alignItems: "flex-start",
         }}
       >
@@ -49,8 +55,8 @@ const Forum = () => {
             width: "35px",
             height: "35px",
             borderRadius: "50%",
-            paddingTop: "5px",
-            paddingBottom: "0px",
+            marginLeft: "10px",
+            cursor: "pointer",
           }}
           src="image.jpg"
           alt=""
@@ -62,11 +68,13 @@ const Forum = () => {
               paddingTop: "7px",
               paddingLeft: "3px",
               fontSize: "12px",
-              fontFamily: "Arial , sans-serif",
+              fontFamily: "Arial, sans-serif",
               fontWeight: "bold",
+              cursor: "pointer",
             }}
+            onClick={() => {GoTo("/Forum/id")}}
           >
-            Name forum
+            Name Forum
           </p>
           <p
             style={{
@@ -74,17 +82,23 @@ const Forum = () => {
               margin: "0px",
               paddingLeft: "5px",
               fontSize: "10px",
-              "font-family": "Arial , sans-serif",
+              fontFamily: "Arial, sans-serif",
+              cursor: "pointer",
             }}
           >
-            user Name
+            User Name
           </p>
         </div>
         <button
+          onClick={() => {
+            setThree(!three);
+          }}
           style={{
+            width: "5px",
+            height: "5px",
             border: "none",
             backgroundColor: "white",
-            marginLeft: "auto",
+            marginLeft: "76%",
             marginTop: "0px",
             paddingTop: "0px",
             paddingBottom: "0px",
@@ -92,10 +106,36 @@ const Forum = () => {
           }}
         >
           <i class="fa-solid fa-ellipsis"></i>
+          {three && (
+            <div className="THreepoint">
+              <button
+                style={{
+                  cursor: "pointer",
+                  border: "none",
+                  backgroundColor: "white",
+                  color: "red",
+                }}
+              >
+                Report
+              </button>
+              <button
+                style={{
+                  cursor: "pointer",
+                  border: "none",
+                  backgroundColor: "white",
+                  color: "black",
+                }}
+              >
+                Block
+              </button>
+            </div>
+          )}
         </button>
       </div>
+
+      {/* Content Section */}
       <div
-        className="ForumContent"
+        className="PostContent"
         style={{
           overflow: "hidden",
           textOverflow: "ellipsis",
@@ -103,44 +143,67 @@ const Forum = () => {
         }}
       >
         <div
-          className="ForumTitre"
           style={{
-            fontSize: "14px",
-            fontFamily: "Arial , sans-serif",
+            fontFamily: "Arial, sans-serif",
             fontWeight: "bold",
             color: "black",
             padding: "5px",
-            paddingLeft: "15px",
-            paddingBottom:"0px",
+            paddingLeft: "10px",
+            paddingBottom: "2px",
             margin: "0px",
           }}
         >
           Traitement de language
         </div>
-        <p className="ForumText">
-          TextConteh hhhhhhhhhhh hhhhhhhh hhhhh hhhhhhhhh hhhhhhhhh hhhhhhhh
-          hhhhhhhh hhhhhhh hhhhhhhhhh hhhhhhhh hhhhhhh hhhhhhhhhhh hhhhhhhhhh
-          hhhhhhhhhh hnt hhh dqsd a zdazd a d zedaz azd azd az dazd azda e fz d az a d a zd azfazdazd
-          jjjjjjj jjjjjj jjjjjjjjjjjjjjjjjjjjjjjjjjjjj
-          jjjjjjjjjjj jjjjjj jjjjjjjj jjjjjjjjjjj
+        
+        <p
+          className="PostText"
+          style={{
+            fontFamily: "Arial, sans-serif",
+            fontWeight: "normal",
+            color: "black",
+            padding: "5px",
+            paddingLeft: "10px",
+            fontSize: "12px",
+            margin: "0px",
+          }}
+        >
+          Text content goes here...
         </p>
+        <a
+          style={{
+            fontFamily: "Arial, sans-serif",
+            fontWeight: "bold",
+            padding: "5px",
+            paddingLeft: "10px",
+            fontSize: "12px",
+            margin: "0px",
+          }}
+          href="#"
+        >
+          Voir ici
+        </a>
       </div>
+
       <hr
         style={{
-          width: "95%",
-          height: "1px",
-          backgroundColor: "gray",
+          marginTop: "5px",
+          width: "97%",
+          height: "0.5px",
+          backgroundColor: "#D3D3D3",
           border: "none",
         }}
       />
 
+      {/* Footer Section */}
       <div
-        className="LikeCommentShareForum"
+        className="LikeCommentSharePost"
         style={{
           display: "flex",
           flexDirection: "row",
           justifyContent: "flex-start",
-          margin: "10px",
+          marginTop: "10px",
+          marginBottom: "10px",
           padding: "0px",
         }}
       >
@@ -164,7 +227,7 @@ const Forum = () => {
               width: "20px",
             }}
           >
-            <i class="fa-regular fa-circle-up"></i>
+            <i className="fa-regular fa-circle-up"></i>
           </button>
           {likes}
           <button
@@ -177,7 +240,7 @@ const Forum = () => {
               width: "20px",
             }}
           >
-            <i class="fa-regular fa-circle-down"></i>
+            <i className="fa-regular fa-circle-down"></i>
           </button>
         </button>
         <button
@@ -191,7 +254,7 @@ const Forum = () => {
             cursor: "pointer",
           }}
         >
-          <i class="fa-regular fa-comment"></i> NBc
+          <i className="fa-regular fa-comment"></i> NBc
         </button>
         <button
           style={{
@@ -204,11 +267,11 @@ const Forum = () => {
             cursor: "pointer",
           }}
         >
-          <i class="fa-regular fa-share-from-square"></i> Share
+          <i className="fa-regular fa-share-from-square"></i> Share
         </button>
       </div>
     </div>
   );
 };
 
-export default Forum;
+export default PostInForum;

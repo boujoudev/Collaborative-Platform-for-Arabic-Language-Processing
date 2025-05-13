@@ -75,6 +75,14 @@ const SignInPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Forget Password Link */}
+      <p className="forgot-password-text">
+        <a className="forgot-password-link">
+          Forget password?
+        </a>
+      </p>
+
       <button type="submit" className="ButtonSignIn">
         Sign In
       </button>

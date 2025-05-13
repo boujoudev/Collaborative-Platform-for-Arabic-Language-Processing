@@ -50,7 +50,7 @@ const Project = () => {
             width: "35px",
             height: "35px",
             borderRadius: "50%",
-            marginLeft: "10PX",
+            marginLeft: "10px",
             // paddingBottom: "0px",
           }}
           src="image.jpg"
@@ -210,6 +210,22 @@ const Project = () => {
               fffffffff
             </span>
           </h6>
+          <a
+            style={{
+              fontFamily: "Arial , sans-serif",
+              fontWeight: "bold",
+              padding: "0px",
+              paddingLeft: "10px",
+              paddingBottom: "2px",
+              fontSize: "12px",
+              margin: "0px",
+            }}
+            href="hhhhhhh"
+          >
+            voire ici
+          </a>
+          <br />
+
           <button className="projetDetail">
             <i class="fa-solid fa-link"></i> Project details
           </button>

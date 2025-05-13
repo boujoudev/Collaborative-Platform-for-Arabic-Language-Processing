@@ -43,13 +43,12 @@ const AddPost = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="fileInputPost" id="inputAddPost">
-            Upload File{" "}
+          <label htmlFor="fileInputPost" className="inputAddPostFile">
+            Upload File
             <input
               style={{ display: "none" }}
               id="fileInputPost"
               type="file"
-              // className="inputAddProjectFile"
               onChange={handleFileChange}
             />
           </label>

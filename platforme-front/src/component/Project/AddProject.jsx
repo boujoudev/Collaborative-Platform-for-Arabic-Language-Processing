@@ -89,7 +89,7 @@ const AddProject = () => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="fileInputProject" id="inputAddProject">
+          <label htmlFor="fileInputProject"className="inputAddProjectFile">
             Upload File{" "}
             <input
               style={{ display: "none" }}

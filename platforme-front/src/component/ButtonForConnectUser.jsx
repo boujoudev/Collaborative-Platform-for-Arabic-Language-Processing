@@ -43,6 +43,17 @@ const ButtonForConnectUser = () => {
           cursor: "pointer",
         }}
       >
+        
+      </button>
+      <button
+        className="DiscussionList"
+        style={{
+          color: "white",
+          backgroundColor: "#1A237E",
+          border: "none",
+          cursor: "pointer",
+        }}
+      >
         <i class="fa-regular fa-comment-dots"></i>
       </button>
       <button

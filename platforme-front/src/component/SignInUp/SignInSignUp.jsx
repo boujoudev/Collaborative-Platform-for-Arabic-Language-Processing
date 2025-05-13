@@ -1,6 +1,7 @@
 import SignUpPage from "./SignUpPage";
 import SignInPage from "./SignInPage";
 import CodeVerification from "./CodeVerification";
+import ChangePassWord from "./ChangePassWord";
 import {
   Dialog,
   DialogContent,
@@ -10,6 +11,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useState } from "react";
+import ForgotPassword from "./ForgetPassword";
+import AfterForgetPassword from "./AfterForgetPassword";
 
 const SignInSignUp = () => {
   const [select, setselect] = useState("");

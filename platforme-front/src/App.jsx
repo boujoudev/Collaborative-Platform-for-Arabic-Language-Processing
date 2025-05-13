@@ -6,7 +6,7 @@ import SignUpPage from "./component/SignInUp/SignUpPage";
 import SignInPage from "./component/SignInUp/SignInPage";
 import HomeFirstElement from "./component/Home/HomeFirstElement";
 import ForumEntet from "./component/forum/ForumEntet";
-import Forum from "./component/forum/Forum";
+import PostInForum from "./component/forum/PostInForum";
 import ToolEntet from "./component/tool/ToolEntet";
 import Tool from "./component/tool/Tool";
 import ProjectEntet from "./component/Project/ProjectEntet";
@@ -40,7 +40,7 @@ import CodeVerification from "./component/SignInUp/CodeVerification";
 import CommentForm from "./component/Comment/CommentForm";
 
 function App() {
-  const [Connect, setConnect] = useState(false);
+  const [Connect, setConnect] = useState(true);
   return (
     <div className="grid-container">
       <div className="platformName">TAL-Arabic Platforme</div>
@@ -55,7 +55,6 @@ function App() {
       </aside>
       <main>
         {/* <CommentForm/> */}
-        <ForumEntetIn/>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/Forum" element={<ForumPage />} />
@@ -69,6 +68,7 @@ function App() {
           <Route path="/Profil/Information" element={<InformationPage />} />
           <Route path="/Profil/Project" element={<ProfilProject />} />
           <Route path="/Profil/Activities" element={<ProfilActivité />} />
+          <Route path="/Forum/id" element={<ForumEntetIn />} />
         </Routes>
       </main>
       <aside className="aside2">

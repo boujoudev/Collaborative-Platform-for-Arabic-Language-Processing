@@ -4,7 +4,7 @@ import ForumEntetIn from "./ForumEntetIn";
 const ForumPageIn = () => {
   return (
     <div>
-      <ForumEntetIn></ForumEntetIn>
+      <ForumEntetIn/>
     </div>
   );
 };

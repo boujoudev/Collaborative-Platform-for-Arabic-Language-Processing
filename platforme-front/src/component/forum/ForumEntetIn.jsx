@@ -1,4 +1,6 @@
 import React from "react";
+import AddPost from "./AddPost";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 const ForumEntetIn = () => {
   return (
@@ -14,10 +16,17 @@ const ForumEntetIn = () => {
           <h2 className="nameForumEntetIn">nlpalgorithms</h2>
         </div>
         <div className="actionsForumEntetIn">
-          <button className="btn btn-postForumEntetIn">
-            <span>+</span>
-            <span>Create Post</span>
-          </button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <button className="btn btn-postForumEntetIn">
+                <span>+</span>
+                <span>Create Post</span>
+              </button>
+            </DialogTrigger>
+            <DialogContent className="PostDialogContent">
+              <AddPost />
+            </DialogContent>
+          </Dialog>
           <button className="btn btn-notify ForumEntetIn">
             <span>
               <i class="fa-solid fa-bell"></i>

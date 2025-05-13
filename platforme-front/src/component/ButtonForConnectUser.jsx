@@ -65,7 +65,7 @@ const ButtonForConnectUser = () => {
           justifyContent: "center",
           width: "150px",
           color: "white",
-          backgroundColor: "rgb(3, 25, 81)",
+          backgroundColor: "#1A237E",
           border: "none",
           cursor: "pointer",
         }}

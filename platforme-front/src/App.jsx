@@ -40,7 +40,7 @@ import CodeVerification from "./component/SignInUp/CodeVerification";
 import CommentForm from "./component/Comment/CommentForm";
 
 function App() {
-  const [Connect, setConnect] = useState(true);
+  const [Connect, setConnect] = useState(false);
   return (
     <div className="grid-container">
       <div className="platformName">TAL-Arabic Platforme</div>
@@ -54,7 +54,8 @@ function App() {
         <SIdeBarre1 />
       </aside>
       <main>
-        <CommentForm/>
+        {/* <CommentForm/> */}
+        <ForumEntetIn/>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/Forum" element={<ForumPage />} />

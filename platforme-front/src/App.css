@@ -100,7 +100,7 @@ main {
   font-size: 16px;
   border: none;
   margin: 5px;
-  height: 30px;
+  height: 40px;
   background-color: white;
   color: #000000;
   border: none;
@@ -124,7 +124,7 @@ main {
 .true {
   font-size: 16px;
   margin: 5px;
-  height: 30px;
+  height: 40px;
   background-color: #1a237a;
   color: rgb(255, 255, 255);
   border: none;
@@ -560,6 +560,7 @@ page de signup */
   background-color: #f5f5f5;
   padding: 0px;
   font-family: Arial, sans-serif;
+  border-radius: 12px;
 }
 
 .confirmation-card {
@@ -573,6 +574,10 @@ page de signup */
   display: flex;
   flex-direction: column;
   align-items: center;
+  -webkit-border-radius: 12px;
+  -moz-border-radius: 12px;
+  -ms-border-radius: 12px;
+  -o-border-radius: 12px;
 }
 
 .confirmation-title {
@@ -674,6 +679,7 @@ page de signup */
   position: relative;
   display: flex;
   align-items: center;
+  width: 400px;
 }
 
 .change-password-input {

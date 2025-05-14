@@ -35,7 +35,7 @@ const ButtonForConnectUser = () => {
       }}
     >
       <button
-        className="DiscussionList"
+        className="ChatBot"
         style={{
           color: "white",
           backgroundColor: "#1A237E",
@@ -43,7 +43,7 @@ const ButtonForConnectUser = () => {
           cursor: "pointer",
         }}
       >
-        
+        <i class="fa-regular fa-message-bot"></i>
       </button>
       <button
         className="DiscussionList"

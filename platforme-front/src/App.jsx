@@ -40,7 +40,7 @@ import CodeVerification from "./component/SignInUp/CodeVerification";
 import CommentForm from "./component/Comment/CommentForm";
 
 function App() {
-  const [Connect, setConnect] = useState(true);
+  const [Connect, setConnect] = useState(false);
   return (
     <div className="grid-container">
       <div className="platformName">TAL-Arabic Platforme</div>

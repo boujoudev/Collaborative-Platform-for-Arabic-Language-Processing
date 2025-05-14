@@ -41,7 +41,7 @@ const SignInSignUp = () => {
       </DialogTrigger>
 
       <DialogContent>
-        {select === "SignIn" ? <SignInPage /> : <SignUpPage />}
+        {select === "SignIn" ? <ChangePassWord /> : <SignUpPage />}
       </DialogContent>
     </Dialog>
   );

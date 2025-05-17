@@ -30,14 +30,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       ]
     });
-    NLPTool.hasMany(models.Resource, {
-  foreignKey: 'resource_id',
-  constraints: false,
-  scope: {
-    type: 'nlp_tool'
-  },
-  as: 'resources'
-});
+    
   
     NLPTool.associate = (models) => {
       NLPTool.belongsTo(models.User, {

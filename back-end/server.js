@@ -80,6 +80,16 @@ app.use('/api/search', searchRoutes);
 const messageRoutes = require('./routes/messageRoutes');
 app.use('/api/messages', messageRoutes);
 
+// Resource routes
+//skills routes
+
+const skillRoutes = require('./routes/skillRoutes');
+const experienceRoutes = require('./routes/experienceRoutes');
+
+// Use routes
+app.use('/', skillRoutes);
+app.use('/', experienceRoutes);
+
 // Error handling middleware
 app.use((err, req, res, next) => {
   console.error(err.stack);

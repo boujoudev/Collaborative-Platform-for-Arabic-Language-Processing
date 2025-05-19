@@ -7,8 +7,7 @@ module.exports = (sequelize, DataTypes) => {
     id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
-      autoIncrement: true,
-      allowNull: false
+      autoIncrement: true
     },
     blockerId: {
       type: DataTypes.INTEGER,
@@ -24,27 +23,18 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'blocked_users',
     timestamps: true,
     createdAt: 'created_at',
-    updatedAt: false,
-    indexes: [
-      {
-        name: 'unique_blocker_blocked',
-        unique: true,
-        fields: ['blockerId', 'blockedId']
-      }
-    ]
+    updatedAt: false
   });
 
   BlockedUser.associate = (models) => {
-    // A user can be a blocker
     BlockedUser.belongsTo(models.User, {
-      foreignKey: 'blockerId',
+      foreignKey: 'blocker_id',
       as: 'blocker',
       onDelete: 'CASCADE'
     });
 
-    // A user can be blocked by others
     BlockedUser.belongsTo(models.User, {
-      foreignKey: 'blockedId',
+      foreignKey: 'blocked_id',
       as: 'blocked',
       onDelete: 'CASCADE'
     });

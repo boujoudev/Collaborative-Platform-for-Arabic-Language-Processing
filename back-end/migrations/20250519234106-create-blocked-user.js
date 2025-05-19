@@ -1,5 +1,5 @@
 'use strict';
-
+/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('blocked_users', {
@@ -9,31 +9,25 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      blockerId: {
+      blocker_id: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'users',
           key: 'id'
         },
-        onDelete: 'CASCADE',
-        allowNull: false,
-        field: 'blocker_id'
+        onDelete: 'CASCADE'
       },
-      blockedId: {
+      blocked_id: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'users',
           key: 'id'
         },
-        onDelete: 'CASCADE',
-        allowNull: false,
-        field: 'blocked_id'
+        onDelete: 'CASCADE'
       },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       }
@@ -41,7 +35,7 @@ module.exports = {
 
     // Add unique constraint to prevent duplicate blocking
     await queryInterface.addConstraint('blocked_users', {
-      fields: ['blockerId', 'blockedId'],
+      fields: ['blocker_id', 'blocked_id'],
       type: 'unique',
       name: 'unique_blocker_blocked'
     });

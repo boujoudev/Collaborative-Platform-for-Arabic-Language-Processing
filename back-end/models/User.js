@@ -211,15 +211,13 @@ User.hasOne(models.ContactMe, {
   as: 'contactInfo'
 });
 User.hasMany(models.BlockedUser, {
-  foreignKey: 'blockerId',
-  as: 'blocking',
-  onDelete: 'CASCADE'
+  foreignKey: 'blocker_id',
+  as: 'blocking'
 });
 
 User.hasMany(models.BlockedUser, {
-  foreignKey: 'blockedId',
-  as: 'blockedBy',
-  onDelete: 'CASCADE'
+  foreignKey: 'blocked_id',
+  as: 'blockedBy'
 });
 
 User.hasMany(models.Formation, {

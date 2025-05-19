@@ -9,6 +9,11 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       autoIncrement: true
     },
+    notifyMe: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: true,
+      allowNull: false
+    },
     userId: DataTypes.INTEGER,
     forumId: DataTypes.INTEGER
   }, {

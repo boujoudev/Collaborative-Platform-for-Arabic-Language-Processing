@@ -210,6 +210,17 @@ User.hasOne(models.ContactMe, {
   foreignKey: 'userId',
   as: 'contactInfo'
 });
+User.hasMany(models.BlockedUser, {
+  foreignKey: 'blockerId',
+  as: 'blocking',
+  onDelete: 'CASCADE'
+});
+
+User.hasMany(models.BlockedUser, {
+  foreignKey: 'blockedId',
+  as: 'blockedBy',
+  onDelete: 'CASCADE'
+});
 
 User.hasMany(models.Formation, {
   foreignKey: 'userId',

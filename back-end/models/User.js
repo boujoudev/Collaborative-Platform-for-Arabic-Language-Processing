@@ -84,6 +84,7 @@ module.exports = (sequelize, DataTypes) => {
         as: 'ownedForums'
       });
       
+      
       // A user can create multiple posts
       User.hasMany(models.Post, {
         foreignKey: 'user_id',
@@ -169,6 +170,22 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'user_id',
         as: 'publications'
       });
+ // a user can follow multiple forums
+      User.belongsToMany(models.Forum, {
+  through: models.UserForum,
+  foreignKey: 'userId',
+  as: 'joinedForums'
+});
+  // A user can follow other users
+User.hasMany(models.UserFollow, {
+  foreignKey: 'followerId',
+  as: 'following'
+});
+
+User.hasMany(models.UserFollow, {
+  foreignKey: 'followingId',
+  as: 'followers'
+});
       
       // A user can create multiple courses
       User.hasMany(models.Course, {
@@ -188,6 +205,15 @@ module.exports = (sequelize, DataTypes) => {
 User.hasMany(models.Experience, {
   foreignKey: 'user_id',
   as: 'experiences'
+});
+User.hasOne(models.ContactMe, {
+  foreignKey: 'userId',
+  as: 'contactInfo'
+});
+
+User.hasMany(models.Formation, {
+  foreignKey: 'userId',
+  as: 'formations'
 });
     };
   

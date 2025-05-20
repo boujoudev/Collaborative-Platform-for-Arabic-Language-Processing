@@ -4,6 +4,7 @@ const cors = require('cors');
 const db = require('./config/db');
 const { sequelize } = require('./models');
 const dotenv = require('dotenv');
+const cookieParser = require('cookie-parser');
 
 dotenv.config({path: './back-end/.env'});
 console.log(process.env.GOOGLE_API_KEY)
@@ -17,8 +18,12 @@ const port = process.env.PORT || 3000;
 const app = express();
 
 // Middleware
-app.use(cors()); // Enable CORS for all routes
+app.use(cors({
+  origin: 'http://localhost:3000', // l'origine de ton front (Postman ne met rien ici, donc ça passe, mais pour navigateur c'est essentiel)
+  credentials: true // <-- Important pour que les cookies soient acceptés côté serveur
+})); 
 app.use(express.json()); // Parse JSON request bodies
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded request bodies
 app.use(morgan('dev')); // HTTP request logger
 app.use(express.static('public')); // Serve static files

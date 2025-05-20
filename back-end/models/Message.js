@@ -85,6 +85,55 @@ class Message {
         }
     }
 
+    static async getAllConversations(userId) {
+        try {
+            userId = String(userId);
+            console.log('Récupération de toutes les conversations pour:', userId);
+            
+            // Vérifier la connexion à Firebase
+            const connected = await db.ref('.info/connected').once('value');
+            if (!connected.val()) {
+                throw new Error('Non connecté à Firebase');
+            }
+
+            const messagesRef = db.ref('messages');
+            const snapshot = await messagesRef.once('value');
+            
+            // Map pour stocker les conversations uniques
+            const conversationsMap = new Map();
+            
+            snapshot.forEach((childSnapshot) => {
+                const message = childSnapshot.val();
+                if (message.sender_id === userId || message.receiver_id === userId) {
+                    const otherId = message.sender_id === userId ? message.receiver_id : message.sender_id;
+                    
+                    if (!conversationsMap.has(otherId)) {
+                        conversationsMap.set(otherId, {
+                            user_id: otherId,
+                            last_message: message,
+                            unread_count: message.receiver_id === userId && !message.is_read ? 1 : 0
+                        });
+                    } else {
+                        const conv = conversationsMap.get(otherId);
+                        // Mettre à jour le dernier message si plus récent
+                        if (new Date(message.created_at) > new Date(conv.last_message.created_at)) {
+                            conv.last_message = message;
+                        }
+                        // Incrémenter le compteur de messages non lus
+                        if (message.receiver_id === userId && !message.is_read) {
+                            conv.unread_count++;
+                        }
+                    }
+                }
+            });
+            
+            return Array.from(conversationsMap.values());
+        } catch (error) {
+            console.error('Erreur lors de la récupération des conversations:', error);
+            throw error;
+        }
+    }
+
     static async markAsRead(senderId, receiverId) {
         try {
             // Convertir les IDs en strings pour assurer la cohérence
@@ -123,4 +172,4 @@ class Message {
     }
 }
 
-module.exports = Message; 
+module.exports = Message;

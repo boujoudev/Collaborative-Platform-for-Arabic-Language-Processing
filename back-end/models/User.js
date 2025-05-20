@@ -61,7 +61,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       verificationTokenExpiresAt: {
         type: DataTypes.DATE
-      }
+      },
+      preferencesLinguistiques: {
+      type: DataTypes.ENUM('english', 'arab'),
+      field: 'preferences_linguistiques',
+      defaultValue: 'english',
+      allowNull: false
+    }
   }, {
       tableName: 'users',
       timestamps: true,

@@ -73,5 +73,11 @@ router.put('/:id/certification', authenticate, isAdmin, userController.toggleCer
 // UPLOAD PDP 
 router.post('/upload-profile-photo', authenticate, upload.single('profilePhoto'), userController.uploadProfilePhoto);
 
+// Updat bio user 
+router.put('/:id/bio', userController.updateBio);
+
+// Update preferences user 
+router.put('/:id/preferences', userController.updatePreferencesLinguistiques);
+
 
 module.exports = router;

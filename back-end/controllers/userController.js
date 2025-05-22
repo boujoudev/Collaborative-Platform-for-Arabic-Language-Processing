@@ -2,6 +2,8 @@ const { User, Sequelize } = require('../models');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
+const path = require('path');
+const fs = require('fs');
 const { Op } = Sequelize;
 
 const { generateTokenAndSetCookie } = require('../service/generateTokenAndSetCookie.js');
@@ -557,30 +559,96 @@ const userController = {
       }
     },
 
-    uploadProfilePhoto: async (req, res) => {
+ uploadProfilePhoto: async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'Aucune photo téléchargée' });
+    }
+
+    const userId = req.user.id;
+    const user = await User.findByPk(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: 'Utilisateur non trouvé' });
+    }
+
+    // Supprimer l'ancienne photo si elle existe
+    if (user.profile_picture) {
+      const oldPhotoPath = path.join(__dirname, '..', user.profile_picture);
+      fs.unlink(oldPhotoPath, (err) => {
+        if (err) {
+          console.warn("Erreur lors de la suppression de l'ancienne photo :", err.message);
+        } else {
+          console.log("Ancienne photo supprimée :", oldPhotoPath);
+        }
+      });
+    }
+
+    // Mettre à jour avec la nouvelle photo
+    user.profile_picture = `/uploads/photos_de_profil/${req.file.filename}`;
+    await user.save();
+
+    res.status(200).json({
+      message: 'Photo de profil mise à jour',
+      profile_picture: user.profile_picture
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Erreur serveur lors de l\'upload de la photo' });
+  }
+},
+
+
+
+  // Modifier la bio d'un user
+  updateBio: async (req, res) => {
     try {
-      if (!req.file) {
-        return res.status(400).json({ message: 'Aucune photo téléchargée' });
-      }
-      const userId = req.user.id;
-      const user = await User.findByPk(userId);
-      if (!user) {
-        return res.status(404).json({ message: 'Utilisateur non trouvé' });
+      const userId = req.params.id;
+      const { bio } = req.body;
+
+      if (!bio) {
+        return res.status(400).json({ error: "Le champ bio est requis" });
       }
 
-      // Sauvegarder le chemin ou le nom du fichier dans la base
-      user.profile_picture = `/uploads/photos_de_profil/${req.file.filename}`;
+      const user = await User.findByPk(userId);
+      if (!user) return res.status(404).json({ error: "Utilisateur non trouvé" });
+
+      user.bio = bio;
       await user.save();
 
-      res.status(200).json({ message: 'Photo de profil mise à jour', profile_picture: user.profile_picture });
+      return res.status(200).json({ message: "Bio mise à jour avec succès", bio: user.bio });
     } catch (error) {
       console.error(error);
-      res.status(500).json({ message: 'Erreur serveur lors de l\'upload de la photo' });
+      return res.status(500).json({ error: "Erreur serveur" });
     }
-  }
+  },
 
+  // Modifier les préférences linguistiques
+  updatePreferencesLinguistiques: async (req, res) => {
+    try {
+      const userId = req.params.id;
+      const { preferencesLinguistiques } = req.body;
 
+      if (!preferencesLinguistiques) {
+        return res.status(400).json({ error: "Le champ preferencesLinguistiques est requis" });
+      }
+
+      const user = await User.findByPk(userId);
+      if (!user) return res.status(404).json({ error: "Utilisateur non trouvé" });
+
+      user.preferencesLinguistiques = preferencesLinguistiques;
+      await user.save();
+
+      return res.status(200).json({ message: "Préférences linguistiques mises à jour", preferencesLinguistiques: user.preferencesLinguistiques });
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ error: "Erreur serveur" });
+    }
+  },
 
 };
+
+
+
 
 module.exports = userController;

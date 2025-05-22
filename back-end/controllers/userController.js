@@ -601,27 +601,32 @@ const userController = {
 
 
   // Modifier la bio d'un user
-  updateBio: async (req, res) => {
-    try {
-      const userId = req.params.id;
-      const { bio } = req.body;
+// Modifier la bio d'un user
+updateBio: async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const { bio } = req.body;
 
-      if (!bio) {
-        return res.status(400).json({ error: "Le champ bio est requis" });
-      }
-
-      const user = await User.findByPk(userId);
-      if (!user) return res.status(404).json({ error: "Utilisateur non trouvé" });
-
-      user.bio = bio;
-      await user.save();
-
-      return res.status(200).json({ message: "Bio mise à jour avec succès", bio: user.bio });
-    } catch (error) {
-      console.error(error);
-      return res.status(500).json({ error: "Erreur serveur" });
+    // Vérifie uniquement que la bio n'est pas undefined ou null (autorise chaîne vide)
+    if (bio === undefined || bio === null) {
+      return res.status(400).json({ error: "Le champ bio est requis" });
     }
-  },
+
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({ error: "Utilisateur non trouvé" });
+    }
+
+    user.bio = bio;
+    await user.save();
+
+    return res.status(200).json({ message: "Bio mise à jour avec succès", bio: user.bio });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ error: "Erreur serveur" });
+  }
+},
+
 
   // Modifier les préférences linguistiques
   updatePreferencesLinguistiques: async (req, res) => {

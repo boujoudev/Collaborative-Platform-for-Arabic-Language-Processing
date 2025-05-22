@@ -93,8 +93,9 @@ const skillRoutes = require('./routes/skillRoutes');
 const experienceRoutes = require('./routes/experienceRoutes');
 
 // Use routes
-app.use('/', skillRoutes);
-app.use('/', experienceRoutes);
+app.use('/skills', skillRoutes);
+app.use('/experiences', experienceRoutes);
+
 
 // Error handling middleware
 app.use((err, req, res, next) => {

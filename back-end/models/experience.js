@@ -6,12 +6,13 @@ module.exports = (sequelize, DataTypes) => {
   const Experience = sequelize.define('Experience', {
     title: DataTypes.STRING,
     description: DataTypes.TEXT,
-    user_id: DataTypes.INTEGER
+    user_id: DataTypes.INTEGER,
+    date: DataTypes.STRING  // 👈 Nouveau champ ajouté ici
   }, {
-    tableName: 'experiences',
+    tableName: 'Experiences',
     timestamps: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
   });
 
   Experience.associate = (models) => {

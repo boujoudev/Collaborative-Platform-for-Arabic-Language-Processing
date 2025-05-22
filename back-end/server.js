@@ -5,6 +5,7 @@ const db = require('./config/db');
 const { sequelize } = require('./models');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
+const path = require('path');
 
 dotenv.config({path: './back-end/.env'});
 console.log(process.env.GOOGLE_API_KEY)
@@ -19,7 +20,7 @@ const app = express();
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:3000', // l'origine de ton front (Postman ne met rien ici, donc ça passe, mais pour navigateur c'est essentiel)
+  origin: 'http://localhost:5173', // l'origine de ton front (Postman ne met rien ici, donc ça passe, mais pour navigateur c'est essentiel)
   credentials: true // <-- Important pour que les cookies soient acceptés côté serveur
 })); 
 app.use(express.json()); // Parse JSON request bodies
@@ -101,10 +102,19 @@ app.use((err, req, res, next) => {
   res.status(500).json({ message: 'Something went wrong!' });
 });
 
+
+// Pour recup les photos de profil 
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+
+
+// REFRESH
+app.use('/api', require('./routes/authcheckRoutes'));
+
 // Start the server
 app.listen(port, () => {    
   console.log(`Server is running on port ${port}`);
 });
+
 
 
 

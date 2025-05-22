@@ -146,6 +146,58 @@ const userController = {
   },
 
 
+
+      verifyPendingEmail: async (req, res) => {
+      const { code } = req.body;
+      try {
+        const user = await User.findOne({
+          where: {
+            verificationToken: code,
+            verificationTokenExpiresAt: {
+              [Op.gt]: new Date(),
+            },
+          },
+        });
+
+        if (!user) {
+          return res.status(400).json({ success: false, message: "Invalid or expired verification code" });
+        }
+
+        if (!user.pending_email) {
+          return res.status(400).json({ success: false, message: "No pending email to verify" });
+        }
+
+        // Valider le nouvel email
+        user.email = user.pending_email;
+        user.pending_email = null;
+        user.isVerified = true;
+        user.verificationToken = null;
+        user.verificationTokenExpiresAt = null;
+
+        await user.save();
+        await user.reload();
+
+        res.status(200).json({
+          success: true,
+          message: "New email verified successfully",
+          user: {
+            id: user.id,
+            full_name: user.full_name,
+            email: user.email,
+            username: user.username,
+            role: user.role,
+            certified: user.certified,
+            created_at: user.created_at,
+            isVerified: user.isVerified,
+          },
+        });
+      } catch (error) {
+        console.log("error in verifyPendingEmail ", error);
+        res.status(500).json({ success: false, message: "Server error" });
+      }
+    },
+
+
   // Login user
   login: async (req, res) => {
     try {
@@ -217,36 +269,57 @@ const userController = {
     }
   },
 
-  // Update user profile
-  updateProfile: async (req, res) => {
-    try {
-      const userId = req.user.id;
-      const { full_name, email } = req.body;
+    
+    updateProfile: async (req, res) => {
+      try {
+        const userId = req.user.id;
+        const { full_name, email } = req.body;
 
-      // Find user
-      const user = await User.findByPk(userId);
+        const user = await User.findByPk(userId);
 
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
+        if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+
+        let emailChanged = false;
+
+        if (email && email !== user.email) {
+          emailChanged = true;
+
+          const verificationToken = Math.floor(100000 + Math.random() * 900000).toString();
+          const verificationTokenExpiresAt = new Date(Date.now() + 3600000); // 1h
+
+          // ➕ change pending_email au lieu de email
+          user.pending_email = email;
+          user.verificationToken = verificationToken;
+          user.verificationTokenExpiresAt = verificationTokenExpiresAt;
+
+          await sendVerificationEmail(email, verificationToken);
+        }
+
+        if (full_name) {
+          user.full_name = full_name;
+        }
+
+        await user.save();
+
+        const updatedUser = await User.findByPk(userId, {
+          attributes: { exclude: ['password'] }
+        });
+
+        return res.status(200).json({
+          user: updatedUser,
+          message: emailChanged
+            ? "A verification code has been sent to your new email."
+            : "Profile updated successfully."
+        });
+
+      } catch (error) {
+        console.error('Error updating user profile:', error);
+        return res.status(500).json({ message: 'Internal server error' });
       }
+    },
 
-      // Update user
-      await user.update({
-        full_name: full_name || user.full_name,
-        email: email || user.email
-      });
-
-      // Fetch updated user
-      const updatedUser = await User.findByPk(userId, {
-        attributes: { exclude: ['password'] }
-      });
-
-      return res.status(200).json(updatedUser);
-    } catch (error) {
-      console.error('Error updating user profile:', error);
-      return res.status(500).json({ message: 'Internal server error' });
-    }
-  },
 
 
   // Request password reset
@@ -446,33 +519,68 @@ const userController = {
   },
 
   // Delete user (admin only or self-deletion)
-  deleteUser: async (req, res) => {
+    deleteUser: async (req, res) => {
+      try {
+        const { id } = req.params;
+        const requestingUserId = req.user.id;
+        const isAdmin = req.user.role === 'admin';
+
+        // Check if user is deleting themselves or is an admin
+        if (parseInt(id) !== requestingUserId && !isAdmin) {
+          return res.status(403).json({ message: 'Unauthorized: You can only delete your own account' });
+        }
+
+        // Find user
+        const user = await User.findByPk(id);
+
+        if (!user) {
+          return res.status(404).json({ message: 'User not found' });
+        }
+
+        // Delete user
+        await user.destroy();
+
+        if (parseInt(id) === requestingUserId) {
+        res.clearCookie('token', {
+          httpOnly: true,
+          secure: true, // à activer uniquement si tu es en HTTPS
+          sameSite: 'strict'
+        });
+      }
+
+
+
+        return res.status(200).json({ message: 'User deleted successfully' });
+      } catch (error) {
+        console.error('Error deleting user:', error);
+        return res.status(500).json({ message: 'Internal server error' });
+      }
+    },
+
+    uploadProfilePhoto: async (req, res) => {
     try {
-      const { id } = req.params;
-      const requestingUserId = req.user.id;
-      const isAdmin = req.user.role === 'admin';
-
-      // Check if user is deleting themselves or is an admin
-      if (parseInt(id) !== requestingUserId && !isAdmin) {
-        return res.status(403).json({ message: 'Unauthorized: You can only delete your own account' });
+      if (!req.file) {
+        return res.status(400).json({ message: 'Aucune photo téléchargée' });
       }
-
-      // Find user
-      const user = await User.findByPk(id);
-
+      const userId = req.user.id;
+      const user = await User.findByPk(userId);
       if (!user) {
-        return res.status(404).json({ message: 'User not found' });
+        return res.status(404).json({ message: 'Utilisateur non trouvé' });
       }
 
-      // Delete user
-      await user.destroy();
+      // Sauvegarder le chemin ou le nom du fichier dans la base
+      user.profile_picture = `/uploads/photos_de_profil/${req.file.filename}`;
+      await user.save();
 
-      return res.status(200).json({ message: 'User deleted successfully' });
+      res.status(200).json({ message: 'Photo de profil mise à jour', profile_picture: user.profile_picture });
     } catch (error) {
-      console.error('Error deleting user:', error);
-      return res.status(500).json({ message: 'Internal server error' });
+      console.error(error);
+      res.status(500).json({ message: 'Erreur serveur lors de l\'upload de la photo' });
     }
   }
+
+
+
 };
 
 module.exports = userController;

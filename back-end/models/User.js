@@ -17,6 +17,13 @@ module.exports = (sequelize, DataTypes) => {
           isEmail: true
         }
       },
+      pending_email: {
+        type: DataTypes.STRING(150),
+        allowNull: true,
+        validate: {
+          isEmail: true
+        }
+      },
       username: {
         type: DataTypes.STRING(255),
         allowNull: false,

@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/userController');
+const upload = require('../middlewares/uploadphoto');
 const { authenticate, isAdmin, isModeratorOrAdmin } = require('../middlewares/authMiddleware');
 
 // Public routes
@@ -11,6 +12,10 @@ router.post('/register', userController.register);
 // POST /api/users/verify-email
 router.post('/verify-email', userController.verifyEmail);
 
+// POST /api/users/verify-pending-email
+router.post("/verify-pending-email", userController.verifyPendingEmail);
+
+
 // Login user
 // POST /api/users/login
 router.post('/login', userController.login);
@@ -19,9 +24,7 @@ router.post('/login', userController.login);
 // POST /api/users/logout
 router.post('/logout', userController.logout);
 
-// Get user by ID (public profile)
-// GET /api/users/:id
-router.get('/:id', userController.getUserById);
+
 
 // Protected routes (require authentication)
 // Get current user profile
@@ -31,6 +34,11 @@ router.get('/profile', authenticate, userController.getProfile);
 // Update user profile
 // PUT /api/users/profile
 router.put('/profile', authenticate, userController.updateProfile);
+
+
+// Get user by ID (public profile)
+// GET /api/users/:id
+router.get('/:id', userController.getUserById);
 
 // forgot password
 // POST /api/users/forgot-password
@@ -59,5 +67,11 @@ router.put('/:id/role', authenticate, isAdmin, userController.updateUserRole);
 // Toggle user certification
 // PUT /api/users/:id/certification
 router.put('/:id/certification', authenticate, isAdmin, userController.toggleCertification);
+
+
+
+// UPLOAD PDP 
+router.post('/upload-profile-photo', authenticate, upload.single('profilePhoto'), userController.uploadProfilePhoto);
+
 
 module.exports = router;

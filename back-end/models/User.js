@@ -49,6 +49,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: true
       },
+      about: {
+        type: DataTypes.TEXT,
+        allowNull: true
+      },
       lastLogin: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW

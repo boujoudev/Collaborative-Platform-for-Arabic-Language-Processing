@@ -76,6 +76,9 @@ router.post('/upload-profile-photo', authenticate, upload.single('profilePhoto')
 // Updat bio user 
 router.put('/:id/bio', userController.updateBio);
 
+// Update about user 
+router.put('/:id/about', userController.updateAbout);
+
 // Update preferences user 
 router.put('/:id/preferences', userController.updatePreferencesLinguistiques);
 

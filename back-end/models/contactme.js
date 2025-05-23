@@ -15,8 +15,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     tableName: 'contact_mes',
     timestamps: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   });
 
   ContactMe.associate = (models) => {

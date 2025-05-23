@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const skillController = require('../controllers/skillController');
 
-router.post('/skills', skillController.createSkill);
-router.get('/skills', skillController.getAllSkills);
-router.get('/skills/:id', skillController.getSkillById);
-router.put('/skills/:id', skillController.updateSkill);
-router.delete('/skills/:id', skillController.deleteSkill);
-router.get('/skills', skillController.getSkillsByUserId); 
+router.post('/create', skillController.createSkill);
+router.get('/', skillController.getAllSkills);
+router.get('/users/:userId', skillController.getSkillsByUserId); // Spécifique -> doit être avant /:id
+router.get('/:id', skillController.getSkillById);
+router.put('/:id', skillController.updateSkill);
+router.delete('/:id', skillController.deleteSkill);
 
 module.exports = router;

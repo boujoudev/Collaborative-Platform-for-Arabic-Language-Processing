@@ -11,8 +11,8 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     tableName: 'formations',
     timestamps: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   });
 
   Formation.associate = (models) => {

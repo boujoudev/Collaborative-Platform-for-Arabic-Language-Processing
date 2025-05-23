@@ -5,6 +5,7 @@ exports.createSkill = async (req, res) => {
     const skill = await Skill.create(req.body);
     res.status(201).json(skill);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: 'Failed to create skill' });
   }
 };
@@ -46,6 +47,7 @@ exports.getSkillById = async (req, res) => {
     res.status(500).json({ error: 'Failed to fetch skill' });
   }
 };
+
 exports.getSkillsByUserId = async (req, res) => {
   const { userId } = req.params;
 

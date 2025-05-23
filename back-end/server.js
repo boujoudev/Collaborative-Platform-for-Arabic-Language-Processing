@@ -91,10 +91,15 @@ app.use('/api/messages', messageRoutes);
 
 const skillRoutes = require('./routes/skillRoutes');
 const experienceRoutes = require('./routes/experienceRoutes');
+const formationRoutes = require('./routes/formationRoutes');
+const contactMeRoutes = require('./routes/contactMeRoutes');
+
 
 // Use routes
 app.use('/skills', skillRoutes);
 app.use('/experiences', experienceRoutes);
+app.use('/formations', formationRoutes);
+app.use('/contact', contactMeRoutes);
 
 
 // Error handling middleware

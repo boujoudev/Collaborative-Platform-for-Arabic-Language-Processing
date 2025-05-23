@@ -1,16 +1,28 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+const { Model } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   const Skill = sequelize.define('Skill', {
-    name: DataTypes.STRING,
-    user_id: DataTypes.INTEGER
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        notEmpty: { msg: 'Le nom de la compétence est requis.' },
+      },
+    },
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      validate: {
+        isInt: { msg: 'user_id doit être un entier.' },
+        notNull: { msg: 'user_id est requis.' },
+      },
+    },
   }, {
-    tableName: 'skills',
+    tableName: 'Skills',
     timestamps: true,
-    createdAt: 'created_at',
-    updatedAt: 'updated_at'
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
   });
 
   Skill.associate = (models) => {

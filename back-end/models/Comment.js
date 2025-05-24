@@ -6,7 +6,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     entity_type: {
-      type: DataTypes.ENUM('post', 'project', 'event', 'nlp_tool', 'corpus', 'course'),
+      type: DataTypes.ENUM('post', 'project', 'event', 'nlp_tool', 'corpus', 'course', 'publication'),
       allowNull: false
     },
     entity_id: {

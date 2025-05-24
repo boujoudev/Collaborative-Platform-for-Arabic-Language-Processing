@@ -1,15 +1,17 @@
 const { Comment, User } = require('../models');
 
+const validEntityTypes = ['post', 'project', 'event', 'nlp_tool', 'corpus', 'course', 'publication'];
+
 const commentController = {
   getCommentsByEntity: async (req, res) => {
     try {
       const { entityType, entityId } = req.params;
-      
-      if (!['post', 'project', 'event', 'nlp_tool', 'corpus', 'course'].includes(entityType)) {
+
+      if (!validEntityTypes.includes(entityType)) {
         return res.status(400).json({ message: 'Invalid entity type' });
       }
 
-      // Récupérer les commentaires racines (parent_id = null) + leurs réponses en inclut l'association 'replies'
+      // Récupérer les commentaires racines (parent_id = null) + leurs réponses en incluant l'association 'replies'
       const comments = await Comment.findAll({
         where: {
           entity_type: entityType,
@@ -68,7 +70,7 @@ const commentController = {
       const { entity_type, entity_id, content, image, parent_id } = req.body;
       const user_id = req.user.id;
 
-      if (!['post', 'project', 'event', 'nlp_tool', 'corpus', 'course'].includes(entity_type)) {
+      if (!validEntityTypes.includes(entity_type)) {
         return res.status(400).json({ message: 'Invalid entity type' });
       }
 

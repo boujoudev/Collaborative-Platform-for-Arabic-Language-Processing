@@ -33,9 +33,6 @@ const fileFilter = (req, file, cb) => {
         'text/csv',
         'application/json',
         'application/xml',
-        'image/jpeg',
-        'image/png',
-        'image/gif',
     ];
 
     if (allowedMimeTypes.includes(file.mimetype)) {

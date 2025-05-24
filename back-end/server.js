@@ -122,6 +122,10 @@ app.listen(port, () => {
 });
 
 
+// PUBLICATION 
+const publicationRoutes = require('./routes/publicationRoutes');
+app.use('/api/publications', publicationRoutes);
+
 
 
 

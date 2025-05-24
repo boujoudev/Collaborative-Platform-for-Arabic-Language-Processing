@@ -46,47 +46,46 @@ const forumController = {
   },
 
   // Create a new forum
-  createForum: async (req, res) => {
-    try {
-      const { name, description, photo, topic, visibility } = req.body;
-      const owner_id = req.user.id; // Assuming user is authenticated and available in req.user
-      
-      // Validate required fields
-      if (!name) {
-        return res.status(400).json({ message: 'Forum name is required' });
-      }
+ createForum: async (req, res) => {
+  try {
+    const { name, description, topic, visibility } = req.body;
+    const owner_id = req.user.id;
 
-      // Check if forum with the same name already exists
-      const existingForum = await Forum.findOne({ where: { name } });
-      if (existingForum) {
-        return res.status(400).json({ message: 'A forum with this name already exists' });
-      }
-
-      // Create new forum
-      const newForum = await Forum.create({
-        name,
-        description,
-        photo,
-        topic,
-        visibility: visibility || 'public',
-        owner_id
-      });
-
-      // Fetch the created forum with owner details
-      const forum = await Forum.findByPk(newForum.id, {
-        include: [{
-          model: User,
-          as: 'owner',
-          attributes: ['id', 'username', 'full_name']
-        }]
-      });
-
-      return res.status(201).json(forum);
-    } catch (error) {
-      console.error('Error creating forum:', error);
-      return res.status(500).json({ message: 'Internal server error' });
+    if (!name) {
+      return res.status(400).json({ message: 'Forum name is required' });
     }
-  },
+
+    const existingForum = await Forum.findOne({ where: { name } });
+    if (existingForum) {
+      return res.status(400).json({ message: 'A forum with this name already exists' });
+    }
+
+    const photo = req.file ? `/uploads/forum_photos/${req.file.filename}` : null;
+
+    const newForum = await Forum.create({
+      name,
+      description,
+      photo,
+      topic,
+      visibility: visibility || 'public',
+      owner_id
+    });
+
+    const forum = await Forum.findByPk(newForum.id, {
+      include: [{
+        model: User,
+        as: 'owner',
+        attributes: ['id', 'username', 'full_name']
+      }]
+    });
+
+    return res.status(201).json(forum);
+  } catch (error) {
+    console.error('Error creating forum:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+},
+
 
   // Update an existing forum
   updateForum: async (req, res) => {

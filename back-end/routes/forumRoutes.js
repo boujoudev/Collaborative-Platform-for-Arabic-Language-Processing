@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const forumController = require('../controllers/forumController');
 const { authenticate, isAdmin, isModeratorOrAdmin } = require('../middlewares/authMiddleware');
+const uploadForumPhoto = require('../middlewares/uploadForumPhoto');
 
 // Public routes
 // Get all forums
@@ -19,7 +20,12 @@ router.get('/:id/posts', forumController.getForumPosts);
 // Protected routes (require authentication)
 // Create a new forum
 // POST /api/forums
-router.post('/', authenticate, forumController.createForum);
+router.post(
+  '/',
+  authenticate,
+  uploadForumPhoto.single('photo'), 
+  forumController.createForum
+);
 
 // Update an existing forum
 // PUT /api/forums/:id

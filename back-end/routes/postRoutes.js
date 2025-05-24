@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const postController = require('../controllers/postController');
 const { authenticate, isAdmin, isModeratorOrAdmin } = require('../middlewares/authMiddleware');
+const uploadPostPhoto = require('../middlewares/uploadPostPhoto');
 
 // Public routes
 // Get all posts
@@ -23,7 +24,18 @@ router.get('/:id/evaluations', postController.getPostEvaluations);
 // Protected routes (require authentication)
 // Create a new post
 // POST /api/posts
-router.post('/', authenticate, postController.createPost);
+
+router.post(
+  '/',
+  authenticate,
+  uploadPostPhoto.single('photo'), // gestion de l'image ici
+  postController.createPost
+);
+
+
+// GET POSTS FOR A FORUM BY FORUMID 
+router.get('/:forum_id/posts', postController.getPostsByForumId);
+
 
 // Update an existing post
 // PUT /api/posts/:id

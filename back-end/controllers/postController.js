@@ -59,54 +59,58 @@ const postController = {
     }
   },
 
-  // Create a new post
-  createPost: async (req, res) => {
-    try {
-      const { forum_id, title, content, photo } = req.body;
-      const user_id = req.user.id; // Assuming user is authenticated and available in req.user
-      
-      // Validate required fields
-      if (!forum_id || !title || !content) {
-        return res.status(400).json({ message: 'Forum ID, title, and content are required' });
-      }
+// Create a new post
+createPost: async (req, res) => {
+  try {
+    const { forum_id, title, content } = req.body;
+    const user_id = req.user.id;
 
-      // Check if forum exists
-      const forum = await Forum.findByPk(forum_id);
-      if (!forum) {
-        return res.status(404).json({ message: 'Forum not found' });
-      }
-
-      // Create new post
-      const newPost = await Post.create({
-        forum_id,
-        user_id,
-        title,
-        content,
-        photo
-      });
-
-      // Fetch the created post with author and forum details
-      const post = await Post.findByPk(newPost.id, {
-        include: [
-          {
-            model: User,
-            as: 'author',
-            attributes: ['id', 'username', 'full_name']
-          },
-          {
-            model: Forum,
-            as: 'forum',
-            attributes: ['id', 'name']
-          }
-        ]
-      });
-
-      return res.status(201).json(post);
-    } catch (error) {
-      console.error('Error creating post:', error);
-      return res.status(500).json({ message: 'Internal server error' });
+    // Validation des champs requis
+    if (!forum_id || !title || !content) {
+      return res.status(400).json({ message: 'Forum ID, title, and content are required' });
     }
-  },
+
+    // Vérifie si le forum existe
+    const forum = await Forum.findByPk(forum_id);
+    if (!forum) {
+      return res.status(404).json({ message: 'Forum not found' });
+    }
+
+    // Gestion de la photo uploadée
+    const photo = req.file ? `/uploads/post_photos/${req.file.filename}` : null;
+
+    // Création du post
+    const newPost = await Post.create({
+      forum_id,
+      user_id,
+      title,
+      content,
+      photo
+    });
+
+    // Récupération du post avec les infos utilisateur et forum
+    const post = await Post.findByPk(newPost.id, {
+      include: [
+        {
+          model: User,
+          as: 'author',
+          attributes: ['id', 'username', 'full_name']
+        },
+        {
+          model: Forum,
+          as: 'forum',
+          attributes: ['id', 'name']
+        }
+      ]
+    });
+
+    return res.status(201).json(post);
+  } catch (error) {
+    console.error('Error creating post:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+},
+
 
   // Update an existing post
   updatePost: async (req, res) => {
@@ -216,6 +220,43 @@ const postController = {
       return res.status(500).json({ message: 'Internal server error' });
     }
   },
+
+  // Get all posts for a specific forum by forum_id
+getPostsByForumId: async (req, res) => {
+  try {
+    const { forum_id } = req.params;
+
+    // Vérifie si le forum existe
+    const forum = await Forum.findByPk(forum_id);
+    if (!forum) {
+      return res.status(404).json({ message: 'Forum not found' });
+    }
+
+    // Récupère tous les posts du forum
+    const posts = await Post.findAll({
+      where: { forum_id },
+      include: [
+        {
+          model: User,
+          as: 'author',
+          attributes: ['id', 'username', 'full_name']
+        },
+        {
+          model: Forum,
+          as: 'forum',
+          attributes: ['id', 'name']
+        }
+      ],
+      order: [['created_at', 'DESC']]
+    });
+
+    return res.status(200).json(posts);
+  } catch (error) {
+    console.error('Error fetching posts by forum ID:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+},
+
 
   // Get all evaluations (votes) for a post
   getPostEvaluations: async (req, res) => {

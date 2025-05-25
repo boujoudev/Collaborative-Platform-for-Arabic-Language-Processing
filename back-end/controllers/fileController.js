@@ -6,6 +6,7 @@ const fs = require('fs');
 // Upload d'un fichier
 exports.uploadFile = async (req, res) => {
     try {
+        // Vérification du fichier
         if (!req.file) {
             return res.status(400).json({ message: 'Aucun fichier n\'a été uploadé' });
         }
@@ -13,102 +14,98 @@ exports.uploadFile = async (req, res) => {
         const { entityType, entityId } = req.params;
         const { originalname, filename, path: filePath, mimetype, size } = req.file;
 
-        console.log('Upload du fichier:', {
-            originalname,
-            filename,
-            filePath,
-            entityType,
-            entityId
-        });
-
-        // Configuration dynamique des entités et fichiers
+        // Configuration des entités
         const entityMap = {
-            project: { model: Project, fileModel: ProjectFile, foreignKey: 'project_id', folder: 'project' },
-            corpus: { model: Corpus, fileModel: CorpusFile, foreignKey: 'corpus_id', folder: 'corpus' },
-            course: { model: Course, fileModel: CourseFile, foreignKey: 'course_id', folder: 'course' },
-            publication: { model: Publication, fileModel: Publication, foreignKey: 'publication_id' },
-            annotation: { model: Corpus, fileModel: AnnotationFile, foreignKey: 'corpus_id', folder: 'annotation' }
+            project: { 
+                model: Project, 
+                fileModel: ProjectFile, 
+                foreignKey: 'project_id', 
+                folder: 'projects',
+                allowedTypes: ['application/pdf', 'text/plain', 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document']
+            },
+            course: { 
+                model: Course, 
+                fileModel: CourseFile, 
+                foreignKey: 'course_id', 
+                folder: 'courses',
+                allowedTypes: ['video/mp4', 'video/webm', 'application/pdf']
+            },
+            corpus: { 
+                model: Corpus, 
+                fileModel: CorpusFile, 
+                foreignKey: 'corpus_id', 
+                folder: 'corpus',
+                allowedTypes: ['text/plain', 'application/json', 'text/csv']
+            }
         };
 
+        // Vérification de l'entité
         const config = entityMap[entityType];
-
         if (!config) {
             return res.status(400).json({ message: 'Type d\'entité non valide' });
         }
 
+        // Vérification du type de fichier
+        if (!config.allowedTypes.includes(mimetype)) {
+            return res.status(400).json({ 
+                message: `Type de fichier non autorisé pour ${entityType}. Types autorisés: ${config.allowedTypes.join(', ')}` 
+            });
+        }
+
+        // Vérification de l'existence de l'entité
         const entity = await config.model.findByPk(entityId);
         if (!entity) {
             return res.status(404).json({ message: `${entityType} non trouvé` });
         }
 
-        // --- Gestion spécifique pour les publications ---
-        let uploadFolder = null;
-
-        if (entityType === 'publication') {
-            // Utiliser publication_type pour définir le dossier
-            const pubType = entity.publication_type ? entity.publication_type.toLowerCase().trim() : 'unknown';
-
-            uploadFolder = path.join(__dirname, '..', 'uploads', pubType);
-
-            // Créer le dossier s'il n'existe pas
-            if (!fs.existsSync(uploadFolder)) {
-                fs.mkdirSync(uploadFolder, { recursive: true });
-            }
-
-            // Déplacer le fichier uploadé vers le dossier correct
-            const finalPath = path.join(uploadFolder, filename);
-            fs.renameSync(filePath, finalPath);
-
-            // Enregistrer le chemin relatif dans la base (pour publication, on utilise file_path = filename seulement)
-            // Si tu veux stocker le chemin complet relatif au dossier uploads, fais : `${pubType}/${filename}`
-            await config.fileModel.update(
-                { file_path: `${pubType}/${filename}` },
-                { where: { id: entityId } }
-            );
-
-            // Enregistrer dans une table de fichiers séparée si tu en as une, sinon ok comme ça
-            // Si Publication est aussi la table des fichiers, alors c'est bon ici
-
-            res.status(201).json({
-                message: 'Fichier uploadé avec succès dans le dossier publication',
-                file_name: filename,
-                file_path: `${pubType}/${filename}`
-            });
-            return;
-        }
-
-        // --- Gestion pour les autres entités ---
-        uploadFolder = path.join(__dirname, '..', 'uploads', config.folder);
-
+        // Gestion du dossier d'upload
+        const uploadFolder = path.join(__dirname, '..', 'uploads', config.folder);
         if (!fs.existsSync(uploadFolder)) {
             fs.mkdirSync(uploadFolder, { recursive: true });
         }
 
-        // Déplacer le fichier uploadé vers le dossier correct
-        const finalPath = path.join(uploadFolder, filename);
+        // Création du nom de fichier unique
+        const fileExtension = path.extname(originalname);
+        const uniqueFilename = `${entityType}_${entityId}_${Date.now()}${fileExtension}`;
+        const finalPath = path.join(uploadFolder, uniqueFilename);
+
+        // Déplacement du fichier
         fs.renameSync(filePath, finalPath);
 
-        // Créer l'entrée dans la table des fichiers
+        // Création de l'entrée dans la base de données
         const file = await config.fileModel.create({
-            file_name: filename,
-            file_path: path.join(config.folder, filename), // chemin relatif dans uploads
+            file_name: uniqueFilename,
+            original_name: originalname,
+            file_path: path.join(config.folder, uniqueFilename),
+            mime_type: mimetype,
+            size: size,
             [config.foreignKey]: entityId,
             user_id: req.user.id
         });
 
-        console.log('Fichier créé dans la base de données:', file.toJSON());
-
-        res.status(201).json({
+        // Réponse
+        return res.status(201).json({
+            success: true,
             message: 'Fichier uploadé avec succès',
-            file: file
+            file: {
+                id: file.id,
+                name: file.file_name,
+                originalName: file.original_name,
+                path: file.file_path,
+                type: file.mime_type,
+                size: file.size
+            }
         });
 
     } catch (error) {
         console.error('Erreur lors de l\'upload du fichier:', error);
-        res.status(500).json({ message: error.message });
+        return res.status(500).json({ 
+            success: false,
+            message: 'Erreur lors de l\'upload du fichier',
+            error: error.message 
+        });
     }
 };
-
 
 // Téléchargement d'un fichier
 exports.downloadFile = async (req, res) => {

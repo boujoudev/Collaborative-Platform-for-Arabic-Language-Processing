@@ -1,4 +1,4 @@
-const { Course, User } = require('../models');
+const { Course, User, CourseFile  } = require('../models');
 
 const courseController = {
   // Get all courses
@@ -175,7 +175,33 @@ const courseController = {
       console.error('Error deleting course:', error);
       return res.status(500).json({ message: 'Internal server error' });
     }
+  },
+
+
+// Ajoute cette méthode dans l'objet courseController
+getFilesByCourse: async (req, res) => {
+  const { courseId } = req.params;
+
+  try {
+    const files = await CourseFile.findAll({
+      where: { course_id: courseId },
+      attributes: ['file_name', 'file_path']
+    });
+
+    res.status(200).json({
+      success: true,
+      count: files.length,
+      files
+    });
+  } catch (error) {
+    console.error('Erreur lors de la récupération des fichiers de cours:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Erreur serveur lors de la récupération des fichiers'
+    });
   }
+
+}
 };
 
 module.exports = courseController;

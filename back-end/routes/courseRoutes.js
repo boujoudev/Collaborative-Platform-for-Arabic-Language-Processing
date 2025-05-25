@@ -9,6 +9,9 @@ router.get('/', courseController.getAllCourses);
 // Get courses by domain
 router.get('/domain/:domain', courseController.getCoursesByDomain);
 
+// GET files bby course id 
+router.get('/course/:courseId/files', authenticate, courseController.getFilesByCourse);
+
 // Get a specific course by ID
 router.get('/:id', courseController.getCourseById);
 
@@ -20,5 +23,8 @@ router.put('/:id', authenticate, courseController.updateCourse);
 
 // Delete a course (requires authentication)
 router.delete('/:id', authenticate, courseController.deleteCourse);
+
+
+
 
 module.exports = router;

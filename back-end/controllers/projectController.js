@@ -89,102 +89,103 @@ const projectController = {
   },
 
   // Create a new project
-  createProject: async (req, res) => {
-    try {
-      const { title, description, visibility, status } = req.body;
-      const user_id = req.user.id; // Assuming user is authenticated and available in req.user
-      
-      // Validate required fields
-      if (!title || !description) {
-        return res.status(400).json({ message: 'Title and description are required' });
-      }
+createProject: async (req, res) => {
+  try {
+    const { title, description, visibility, status, link } = req.body;
+    const user_id = req.user.id;
 
-      // Create project in a transaction
-      const result = await sequelize.transaction(async (t) => {
-        // Create the project
-        const newProject = await Project.create({
-          title,
-          description,
-          visibility: visibility || 'public',
-          status: status || 'ongoing'
-        }, { transaction: t });
-
-        // Add the creator as an owner
-        await ProjectOwner.create({
-          project_id: newProject.id,
-          user_id
-        }, { transaction: t });
-
-        return newProject;
-      });
-
-      // Fetch the created project with owner details
-      const project = await Project.findByPk(result.id, {
-        include: [{
-          model: User,
-          as: 'owners',
-          attributes: ['id', 'username', 'full_name'],
-          through: { attributes: [] }
-        }]
-      });
-
-      return res.status(201).json(project);
-    } catch (error) {
-      console.error('Error creating project:', error);
-      return res.status(500).json({ message: 'Internal server error' });
+    // Validation des champs requis
+    if (!title || !description) {
+      return res.status(400).json({ message: 'Title and description are required' });
     }
-  },
+
+    // Validation du lien si fourni
+    if (link) {
+      try {
+        new URL(link);
+      } catch (e) {
+        return res.status(400).json({ message: 'Invalid URL format for link' });
+      }
+    }
+
+    // Création du projet dans une transaction
+    const result = await sequelize.transaction(async (t) => {
+      const newProject = await Project.create({
+        title,
+        description,
+        visibility: visibility || 'public',
+        status: status || 'ongoing',
+        link: link || null
+      }, { transaction: t });
+
+      await ProjectOwner.create({
+        project_id: newProject.id,
+        user_id
+      }, { transaction: t });
+
+      return newProject;
+    });
+
+    // ✅ Réponse envoyée au client
+    return res.status(201).json({ message: 'Project created successfully', project: result });
+
+  } catch (error) {
+    console.error('Error creating project:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+},
+
 
   // Update an existing project
-  updateProject: async (req, res) => {
-    try {
-      const { id } = req.params;
-      const { title, description, visibility, status } = req.body;
-      const user_id = req.user.id; // Assuming user is authenticated and available in req.user
+updateProject: async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { title, description, visibility, status, link } = req.body;
+    const user_id = req.user.id;
 
-      // Find the project
-      const project = await Project.findByPk(id);
+    // Trouver le projet
+    const project = await Project.findByPk(id);
 
-      if (!project) {
-        return res.status(404).json({ message: 'Project not found' });
-      }
-
-      // Check if the user is an owner of the project
-      const isOwner = await ProjectOwner.findOne({
-        where: {
-          project_id: id,
-          user_id
-        }
-      });
-
-      if (!isOwner && req.user.role !== 'admin') {
-        return res.status(403).json({ message: 'Unauthorized: Only project owners can update projects' });
-      }
-
-      // Update the project
-      await project.update({
-        title: title || project.title,
-        description: description || project.description,
-        visibility: visibility || project.visibility,
-        status: status || project.status
-      });
-
-      // Fetch the updated project with owner details
-      const updatedProject = await Project.findByPk(id, {
-        include: [{
-          model: User,
-          as: 'owners',
-          attributes: ['id', 'username', 'full_name'],
-          through: { attributes: [] }
-        }]
-      });
-
-      return res.status(200).json(updatedProject);
-    } catch (error) {
-      console.error('Error updating project:', error);
-      return res.status(500).json({ message: 'Internal server error' });
+    if (!project) {
+      return res.status(404).json({ message: 'Project not found' });
     }
-  },
+
+    // Vérifier les autorisations
+    const isOwner = await ProjectOwner.findOne({
+      where: { project_id: id, user_id }
+    });
+
+    if (!isOwner && req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Unauthorized: Only project owners can update projects' });
+    }
+
+    // Valider le lien si fourni
+    if (link) {
+      try {
+        new URL(link);
+      } catch (e) {
+        return res.status(400).json({ message: 'Invalid URL format for link' });
+      }
+    }
+
+    // Mettre à jour le projet
+    await project.update({
+      title: title || project.title,
+      description: description || project.description,
+      visibility: visibility || project.visibility,
+      status: status || project.status,
+      link: link === undefined ? project.link : link
+    });
+
+    // ✅ Réponse envoyée
+    return res.status(200).json({ message: 'Project updated successfully', project });
+
+  } catch (error) {
+    console.error('Error updating project:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+},
+
 
   // Delete a project
   deleteProject: async (req, res) => {

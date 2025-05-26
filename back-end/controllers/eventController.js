@@ -83,40 +83,45 @@ const eventController = {
   },
 
   // Create a new event
-  createEvent: async (req, res) => {
-    try {
-      const { title, description, start_time, deadline, visibility } = req.body;
-      const owner_id = req.user.id; // Assuming user is authenticated and available in req.user
-      
-      // Validate required fields
-      if (!title || !description || !start_time || !deadline) {
-        return res.status(400).json({ message: 'All fields are required' });
-      }
+createEvent: async (req, res) => {
+  try {
+    const { title, description, start_time, deadline, visibility, type, timezone, external_link } = req.body;
+    const owner_id = req.user.id;
 
-      const newEvent = await Event.create({
-        title,
-        description,
-        start_time,
-        deadline,
-        visibility: visibility || 'public',
-        owner_id
-      });
-
-      // Fetch the created event with owner details
-      const event = await Event.findByPk(newEvent.id, {
-        include: [{
-          model: User,
-          as: 'owner',
-          attributes: ['id', 'username', 'full_name']
-        }]
-      });
-
-      return res.status(201).json(event);
-    } catch (error) {
-      console.error('Error creating event:', error);
-      return res.status(500).json({ message: 'Internal server error' });
+    // Validation des champs requis
+    if (!title || !description || !start_time || !deadline || !type || !timezone) {
+      return res.status(400).json({ message: 'All fields are required' });
     }
-  },
+
+    console.log('BODY:', req.body);
+
+    const newEvent = await Event.create({
+      title,
+      description,
+      start_time,
+      deadline,
+      visibility: visibility || 'public',
+      type,
+      timezone,
+      external_link,
+      owner_id
+    });
+
+    const event = await Event.findByPk(newEvent.id, {
+      include: [{
+        model: User,
+        as: 'owner',
+        attributes: ['id', 'username', 'full_name']
+      }]
+    });
+
+    return res.status(201).json(event);
+  } catch (error) {
+    console.error('Error creating event:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+},
+
 
   // Update an existing event
   updateEvent: async (req, res) => {

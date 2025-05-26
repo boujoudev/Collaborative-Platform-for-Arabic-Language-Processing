@@ -10,7 +10,7 @@ router.get('/', courseController.getAllCourses);
 router.get('/domain/:domain', courseController.getCoursesByDomain);
 
 // GET files bby course id 
-router.get('/course/:courseId/files', authenticate, courseController.getFilesByCourse);
+router.get('/course/:courseId/files', courseController.getFilesByCourse);
 
 // Get a specific course by ID
 router.get('/:id', courseController.getCourseById);

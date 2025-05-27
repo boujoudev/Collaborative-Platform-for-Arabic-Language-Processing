@@ -1,5 +1,6 @@
 const { Event, User, EventInterest, Sequelize } = require('../models');
 const { Op } = Sequelize;
+const NotificationService = require('../services/notificationService');
 
 // Controller for handling event-related operations
 const eventController = {
@@ -85,20 +86,29 @@ const eventController = {
   // Create a new event
   createEvent: async (req, res) => {
     try {
-      const { title, description, start_time, deadline, visibility } = req.body;
-      const owner_id = req.user.id; // Assuming user is authenticated and available in req.user
+      const { title, description, start_time, end_time, deadline, visibility, type, timezone, external_link } = req.body;
+      const owner_id = req.user.id;
       
       // Validate required fields
-      if (!title || !description || !start_time || !deadline) {
-        return res.status(400).json({ message: 'All fields are required' });
+      if (!title || !description || !start_time || !deadline || !type || !timezone) {
+        return res.status(400).json({ message: 'Title, description, start time, deadline, type, and timezone are required' });
+      }
+
+      // Validate event type and external link
+      if (type === 'online' && !external_link) {
+        return res.status(400).json({ message: 'External link is required for online events' });
       }
 
       const newEvent = await Event.create({
         title,
         description,
         start_time,
+        end_time,
         deadline,
         visibility: visibility || 'public',
+        type,
+        timezone,
+        external_link,
         owner_id
       });
 
@@ -111,6 +121,35 @@ const eventController = {
         }]
       });
 
+      // Schedule event reminder notification
+      const notificationService = new NotificationService(req.app.get('io'));
+      const reminderTime = new Date(start_time);
+      reminderTime.setHours(reminderTime.getHours() - 1); // Send reminder 1 hour before
+
+      // Schedule the reminder
+      setTimeout(async () => {
+        const interestedUsers = await EventInterest.findAll({
+          where: { event_id: event.id },
+          include: [{
+            model: User,
+            attributes: ['id']
+          }]
+        });
+
+        for (const interest of interestedUsers) {
+          await notificationService.handleEventReminder(
+            interest.user.id,
+            {
+              id: event.id,
+              title: event.title,
+              startTime: event.start_time,
+              type: event.type,
+              externalLink: event.external_link
+            }
+          );
+        }
+      }, reminderTime.getTime() - Date.now());
+
       return res.status(201).json(event);
     } catch (error) {
       console.error('Error creating event:', error);
@@ -122,8 +161,8 @@ const eventController = {
   updateEvent: async (req, res) => {
     try {
       const { id } = req.params;
-      const { title, description, start_time, deadline, visibility } = req.body;
-      const owner_id = req.user.id; // Assuming user is authenticated and available in req.user
+      const { title, description, start_time, end_time, deadline, visibility, type, timezone, external_link } = req.body;
+      const owner_id = req.user.id;
 
       // Find the event
       const event = await Event.findByPk(id);
@@ -137,13 +176,22 @@ const eventController = {
         return res.status(403).json({ message: 'Unauthorized: You can only update your own events' });
       }
 
+      // Validate event type and external link
+      if (type === 'online' && !external_link) {
+        return res.status(400).json({ message: 'External link is required for online events' });
+      }
+
       // Update the event
       await event.update({
         title: title || event.title,
         description: description || event.description,
         start_time: start_time || event.start_time,
+        end_time: end_time !== undefined ? end_time : event.end_time,
         deadline: deadline || event.deadline,
-        visibility: visibility || event.visibility
+        visibility: visibility || event.visibility,
+        type: type || event.type,
+        timezone: timezone || event.timezone,
+        external_link: external_link !== undefined ? external_link : event.external_link
       });
 
       // Fetch the updated event with owner details
@@ -194,10 +242,16 @@ const eventController = {
   expressInterest: async (req, res) => {
     try {
       const { id } = req.params;
-      const user_id = req.user.id; // Assuming user is authenticated and available in req.user
+      const user_id = req.user.id;
 
       // Find the event
-      const event = await Event.findByPk(id);
+      const event = await Event.findByPk(id, {
+        include: [{
+          model: User,
+          as: 'owner',
+          attributes: ['id', 'username', 'full_name']
+        }]
+      });
 
       if (!event) {
         return res.status(404).json({ message: 'Event not found' });
@@ -220,6 +274,20 @@ const eventController = {
         event_id: id,
         user_id
       });
+
+      // Notify event owner about new interest
+      if (event.owner.id !== user_id) {
+        const notificationService = new NotificationService(req.app.get('io'));
+        await notificationService.sendNotification(
+          event.owner.id,
+          'EVENT_INTEREST',
+          {
+            eventId: event.id,
+            eventTitle: event.title,
+            interestedUserId: user_id
+          }
+        );
+      }
 
       return res.status(200).json({ message: 'Interest expressed successfully' });
     } catch (error) {

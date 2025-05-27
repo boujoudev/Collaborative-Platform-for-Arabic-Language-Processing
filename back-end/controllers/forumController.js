@@ -1,4 +1,5 @@
-const { Forum, User, Post } = require('../models');
+const { Forum, User, Post, ForumMember } = require('../models');
+const NotificationService = require('../services/notificationService');
 
 // Controller for handling forum-related operations
 const forumController = {
@@ -49,7 +50,7 @@ const forumController = {
   createForum: async (req, res) => {
     try {
       const { name, description, photo, topic, visibility } = req.body;
-      const owner_id = req.user.id; // Assuming user is authenticated and available in req.user
+      const owner_id = req.user.id;
       
       // Validate required fields
       if (!name) {
@@ -70,6 +71,13 @@ const forumController = {
         topic,
         visibility: visibility || 'public',
         owner_id
+      });
+
+      // Add owner as a member
+      await ForumMember.create({
+        forum_id: newForum.id,
+        user_id: owner_id,
+        role: 'owner'
       });
 
       // Fetch the created forum with owner details
@@ -193,6 +201,100 @@ const forumController = {
       return res.status(200).json(posts);
     } catch (error) {
       console.error('Error fetching forum posts:', error);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+  },
+
+  // Join a forum
+  joinForum: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const user_id = req.user.id;
+
+      // Check if forum exists
+      const forum = await Forum.findByPk(id, {
+        include: [{
+          model: User,
+          as: 'owner',
+          attributes: ['id', 'username', 'full_name']
+        }]
+      });
+
+      if (!forum) {
+        return res.status(404).json({ message: 'Forum not found' });
+      }
+
+      // Check if user is already a member
+      const existingMember = await ForumMember.findOne({
+        where: {
+          forum_id: id,
+          user_id
+        }
+      });
+
+      if (existingMember) {
+        return res.status(400).json({ message: 'You are already a member of this forum' });
+      }
+
+      // Add user as a member
+      await ForumMember.create({
+        forum_id: id,
+        user_id,
+        role: 'member'
+      });
+
+      // Notify forum owner about new member
+      if (forum.owner.id !== user_id) {
+        const notificationService = new NotificationService(req.app.get('io'));
+        await notificationService.handleNewForumMember(
+          user_id,
+          forum.id,
+          forum.owner.id
+        );
+      }
+
+      return res.status(200).json({ message: 'Successfully joined the forum' });
+    } catch (error) {
+      console.error('Error joining forum:', error);
+      return res.status(500).json({ message: 'Internal server error' });
+    }
+  },
+
+  // Leave a forum
+  leaveForum: async (req, res) => {
+    try {
+      const { id } = req.params;
+      const user_id = req.user.id;
+
+      // Check if forum exists
+      const forum = await Forum.findByPk(id);
+      if (!forum) {
+        return res.status(404).json({ message: 'Forum not found' });
+      }
+
+      // Check if user is a member
+      const member = await ForumMember.findOne({
+        where: {
+          forum_id: id,
+          user_id
+        }
+      });
+
+      if (!member) {
+        return res.status(400).json({ message: 'You are not a member of this forum' });
+      }
+
+      // Prevent owner from leaving
+      if (member.role === 'owner') {
+        return res.status(400).json({ message: 'Forum owner cannot leave the forum' });
+      }
+
+      // Remove user from forum
+      await member.destroy();
+
+      return res.status(200).json({ message: 'Successfully left the forum' });
+    } catch (error) {
+      console.error('Error leaving forum:', error);
       return res.status(500).json({ message: 'Internal server error' });
     }
   }

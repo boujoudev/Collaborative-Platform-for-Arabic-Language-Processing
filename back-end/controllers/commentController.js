@@ -1,4 +1,5 @@
-const { Comment, User } = require('../models');
+const { Comment, User, Post, Project, Event, NlpTool, Corpus } = require('../models');
+const NotificationService = require('../services/notificationService');
 
 // Controller for handling comment-related operations
 const commentController = {
@@ -15,14 +16,29 @@ const commentController = {
       const comments = await Comment.findAll({
         where: {
           entity_type: entityType,
-          entity_id: entityId
+          entity_id: entityId,
+          parent_id: null // Only get top-level comments
         },
-        include: [{
-          model: User,
-          as: 'author',
-          attributes: ['id', 'username', 'full_name']
-        }],
-        order: [['created_at', 'DESC']]
+        include: [
+          {
+            model: User,
+            as: 'author',
+            attributes: ['id', 'username', 'full_name']
+          },
+          {
+            model: Comment,
+            as: 'replies',
+            include: [{
+              model: User,
+              as: 'author',
+              attributes: ['id', 'username', 'full_name']
+            }]
+          }
+        ],
+        order: [
+          ['created_at', 'DESC'],
+          [{ model: Comment, as: 'replies' }, 'created_at', 'ASC']
+        ]
       });
 
       return res.status(200).json(comments);
@@ -38,11 +54,22 @@ const commentController = {
       const { id } = req.params;
       
       const comment = await Comment.findByPk(id, {
-        include: [{
-          model: User,
-          as: 'author',
-          attributes: ['id', 'username', 'full_name']
-        }]
+        include: [
+          {
+            model: User,
+            as: 'author',
+            attributes: ['id', 'username', 'full_name']
+          },
+          {
+            model: Comment,
+            as: 'replies',
+            include: [{
+              model: User,
+              as: 'author',
+              attributes: ['id', 'username', 'full_name']
+            }]
+          }
+        ]
       });
 
       if (!comment) {
@@ -59,8 +86,8 @@ const commentController = {
   // Create a new comment
   createComment: async (req, res) => {
     try {
-      const { entity_type, entity_id, content, image } = req.body;
-      const user_id = req.user.id; // Assuming user is authenticated and available in req.user
+      const { entity_type, entity_id, content, image, parent_id } = req.body;
+      const user_id = req.user.id;
       
       // Validate entity type
       if (!['post', 'project', 'event', 'nlp_tool', 'corpus', 'course'].includes(entity_type)) {
@@ -72,12 +99,21 @@ const commentController = {
         return res.status(400).json({ message: 'Comment content is required' });
       }
 
+      // If this is a reply, verify the parent comment exists
+      if (parent_id) {
+        const parentComment = await Comment.findByPk(parent_id);
+        if (!parentComment) {
+          return res.status(404).json({ message: 'Parent comment not found' });
+        }
+      }
+
       const newComment = await Comment.create({
         entity_type,
         entity_id,
         content,
         image,
-        user_id
+        user_id,
+        parent_id
       });
 
       // Fetch the created comment with author details
@@ -88,6 +124,41 @@ const commentController = {
           attributes: ['id', 'username', 'full_name']
         }]
       });
+
+      // Initialize NotificationService
+      const notificationService = new NotificationService(req.app.get('io'));
+
+      // If this is a reply, notify the parent comment's author
+      if (parent_id) {
+        const parentComment = await Comment.findByPk(parent_id, {
+          include: [{
+            model: User,
+            as: 'author'
+          }]
+        });
+        
+        if (parentComment && parentComment.author.id !== user_id) {
+          await notificationService.handleCommentReply(
+            entity_id,
+            user_id,
+            parentComment.author.id,
+            comment
+          );
+        }
+      } else {
+        // For new comments, notify the entity owner
+        // You'll need to implement this based on your entity types
+        // This is a placeholder - implement the actual logic based on your needs
+        const entityOwnerId = await getEntityOwnerId(entity_type, entity_id);
+        if (entityOwnerId && entityOwnerId !== user_id) {
+          await notificationService.handleNewComment(
+            entity_id,
+            user_id,
+            entityOwnerId,
+            comment
+          );
+        }
+      }
 
       return res.status(201).json(comment);
     } catch (error) {
@@ -101,7 +172,7 @@ const commentController = {
     try {
       const { id } = req.params;
       const { content, image } = req.body;
-      const user_id = req.user.id; // Assuming user is authenticated and available in req.user
+      const user_id = req.user.id;
 
       // Find the comment
       const comment = await Comment.findByPk(id);
@@ -141,7 +212,7 @@ const commentController = {
   deleteComment: async (req, res) => {
     try {
       const { id } = req.params;
-      const user_id = req.user.id; // Assuming user is authenticated and available in req.user
+      const user_id = req.user.id;
 
       // Find the comment
       const comment = await Comment.findByPk(id);
@@ -151,7 +222,6 @@ const commentController = {
       }
 
       // Check if the user is the author of the comment or an admin/moderator
-      // This would require checking user role, which we'd get from req.user
       if (comment.user_id !== user_id && req.user.role !== 'admin' && req.user.role !== 'moderator') {
         return res.status(403).json({ message: 'Unauthorized: You can only delete your own comments' });
       }
@@ -166,5 +236,34 @@ const commentController = {
     }
   }
 };
+
+// Helper function to get entity owner ID
+async function getEntityOwnerId(entityType, entityId) {
+  try {
+    switch (entityType) {
+      case 'post':
+        const post = await Post.findByPk(entityId);
+        return post?.user_id;
+      case 'project':
+        const project = await Project.findByPk(entityId);
+        return project?.user_id;
+      case 'event':
+        const event = await Event.findByPk(entityId);
+        return event?.user_id;
+      case 'nlp_tool':
+        const nlpTool = await NlpTool.findByPk(entityId);
+        return nlpTool?.user_id;
+      case 'corpus':
+        const corpus = await Corpus.findByPk(entityId);
+        return corpus?.user_id;
+      // Add other entity types as needed
+      default:
+        return null;
+    }
+  } catch (error) {
+    console.error('Error getting entity owner:', error);
+    return null;
+  }
+}
 
 module.exports = commentController;

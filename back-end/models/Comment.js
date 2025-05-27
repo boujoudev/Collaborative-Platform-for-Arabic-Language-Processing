@@ -19,6 +19,14 @@ module.exports = (sequelize, DataTypes) => {
       },
       image: {
         type: DataTypes.TEXT
+      },
+      parent_id: {
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        references: {
+          model: 'comments',
+          key: 'id'
+        }
       }
     }, {
       tableName: 'comments',
@@ -28,6 +36,9 @@ module.exports = (sequelize, DataTypes) => {
       indexes: [
         {
           fields: ['entity_type', 'entity_id']
+        },
+        {
+          fields: ['parent_id']
         }
       ]
     });
@@ -37,6 +48,17 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'user_id',
         as: 'author',
         onDelete: 'CASCADE'
+      });
+
+      // Self-referential association for replies
+      Comment.belongsTo(Comment, {
+        foreignKey: 'parent_id',
+        as: 'parent'
+      });
+
+      Comment.hasMany(Comment, {
+        foreignKey: 'parent_id',
+        as: 'replies'
       });
     };
   

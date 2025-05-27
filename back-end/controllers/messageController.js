@@ -1,5 +1,6 @@
 const Message = require('../models/Message');
 const { User } = require('../models');
+const NotificationService = require('../services/notificationService');
 
 const messageController = {
     // Envoyer un message
@@ -48,6 +49,18 @@ const messageController = {
                     username: receiver.username
                 }
             };
+
+            // Send notification to receiver
+            const notificationService = new NotificationService(req.app.get('io'));
+            await notificationService.handleNewMessage(
+                sender_id,
+                receiver_id,
+                {
+                    id: message.id,
+                    content: message.content,
+                    senderName: sender.full_name
+                }
+            );
 
             res.status(201).json(response);
         } catch (error) {

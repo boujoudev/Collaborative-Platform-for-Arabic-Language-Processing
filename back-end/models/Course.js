@@ -12,12 +12,19 @@ module.exports = (sequelize, DataTypes) => {
     description: {
       type: DataTypes.TEXT
     },
-    link: {
-      type: DataTypes.TEXT,
+      link: {
+      type: DataTypes.STRING,
+      allowNull: true,
       validate: {
-        isUrl: true
+        isUrl: {
+          msg: 'Le lien doit être une URL valide',
+        }
+      },
+      set(value) {
+        this.setDataValue('link', value === '' ? null : value);
       }
-    },
+    }
+    ,
     domain: {
       type: DataTypes.STRING,
       allowNull: true // ou false si obligatoire

@@ -1,6 +1,5 @@
-const { Course, User, CourseCategory, CourseFile } = require('../models');
+const { Course, User, CourseFile  } = require('../models');
 
-// Controller for handling course-related operations
 const courseController = {
   // Get all courses
   getAllCourses: async (req, res) => {
@@ -11,10 +10,6 @@ const courseController = {
             model: User,
             as: 'creator',
             attributes: ['id', 'username', 'full_name']
-          },
-          {
-            model: CourseCategory,
-            as: 'category'
           }
         ],
         order: [['created_at', 'DESC']]
@@ -27,22 +22,18 @@ const courseController = {
     }
   },
 
-  // Get courses by category
-  getCoursesByCategory: async (req, res) => {
+  // Get courses by domain
+  getCoursesByDomain: async (req, res) => {
     try {
-      const { categoryId } = req.params;
+      const { domain } = req.params;
       
       const courses = await Course.findAll({
-        where: { category_id: categoryId },
+        where: { domain },
         include: [
           {
             model: User,
             as: 'creator',
             attributes: ['id', 'username', 'full_name']
-          },
-          {
-            model: CourseCategory,
-            as: 'category'
           }
         ],
         order: [['created_at', 'DESC']]
@@ -50,79 +41,60 @@ const courseController = {
 
       return res.status(200).json(courses);
     } catch (error) {
-      console.error('Error fetching courses by category:', error);
+      console.error('Error fetching courses by domain:', error);
       return res.status(500).json({ message: 'Internal server error' });
     }
   },
 
   // Get a specific course by ID
-  getCourseById: async (req, res) => {
+ getCourseById: async (req, res) => {
     try {
       const { id } = req.params;
       
       const course = await Course.findByPk(id, {
-        include: [
-          {
-            model: User,
-            as: 'creator',
-            attributes: ['id', 'username', 'full_name']
-          },
-          {
-            model: CourseCategory,
-            as: 'category'
-          },
-          {
-            model: CourseFile,
-            as: 'files'
-          }
-        ]
+        include: [{
+          model: User,
+          as: 'creator',
+          attributes: ['id', 'username', 'full_name']
+        }]
       });
 
       if (!course) {
-        return res.status(404).json({ message: 'Course not found' });
+        return res.status(404).json({ message: 'Cours non trouvé' });
       }
 
       return res.status(200).json(course);
     } catch (error) {
       console.error('Error fetching course:', error);
-      return res.status(500).json({ message: 'Internal server error' });
+      return res.status(500).json({ message: 'Erreur serveur' });
     }
   },
 
   // Create a new course
   createCourse: async (req, res) => {
     try {
-      const { title, description, link, category_id } = req.body;
-      const user_id = req.user.id; // Assuming user is authenticated and available in req.user
+      const { title, description, link, domain } = req.body;
+      const user_id = req.user.id;
       
       // Validate required fields
       if (!title) {
         return res.status(400).json({ message: 'Course title is required' });
       }
 
-      if (!category_id) {
-        return res.status(400).json({ message: 'Course category is required' });
-      }
-
       const newCourse = await Course.create({
         title,
         description,
         link,
-        category_id,
+        domain,
         user_id
       });
 
-      // Fetch the created course with creator and category details
       const course = await Course.findByPk(newCourse.id, {
         include: [
           {
             model: User,
             as: 'creator',
             attributes: ['id', 'username', 'full_name']
-          },
-          {
-            model: CourseCategory,
-            as: 'category'
           }
         ]
       });
@@ -138,8 +110,8 @@ const courseController = {
   updateCourse: async (req, res) => {
     try {
       const { id } = req.params;
-      const { title, description, link, category_id } = req.body;
-      const user_id = req.user.id; // Assuming user is authenticated and available in req.user
+      const { title, description, link, domain } = req.body;
+      const user_id = req.user.id;
 
       // Find the course
       const course = await Course.findByPk(id);
@@ -157,23 +129,17 @@ const courseController = {
       await course.update({
         title: title || course.title,
         description: description !== undefined ? description : course.description,
-        link: link || course.link,
-        category_id: category_id || course.category_id
+        link: link !== undefined ? link : course.link,
+        domain: domain !== undefined ? domain : course.domain
       });
 
-      // Fetch the updated course with creator and category details
+      // Fetch the updated course with creator details
       const updatedCourse = await Course.findByPk(id, {
-        include: [
-          {
-            model: User,
-            as: 'creator',
-            attributes: ['id', 'username', 'full_name']
-          },
-          {
-            model: CourseCategory,
-            as: 'category'
-          }
-        ]
+        include: [{
+          model: User,
+          as: 'creator',
+          attributes: ['id', 'username', 'full_name']
+        }]
       });
 
       return res.status(200).json(updatedCourse);
@@ -209,7 +175,33 @@ const courseController = {
       console.error('Error deleting course:', error);
       return res.status(500).json({ message: 'Internal server error' });
     }
+  },
+
+
+// Ajoute cette méthode dans l'objet courseController
+getFilesByCourse: async (req, res) => {
+  const { courseId } = req.params;
+
+  try {
+    const files = await CourseFile.findAll({
+      where: { course_id: courseId },
+      attributes: ['file_name', 'file_path']
+    });
+
+    res.status(200).json({
+      success: true,
+      count: files.length,
+      files
+    });
+  } catch (error) {
+    console.error('Erreur lors de la récupération des fichiers de cours:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Erreur serveur lors de la récupération des fichiers'
+    });
   }
+
+}
 };
 
 module.exports = courseController;

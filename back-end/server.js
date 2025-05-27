@@ -126,6 +126,15 @@ app.listen(port, () => {
 const publicationRoutes = require('./routes/publicationRoutes');
 app.use('/api/publications', publicationRoutes);
 
+// PUBLICATION 
+const publicationRoutes = require('./routes/publicationRoutes');
+app.use('/api/publications', publicationRoutes);
+
+
+// Evaluation 
+const evaluationRoutes = require('./routes/evaluationRoutes');
+
+app.use('/api/evaluations', evaluationRoutes);
 
 // Evaluation 
 const evaluationRoutes = require('./routes/evaluationRoutes');

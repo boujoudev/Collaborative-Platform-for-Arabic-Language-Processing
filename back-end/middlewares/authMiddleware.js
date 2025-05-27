@@ -8,13 +8,15 @@ const JWT_SECRET = 'your_jwt_secret_key';
 // Middleware to authenticate users
 const authenticate = async (req, res, next) => {
   const token = req.cookies.token;
+  console.log("Cookies reçus :", req.cookies);
 	if (!token) return res.status(401).json({ success: false, message: "Unauthorized - no token provided" });
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
 		if (!decoded) return res.status(401).json({ success: false, message: "Unauthorized - invalid token" });
 
-		req.userId = decoded.userId;
+		req.user = {id: decoded.id, username: decoded.username, role: decoded.role};
+    console.log("JWT Decoded :", decoded);
 		next();
 	} catch (error) {
 		console.log("Error in verifyToken ", error);

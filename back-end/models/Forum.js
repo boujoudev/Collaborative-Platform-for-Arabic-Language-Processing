@@ -37,6 +37,12 @@ module.exports = (sequelize, DataTypes) => {
         as: 'owner',
         onDelete: 'CASCADE'
       });
+
+      Forum.belongsToMany(models.User, {
+  through: models.UserForum,
+  foreignKey: 'forumId',
+  as: 'members'
+});
       Forum.hasMany(models.Post, {
         foreignKey: 'forum_id',
         as: 'posts'

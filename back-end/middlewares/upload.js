@@ -32,7 +32,7 @@ const fileFilter = (req, file, cb) => {
         'text/plain',
         'text/csv',
         'application/json',
-        'application/xml'
+        'application/xml',
     ];
 
     if (allowedMimeTypes.includes(file.mimetype)) {

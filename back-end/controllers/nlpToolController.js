@@ -47,8 +47,9 @@ const nlpToolController = {
 
   // Create a new NLP tool
   createTool: async (req, res) => {
+    console.log(req.body)
     try {
-      const { title, description, link } = req.body;
+      const { title, description, link, domaine } = req.body;
       const user_id = req.user.id; // Assuming user is authenticated and available in req.user
       
       // Validate required fields
@@ -60,10 +61,13 @@ const nlpToolController = {
         return res.status(400).json({ message: 'Tool link is required' });
       }
 
+      // Optionally, you can validate domaine here if needed (e.g. required or format)
+
       const newTool = await NLPTool.create({
         title,
         description,
         link,
+        domaine,   // <-- nouveau champ ajouté ici
         user_id
       });
 
@@ -87,7 +91,7 @@ const nlpToolController = {
   updateTool: async (req, res) => {
     try {
       const { id } = req.params;
-      const { title, description, link } = req.body;
+      const { title, description, link, domaine } = req.body;
       const user_id = req.user.id; // Assuming user is authenticated and available in req.user
 
       // Find the tool
@@ -106,7 +110,8 @@ const nlpToolController = {
       await tool.update({
         title: title || tool.title,
         description: description !== undefined ? description : tool.description,
-        link: link || tool.link
+        link: link || tool.link,
+        domaine: domaine !== undefined ? domaine : tool.domaine // <-- mise à jour domaine
       });
 
       // Fetch the updated tool with creator details

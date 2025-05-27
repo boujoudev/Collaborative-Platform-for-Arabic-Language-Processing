@@ -12,13 +12,35 @@ const commentController = {
       const { entityType, entityId } = req.params;
 
       if (!validEntityTypes.includes(entityType)) {
+
+      if (!validEntityTypes.includes(entityType)) {
         return res.status(400).json({ message: 'Invalid entity type' });
       }
 
       // Récupérer les commentaires racines (parent_id = null) + leurs réponses en incluant l'association 'replies'
+      // Récupérer les commentaires racines (parent_id = null) + leurs réponses en incluant l'association 'replies'
       const comments = await Comment.findAll({
         where: {
           entity_type: entityType,
+          entity_id: entityId,
+          parent_id: null  // Seulement commentaires racines
+        },
+        include: [
+          {
+            model: User,
+            as: 'author',
+            attributes: ['id', 'username', 'full_name']
+          },
+          {
+            model: Comment,
+            as: 'replies',
+            include: [{
+              model: User,
+              as: 'author',
+              attributes: ['id', 'username', 'full_name']
+            }]
+          }
+        ],
           entity_id: entityId,
           parent_id: null  // Seulement commentaires racines
         },
@@ -75,6 +97,10 @@ const commentController = {
       const user_id = req.user.id;
 
       if (!validEntityTypes.includes(entity_type)) {
+      const { entity_type, entity_id, content, image, parent_id } = req.body;
+      const user_id = req.user.id;
+
+      if (!validEntityTypes.includes(entity_type)) {
         return res.status(400).json({ message: 'Invalid entity type' });
       }
 
@@ -93,11 +119,24 @@ const commentController = {
         }
       }
 
+      // Si parent_id est défini, vérifier qu'il existe et appartient au même entity_type/entity_id
+      if (parent_id) {
+        const parentComment = await Comment.findByPk(parent_id);
+        if (!parentComment) {
+          return res.status(400).json({ message: 'Parent comment not found' });
+        }
+        if (parentComment.entity_type !== entity_type || parentComment.entity_id !== entity_id) {
+          return res.status(400).json({ message: 'Parent comment entity mismatch' });
+        }
+      }
+
       const newComment = await Comment.create({
         entity_type,
         entity_id,
         content,
         image,
+        user_id,
+        parent_id: parent_id || null
         user_id,
         parent_id: parent_id || null
       });
@@ -192,6 +231,7 @@ const commentController = {
     try {
       const { id } = req.params;
       const { content, image } = req.body;
+      const user_id = req.user.id;
       const user_id = req.user.id;
 
       const comment = await Comment.findByPk(id);
@@ -302,6 +342,7 @@ const commentController = {
   deleteComment: async (req, res) => {
     try {
       const { id } = req.params;
+      const user_id = req.user.id;
       const user_id = req.user.id;
 
       const comment = await Comment.findByPk(id);

@@ -17,6 +17,13 @@ module.exports = (sequelize, DataTypes) => {
           isEmail: true
         }
       },
+      pending_email: {
+        type: DataTypes.STRING(150),
+        allowNull: true,
+        validate: {
+          isEmail: true
+        }
+      },
       username: {
         type: DataTypes.STRING(255),
         allowNull: false,
@@ -42,6 +49,10 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.TEXT,
         allowNull: true
       },
+      about: {
+        type: DataTypes.TEXT,
+        allowNull: true
+      },
       lastLogin: {
         type: DataTypes.DATE,
         defaultValue: DataTypes.NOW
@@ -61,7 +72,13 @@ module.exports = (sequelize, DataTypes) => {
       },
       verificationTokenExpiresAt: {
         type: DataTypes.DATE
-      }
+      },
+      preferencesLinguistiques: {
+      type: DataTypes.ENUM('english', 'arab'),
+      field: 'preferences_linguistiques',
+      defaultValue: 'english',
+      allowNull: false
+    }
   }, {
       tableName: 'users',
       timestamps: true,
@@ -83,6 +100,7 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'owner_id',
         as: 'ownedForums'
       });
+      
       
       // A user can create multiple posts
       User.hasMany(models.Post, {
@@ -169,6 +187,22 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'user_id',
         as: 'publications'
       });
+ // a user can follow multiple forums
+      User.belongsToMany(models.Forum, {
+  through: models.UserForum,
+  foreignKey: 'userId',
+  as: 'joinedForums'
+});
+  // A user can follow other users
+User.hasMany(models.UserFollow, {
+  foreignKey: 'followerId',
+  as: 'following'
+});
+
+User.hasMany(models.UserFollow, {
+  foreignKey: 'followingId',
+  as: 'followers'
+});
       
       // A user can create multiple courses
       User.hasMany(models.Course, {
@@ -181,6 +215,32 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'user_id',
         as: 'uploadedCourseFiles'
       });
+      User.hasMany(models.Skill, {
+  foreignKey: 'user_id',
+  as: 'skills'
+});
+User.hasMany(models.Experience, {
+  foreignKey: 'user_id',
+  as: 'experiences'
+});
+User.hasOne(models.ContactMe, {
+  foreignKey: 'userId',
+  as: 'contactInfo'
+});
+User.hasMany(models.BlockedUser, {
+  foreignKey: 'blocker_id',
+  as: 'blocking'
+});
+
+User.hasMany(models.BlockedUser, {
+  foreignKey: 'blocked_id',
+  as: 'blockedBy'
+});
+
+User.hasMany(models.Formation, {
+  foreignKey: 'userId',
+  as: 'formations'
+});
     };
   
     return User;

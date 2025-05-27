@@ -1,42 +1,43 @@
-const { Model, DataTypes } = require('sequelize');
-const sequelize = require('../config/db');
-
-class Notification extends Model {}
-
-Notification.init({
-  id: {
-    type: DataTypes.INTEGER,
-    primaryKey: true,
-    autoIncrement: true
-  },
-  userId: {
-    type: DataTypes.INTEGER,
-    allowNull: false,
-    references: {
-      model: 'User',
-      key: 'id'
+// models/Notification.js
+module.exports = (sequelize, DataTypes) => {
+  const Notification = sequelize.define('Notification', {
+    id: {
+      type: DataTypes.INTEGER,
+      primaryKey: true,
+      autoIncrement: true
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: 'Users',
+        key: 'id'
+      }
+    },
+    type: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isIn: [['NEW_MESSAGE', 'NEW_COMMENT', 'COMMENT_REPLY', 'EVENT_REMINDER', 'NEW_FOLLOWER', 'NEW_FORUM_MEMBER', 'COMMENT_EDITED']]
+      }
+    },
+    data: {
+      type: DataTypes.TEXT,
+      allowNull: false
+    },
+    read: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false
     }
-  },
-  type: {
-    type: DataTypes.STRING,
-    allowNull: false,
-    validate: {
-      isIn: [['NEW_MESSAGE', 'NEW_COMMENT', 'COMMENT_REPLY', 'EVENT_REMINDER', 'NEW_FOLLOWER', 'NEW_FORUM_MEMBER']]
-    }
-  },
-  data: {
-    type: DataTypes.TEXT,
-    allowNull: false
-  },
-  read: {
-    type: DataTypes.BOOLEAN,
-    defaultValue: false
-  }
-}, {
-  sequelize,
-  modelName: 'Notification',
-  tableName: 'notifications',
-  timestamps: true
-});
+  }, {
+    tableName: 'notifications',
+    timestamps: true
+  });
 
-module.exports = Notification; 
+  Notification.associate = (models) => {
+    // associations if needed
+    // Notification.belongsTo(models.User, { foreignKey: 'userId' });
+  };
+
+  return Notification;
+};

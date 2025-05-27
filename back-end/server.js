@@ -6,6 +6,9 @@ const { sequelize } = require('./models');
 const dotenv = require('dotenv');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const http = require('http');
+const { Server } = require('socket.io');
+const socketIO = require('./config/socketio');
 
 dotenv.config({path: './back-end/.env'});
 console.log(process.env.GOOGLE_API_KEY)
@@ -15,8 +18,38 @@ dotenv.config();
 
 const port = process.env.PORT || 3000;
 
-// Create the Express app
+// Express app & HTTP server
 const app = express();
+const server = http.createServer(app);
+
+// Socket.IO config
+const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:3000',
+    methods: ["GET", "POST"],
+    credentials: true
+  }
+});
+
+// Initialize the socketIO module with the io instance
+socketIO.init(io);
+
+// Socket.IO events
+io.on('connection', (socket) => {
+  console.log('User connected:', socket.id);
+  socket.on('join', (userId) => {
+    socket.join(`user_${userId}`);
+    console.log(`User ${userId} joined their room`);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('User disconnected:', socket.id);
+  });
+});
+
+// Rendre io accessible dans req.app.get('io')
+app.set('io', io);
+
 
 // Middleware
 app.use(cors({
@@ -116,11 +149,6 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // REFRESH
 app.use('/api', require('./routes/authcheckRoutes'));
 
-// Start the server
-app.listen(port, () => {    
-  console.log(`Server is running on port ${port}`);
-});
-
 
 // PUBLICATION 
 const publicationRoutes = require('./routes/publicationRoutes');
@@ -132,6 +160,18 @@ const evaluationRoutes = require('./routes/evaluationRoutes');
 
 app.use('/api/evaluations', evaluationRoutes);
 
+
+
+// Middleware 404
+app.use((req, res) => {
+  res.status(404).json({ message: 'Route not found' });
+});
+
+
+// Start the server
+server.listen(port, () => {    
+  console.log(`Server is running on port ${port}`);
+});
 
 
 

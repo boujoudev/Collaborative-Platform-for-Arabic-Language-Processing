@@ -83,6 +83,17 @@ class NotificationService {
       forumId
     });
   }
+
+  // Handle comment edit notification
+  async handleCommentEdited(entityId, editorId, recipientId, comment, entityType) {
+    await this.sendNotification(recipientId, 'COMMENT_EDITED', {
+      entityId,
+      entityType,
+      editorId,
+      commentId: comment.id,
+      content: comment.content
+    });
+  }
 }
 
-module.exports = NotificationService; 
+module.exports = NotificationService;

@@ -1,6 +1,5 @@
 const Message = require('../models/Message');
 const { User } = require('../models');
-const NotificationService = require('../services/notificationService');
 
 const messageController = {
     // Envoyer un message
@@ -24,6 +23,10 @@ const messageController = {
             // Vérifier si l'utilisateur n'essaie pas de s'envoyer un message à lui-même
             if (sender_id === receiver_id) {
                 return res.status(400).json({ error: 'Vous ne pouvez pas vous envoyer un message à vous-même' });
+            }
+            // Dans messageController.js, fonction sendMessage
+            if (!req.user || !req.user.id) {
+                return res.status(401).json({ error: 'Utilisateur non authentifié' });
             }
 
             // Créer le message
@@ -49,18 +52,6 @@ const messageController = {
                     username: receiver.username
                 }
             };
-
-            // Send notification to receiver
-            const notificationService = new NotificationService(req.app.get('io'));
-            await notificationService.handleNewMessage(
-                sender_id,
-                receiver_id,
-                {
-                    id: message.id,
-                    content: message.content,
-                    senderName: sender.full_name
-                }
-            );
 
             res.status(201).json(response);
         } catch (error) {
@@ -117,7 +108,40 @@ const messageController = {
             console.error('Erreur détaillée lors de la récupération de la conversation:', error);
             res.status(500).json({ error: 'Erreur lors de la récupération de la conversation' });
         }
+    },
+
+    // Obtenir toutes les conversations
+    getAllConversations: async (req, res) => {
+        try {
+            const userId = req.user.id;
+            console.log('Récupération de toutes les conversations pour l\'utilisateur:', userId);
+
+            // Récupérer toutes les conversations
+            const conversations = await Message.getAllConversations(userId);
+
+            // Récupérer les informations des utilisateurs pour chaque conversation
+            const enrichedConversations = await Promise.all(conversations.map(async (conv) => {
+                const otherUser = await User.findByPk(conv.user_id, {
+                    attributes: ['id', 'full_name', 'username']
+                });
+
+                return {
+                    ...conv,
+                    user: otherUser
+                };
+            }));
+
+            // Trier les conversations par date du dernier message
+            enrichedConversations.sort((a, b) => 
+                new Date(b.last_message.created_at) - new Date(a.last_message.created_at)
+            );
+
+            res.json(enrichedConversations);
+        } catch (error) {
+            console.error('Erreur lors de la récupération des conversations:', error);
+            res.status(500).json({ error: 'Erreur lors de la récupération des conversations' });
+        }
     }
 };
 
-module.exports = messageController; 
+module.exports = messageController;

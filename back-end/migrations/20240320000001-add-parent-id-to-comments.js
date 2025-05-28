@@ -9,12 +9,16 @@ module.exports = {
         model: 'comments',
         key: 'id'
       },
-      onDelete: 'CASCADE',
-      onUpdate: 'CASCADE'
+      onUpdate: 'CASCADE',
+      onDelete: 'SET NULL'
     });
+
+    // Add index for better query performance
+    await queryInterface.addIndex('comments', ['parent_id']);
   },
 
   down: async (queryInterface, Sequelize) => {
+    await queryInterface.removeIndex('comments', ['parent_id']);
     await queryInterface.removeColumn('comments', 'parent_id');
   }
-};
+}; 

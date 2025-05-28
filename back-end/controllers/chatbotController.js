@@ -1,6 +1,6 @@
 // controllers/chatbot.js
 const chatbotService = require('../services/chatbotService');
-
+const ChatHistory = require('../models').ChatHistory;
 
 
 async function handleChat(req, res) {
@@ -19,5 +19,21 @@ async function handleChat(req, res) {
   }
 }
 
-module.exports = { handleChat };
+async function getChatHistory(req, res) {
+  const { userId } = req.params;
+
+  try {
+    const history = await ChatHistory.findAll({
+      where: { user_id: userId },
+      order: [['timestamp', 'ASC']], // messages dans l'ordre chronologique
+    });
+
+    res.json({ history });
+  } catch (error) {
+    console.error("Error fetching chat history:", error);
+    res.status(500).json({ error: "An error occurred while retrieving chat history." });
+  }
+}
+
+module.exports = { handleChat, getChatHistory };
 

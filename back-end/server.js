@@ -160,6 +160,9 @@ const evaluationRoutes = require('./routes/evaluationRoutes');
 
 app.use('/api/evaluations', evaluationRoutes);
 
+// Report routes
+const reportRoutes = require('./routes/reportRoutes');
+app.use('/api/reports', reportRoutes);
 
 
 // Middleware 404

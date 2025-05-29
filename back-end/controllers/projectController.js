@@ -474,7 +474,64 @@ updateProject: async (req, res) => {
       console.error('Error fetching join requests:', error);
       return res.status(500).json({ message: 'Internal server error' });
     }
+  },
+
+
+
+// Cancel a join request
+// Withdraw a join request
+withdrawJoinRequest: async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user_id = req.user.id; // Utilisateur authentifié
+
+    // Vérifier si la demande existe
+    const request = await ProjectRequest.findOne({
+      where: {
+        project_id: id,
+        user_id,
+        status: 'pending'
+      }
+    });
+
+    if (!request) {
+      return res.status(404).json({ message: 'No pending join request found' });
+    }
+
+    await request.destroy();
+    return res.status(200).json({ message: 'Join request withdrawn successfully' });
+  } catch (error) {
+    console.error('Error withdrawing join request:', error);
+    return res.status(500).json({ message: 'Internal server error' });
   }
+},
+
+
+
+// Check if user has already requested to join a project
+hasRequestedToJoin: async (req, res) => {
+  try {
+    const { id } = req.params; // project ID
+    const user_id = req.user.id;
+
+    const existingRequest = await ProjectRequest.findOne({
+      where: {
+        project_id: id,
+        user_id
+      }
+    });
+
+    const hasRequested = !!existingRequest;
+
+    return res.status(200).json({ hasRequested }); // retourne true ou false
+  } catch (error) {
+    console.error('Error checking join request:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+},
+
+
+
 };
 
 module.exports = projectController;

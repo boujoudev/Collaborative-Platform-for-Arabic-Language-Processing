@@ -164,11 +164,16 @@ app.use('/api/evaluations', evaluationRoutes);
 const reportRoutes = require('./routes/reportRoutes');
 app.use('/api/reports', reportRoutes);
 
+// FOLLOW ROUTES 
+const followRoutes = require('./routes/follow'); 
+app.use('/api/follow', followRoutes);
+
 
 // Middleware 404
 app.use((req, res) => {
   res.status(404).json({ message: 'Route not found' });
 });
+
 
 
 // Start the server

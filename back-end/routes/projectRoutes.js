@@ -49,4 +49,12 @@ router.put('/:id/requests/:requestId', authenticate, projectController.handleJoi
 // GET /api/projects/:id/requests
 router.get('/:id/requests', authenticate, projectController.getJoinRequests);
 
+// Withdraw a join request (requires authentication)
+// DELETE /api/projects/:id/requests/withdraw
+router.delete('/:id/requests/withdraw', authenticate, projectController.withdrawJoinRequest);
+
+
+router.get('/:id/has-requested', authenticate, projectController.hasRequestedToJoin);
+
+
 module.exports = router;

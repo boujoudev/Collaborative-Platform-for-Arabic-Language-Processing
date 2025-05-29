@@ -4,10 +4,6 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true
-      },
-      notify_before: {
-        type: DataTypes.STRING,
-        allowNull: false
       }
     }, {
       tableName: 'event_interest',

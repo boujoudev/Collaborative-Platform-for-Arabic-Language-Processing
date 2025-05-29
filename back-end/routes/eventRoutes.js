@@ -13,6 +13,9 @@ router.get('/', eventController.getAllEvents);
 // GET /api/events/upcoming
 router.get('/upcoming', eventController.getUpcomingEvents);
 
+router.get('/:eventId/interested', authenticate, eventController.isUserInterestedInEvent); 
+router.get('/:id/interests', authenticate, eventController.getEventInterests);
+
 // Get a specific event by ID
 // GET /api/events/:id
 router.get('/:id', eventController.getEventById);
@@ -36,5 +39,7 @@ router.post('/:id/interest', authenticate, eventController.expressInterest);
 // Withdraw interest from an event (requires authentication)
 // DELETE /api/events/:id/interest
 router.delete('/:id/interest', authenticate, eventController.withdrawInterest);
+
+
 
 module.exports = router;

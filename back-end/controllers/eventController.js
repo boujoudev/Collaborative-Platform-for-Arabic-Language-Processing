@@ -65,10 +65,12 @@ const eventController = {
             as: 'interests',
             include: [{
               model: User,
+              as: 'user', // ✅ car dans EventInterest tu as mis as: 'user'
               attributes: ['id', 'username', 'full_name']
             }]
           }
         ]
+
       });
 
       if (!event) {
@@ -259,7 +261,53 @@ createEvent: async (req, res) => {
       console.error('Error withdrawing interest:', error);
       return res.status(500).json({ message: 'Internal server error' });
     }
+  },
+  // Get all interests for a specific event
+getEventInterests: async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    // Vérifie que l'événement existe
+    const event = await Event.findByPk(id);
+    if (!event) {
+      return res.status(404).json({ message: 'Event not found' });
+    }
+
+    // Récupère tous les intérêts pour cet événement
+    const interests = await EventInterest.findAll({
+      where: { event_id: id },
+      include: {
+        model: User,
+        as: 'user',
+        attributes: ['id', 'full_name', 'email'] 
+      }
+    });
+
+    return res.status(200).json({ interests });
+  } catch (error) {
+    console.error('Error fetching event interests:', error);
+    return res.status(500).json({ message: 'Internal server error' });
   }
+},
+isUserInterestedInEvent: async (req, res) => {
+    try {
+      const userId = req.user.id;
+      const { eventId } = req.params;
+
+      const interest = await EventInterest.findOne({
+        where: {
+          user_id: userId,
+          event_id: eventId
+        }
+      });
+
+      return res.json({ interested: !!interest });
+    } catch (error) {
+      console.error('Erreur lors de la vérification de l’intérêt :', error);
+      return res.status(500).json({ error: 'Erreur serveur' });
+    }
+  },
+
 };
 
 module.exports = eventController;

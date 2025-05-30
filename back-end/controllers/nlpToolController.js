@@ -144,7 +144,7 @@ const nlpToolController = {
       }
 
       // Check if the user is the creator of the tool
-      if (tool.user_id !== user_id) {
+      if (tool.user_id !== user_id && req.user.role !== 'admin') {
         return res.status(403).json({ message: 'Not authorized to delete this tool' });
       }
 

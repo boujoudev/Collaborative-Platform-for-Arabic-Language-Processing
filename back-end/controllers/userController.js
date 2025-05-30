@@ -323,7 +323,6 @@ updateProfile: async (req, res) => {
 },
 
 
-
 // Request password reset
 requestPasswordReset: async (req, res) => {
   const { email } = req.body;
@@ -441,24 +440,24 @@ getAllUsers: async (req, res) => {
 },
 
   // Get user by ID
-  getUserById: async (req, res) => {
-    try {
-      const { id } = req.params;
+getUserById: async (req, res) => {
+  try {
+    const { id } = req.params;
 
-      const user = await User.findByPk(id, {
-        attributes: { exclude: ['password'] }
-      });
+    const user = await User.findByPk(id, {
+      attributes: { exclude: ['password'] }
+    });
 
-      if (!user) {
-        return res.status(404).json({ message: 'User not found' });
-      }
-
-      return res.status(200).json(user);
-    } catch (error) {
-      console.error('Error fetching user:', error);
-      return res.status(500).json({ message: 'Internal server error' });
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
-  },
+
+    return res.status(200).json(user);
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+},
 
   // Update user role (admin only)
 updateUserRole: async (req, res) => {
@@ -670,6 +669,57 @@ updatePreferencesLinguistiques: async (req, res) => {
     return res.status(500).json({ error: "Erreur serveur" });
   }
 },
+adminRegister: async (req, res) => {
+  try {
+    const { full_name, email, username, password, role } = req.body;
+    
+    // Vérifie que l'utilisateur est authentifié et admin
+    if (!req.user || req.user.role !== 'admin') {
+      return res.status(403).json({ message: 'Only admins can create users' });
+    }
+
+    if (!full_name || !email || !username || !password || !role) {
+      return res.status(400).json({ message: 'All fields are required' });
+    }
+
+    const existingUser = await User.findOne({
+      where: { [Op.or]: [{ email }, { username }] }
+    });
+
+    if (existingUser) {
+      return res.status(400).json({ message: 'Email or username already in use' });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const newUser = await User.create({
+      full_name,
+      email,
+      username,
+      password: hashedPassword,
+      role,
+      certified: false,
+      isVerified: true, // facultatif : un admin crée un compte déjà vérifié
+    });
+
+    return res.status(201).json({
+      message: `User with role '${role}' created successfully`,
+      user: {
+        id: newUser.id,
+        full_name: newUser.full_name,
+        username: newUser.username,
+        role: newUser.role,
+        email: newUser.email,
+      }
+    });
+  } catch (error) {
+    console.error('Error creating user by admin:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+},
+
+
 
 };
 

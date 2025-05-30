@@ -16,6 +16,11 @@ router.post('/verify-email', userController.verifyEmail);
 router.post("/verify-pending-email", userController.verifyPendingEmail);
 
 
+// Admin register 
+router.post('/admin/register-user', authenticate, userController.adminRegister);
+
+
+
 // Login user
 // POST /api/users/login
 router.post('/login', userController.login);

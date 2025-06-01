@@ -41,9 +41,10 @@ class NotificationService {
   }
 
   // Handle new comment notification
-  async handleNewComment(postId, commenterId, postOwnerId, comment) {
-    await this.sendNotification(postOwnerId, 'NEW_COMMENT', {
-      postId,
+  async handleNewComment(entityId, commenterId, entityOwnerId, comment, entityType) {
+    await this.sendNotification(entityOwnerId, 'NEW_COMMENT', {
+      entityId,
+      entityType,
       commenterId,
       commentId: comment.id,
       content: comment.content
@@ -51,9 +52,10 @@ class NotificationService {
   }
 
   // Handle comment reply notification
-  async handleCommentReply(postId, replierId, commentOwnerId, reply) {
+  async handleCommentReply(entityId, replierId, commentOwnerId, reply, entityType) {
     await this.sendNotification(commentOwnerId, 'COMMENT_REPLY', {
-      postId,
+      entityId,
+      entityType,
       replierId,
       replyId: reply.id,
       content: reply.content

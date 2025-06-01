@@ -120,7 +120,8 @@ const commentController = {
             entity_id,
             user_id,
             parentComment.user_id,
-            comment
+            comment,
+            entity_type // Add this parameter
           );
         }
       } else {
@@ -176,7 +177,8 @@ const commentController = {
             entity_id,
             user_id,
             entityOwnerId,
-            comment
+            comment,
+            entity_type // Add this parameter
           );
         }
       }

@@ -1,4 +1,4 @@
-const { Forum, User, Post } = require('../models');
+const { Forum, User, Post, UserForum  } = require('../models');
 
 // Controller for handling forum-related operations
 const forumController = {
@@ -194,7 +194,128 @@ const forumController = {
       console.error('Error fetching forum posts:', error);
       return res.status(500).json({ message: 'Internal server error' });
     }
+  },
+
+  hasUserJoinedForum: async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { forumId } = req.params;
+
+    const userForum = await UserForum.findOne({
+      where: { userId, forumId }
+    });
+
+    return res.status(200).json({ joined: !!userForum });
+  } catch (error) {
+    console.error('Error checking user forum membership:', error);
+    return res.status(500).json({ message: 'Internal server error' });
   }
+},
+
+isNotifyMeEnabled: async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { forumId } = req.params;
+
+    const userForum = await UserForum.findOne({
+      where: { userId, forumId }
+    });
+
+    if (!userForum) {
+      return res.status(404).json({ message: 'User is not part of this forum' });
+    }
+
+    return res.status(200).json({ notifyMe: userForum.notifyMe });
+  } catch (error) {
+    console.error('Error checking notifyMe status:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+},
+
+// POST /api/forums/:forumId/join
+joinForum: async (req, res) => {
+  const { forumId } = req.params;
+  const userId = req.user.id;
+
+  try {
+    const [record, created] = await UserForum.findOrCreate({
+      where: { userId, forumId },
+      defaults: { notifyMe: true }
+    });
+
+    if (!created) {
+      return res.status(400).json({ message: 'User already joined this forum.' });
+    }
+
+    return res.status(201).json({ message: 'Joined the forum successfully.', data: record });
+  } catch (error) {
+    console.error('Error joining forum:', error);
+    return res.status(500).json({ message: 'Error joining forum.', error: error.message });
+  }
+},
+
+leaveForum: async (req, res) => {
+  const { forumId } = req.params;
+  const userId = req.user.id;
+
+  try {
+    const deleted = await UserForum.destroy({
+      where: { userId, forumId }
+    });
+
+    if (deleted === 0) {
+      return res.status(404).json({ message: 'User is not a member of this forum.' });
+    }
+
+    return res.status(200).json({ message: 'Left the forum successfully.' });
+  } catch (error) {
+    console.error('Error leaving forum:', error);
+    return res.status(500).json({ message: 'Error leaving forum.', error: error.message });
+  }
+},
+
+enableNotifyMe: async (req, res) => {
+  const { forumId } = req.params;
+  const userId = req.user.id;
+
+  try {
+    const userForum = await UserForum.findOne({ where: { userId, forumId } });
+
+    if (!userForum) {
+      return res.status(404).json({ message: 'User is not a member of this forum.' });
+    }
+
+    await userForum.update({ notifyMe: true });
+
+    return res.status(200).json({ message: 'Notifications enabled for this forum.' });
+  } catch (error) {
+    console.error('Error enabling notifications:', error);
+    return res.status(500).json({ message: 'Error enabling notifications.', error: error.message });
+  }
+},
+
+disableNotifyMe: async (req, res) => {
+  const { forumId } = req.params;
+  const userId = req.user.id;
+
+  try {
+    const userForum = await UserForum.findOne({ where: { userId, forumId } });
+
+    if (!userForum) {
+      return res.status(404).json({ message: 'User is not a member of this forum.' });
+    }
+
+    await userForum.update({ notifyMe: false });
+
+    return res.status(200).json({ message: 'Notifications disabled for this forum.' });
+  } catch (error) {
+    console.error('Error disabling notifications:', error);
+    return res.status(500).json({ message: 'Error disabling notifications.', error: error.message });
+  }
+},
+
+
+
 };
 
 module.exports = forumController;

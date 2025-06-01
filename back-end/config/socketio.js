@@ -17,3 +17,5 @@ const socketIO = {
 };
 
 module.exports = socketIO;
+// Also export io directly for backward compatibility
+module.exports.io = socketIO.io;

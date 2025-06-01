@@ -71,8 +71,16 @@ class NotificationService {
 
   // Handle new follower notification
   async handleNewFollower(followerId, followedId) {
+    // Get follower information
+    const { User } = require('../models');
+    const follower = await User.findByPk(followerId, {
+      attributes: ['id', 'username', 'full_name']
+    });
+
     await this.sendNotification(followedId, 'NEW_FOLLOWER', {
-      followerId
+      followerId,
+      followerUsername: follower.username,
+      followerName: follower.full_name
     });
   }
 

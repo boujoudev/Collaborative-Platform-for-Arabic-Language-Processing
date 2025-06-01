@@ -1,5 +1,9 @@
 const Message = require('../models/Message');
 const { User } = require('../models');
+const NotificationService = require('../services/notificationService');
+const socketIO = require('../config/socketio');
+
+const notificationService = new NotificationService(socketIO.getIO());
 
 const messageController = {
     // Envoyer un message
@@ -24,7 +28,7 @@ const messageController = {
             if (sender_id === receiver_id) {
                 return res.status(400).json({ error: 'Vous ne pouvez pas vous envoyer un message à vous-même' });
             }
-            // Dans messageController.js, fonction sendMessage
+            
             if (!req.user || !req.user.id) {
                 return res.status(401).json({ error: 'Utilisateur non authentifié' });
             }
@@ -52,6 +56,14 @@ const messageController = {
                     username: receiver.username
                 }
             };
+
+            // Send notification to receiver
+            await notificationService.handleNewMessage(sender_id, receiver_id, {
+                id: message.id,
+                content: content.length > 50 ? content.substring(0, 50) + '...' : content
+            });
+            
+            console.log('Notification envoyée au destinataire');
 
             res.status(201).json(response);
         } catch (error) {

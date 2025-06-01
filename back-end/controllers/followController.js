@@ -1,4 +1,8 @@
 const { UserFollow, User } = require('../models');
+const NotificationService = require('../services/notificationService');
+const socketIO = require('../config/socketio');
+
+const notificationService = new NotificationService(socketIO.getIO());
 
 const followController = {
   // Suivre un utilisateur
@@ -19,8 +23,21 @@ const followController = {
         return res.status(400).json({ message: 'Already following this user.' });
       }
 
+      // Create the follow relationship
       await UserFollow.create({ followerId, followingId });
-      return res.status(201).json({ message: 'User followed successfully.' });
+
+      // Get follower information for the notification
+      const follower = await User.findByPk(followerId, {
+        attributes: ['id', 'username', 'full_name']
+      });
+
+      // Send notification to the user being followed
+      await notificationService.handleNewFollower(followerId, followingId);
+
+      return res.status(201).json({ 
+        message: 'User followed successfully.',
+        follower: follower
+      });
     } catch (error) {
       console.error('Error following user:', error);
       return res.status(500).json({ message: 'Internal server error' });

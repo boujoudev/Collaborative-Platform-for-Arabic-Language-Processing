@@ -169,6 +169,10 @@ const followRoutes = require('./routes/follow');
 app.use('/api/follow', followRoutes);
 
 
+// Notification routes
+const notificationRoutes = require('./routes/notificationRoutes');
+app.use('/api/notifications', notificationRoutes);
+
 // Middleware 404
 app.use((req, res) => {
   res.status(404).json({ message: 'Route not found' });

@@ -5,3 +5,5 @@ back-end/.env
 =======
 .env
 >>>>>>> origin/Authentication-&-Middleware
+uploads
+node_modules
